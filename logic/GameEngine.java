@@ -9,7 +9,7 @@ import cli.Cli;
 public class GameEngine {
 
 	List<Dragon> dragons = new ArrayList<Dragon>();
-	List<>
+	List<Dart> darts = new ArrayList<Dart>();
 	Hero h1 = new Hero();
 	Maze board;
 	int posEspada = 81;
@@ -67,6 +67,7 @@ public class GameEngine {
 		board.gera();
 		dragonMode = cli.askForMode();
 		generateDragons(cli.askForDragons());
+		generateDarts();
 		
 		
 		
@@ -108,7 +109,13 @@ public class GameEngine {
 			h1.escudo= true;
 			posEscudo = -1;
 		}
-
+		
+		for(int j=0;j<darts.size();j++){
+			if(h1.posicao == darts.get(j).posicao){
+				h1.dardo=true;
+				darts.get(j).posicao = -1;				
+			}
+		}
 		if (h1.armado)
 			board.changeBoard(h1.posicao, 'A');
 		else
@@ -128,12 +135,26 @@ public class GameEngine {
 					board.changeBoard(posEscudo, 'F');
 				else
 					board.changeBoard(posEscudo, 'P');
-			
-			if (dragons.get(i).posicao != -1 && dragons.get(i).posicao != posEspada && dragons.get(i).acordado)
-				board.changeBoard(dragons.get(i).posicao, 'D');
-			if (dragons.get(i).posicao != -1 && dragons.get(i).posicao != posEspada && !dragons.get(i).acordado)
-				board.changeBoard(dragons.get(i).posicao, 'd');
+
+			for(int j=0;j<darts.size();j++){
+
+				if (dragons.get(i).posicao != -1 && dragons.get(i).posicao != posEspada && dragons.get(i).acordado
+						&& dragons.get(i).posicao != posEscudo && dragons.get(i).posicao != darts.get(j).posicao)
+					board.changeBoard(dragons.get(i).posicao, 'D');
+				if (dragons.get(i).posicao != -1 && dragons.get(i).posicao != posEspada && !dragons.get(i).acordado
+						&& dragons.get(i).posicao != posEscudo && dragons.get(i).posicao != darts.get(j).posicao)
+					board.changeBoard(dragons.get(i).posicao, 'd');
+
+				
+				if(darts.get(j).posicao != -1){
+					if (dragons.get(i).posicao == darts.get(j).posicao)
+						board.changeBoard(darts.get(j).posicao, 'F');
+					else
+						board.changeBoard(darts.get(j).posicao, 'T');
+				}
+			}
 		}
+
 	}
 
 	/*
@@ -144,10 +165,15 @@ public class GameEngine {
 	public void deleteEntities() {
 		board.changeBoard(h1.posicao, ' ');
 		for(int i=0;i<dragons.size();i++)
-		if (dragons.get(i).posicao != -1)
-			board.changeBoard(dragons.get(i).posicao, ' ');
+			if (dragons.get(i).posicao != -1)
+				board.changeBoard(dragons.get(i).posicao, ' ');
 		if (posEspada != -1)
 			board.changeBoard(posEspada, ' ');
+		if (posEscudo != -1)
+			board.changeBoard(posEscudo, ' ');
+		for(int i=0;i<darts.size();i++)
+			if (darts.get(i).posicao != -1)
+				board.changeBoard(darts.get(i).posicao, ' ');
 	}
 
 	/*
@@ -195,6 +221,7 @@ public class GameEngine {
 		default:
 			break;
 		}
+		throwDarts(direcao);
 		return 0;
 	}
 	
@@ -335,5 +362,55 @@ public class GameEngine {
 			dragons.add(d1);
 		}
 	}
+	/*
+	 * @brief Cria o numero de dardos entre 0 e 5 re-os na lista de dardos (darts).
+	 */
+	
+	public void generateDarts(){
+		int n=0;
+		Random r = new Random();
+		int number= r.nextInt(5)+1;
 
+		for(int i=0;i<number;i++){
+			do {
+				n = r.nextInt((board.dimension * board.dimension) - 1);
+			} while (board.checkTile(n) == 'X');
+			Dart d1= new Dart(n);
+			darts.add(d1);
+		}
+	}
+	
+	public void throwDarts(char direcao){
+		int pos=h1.posicao;
+		boolean usedDart=false;
+		if(h1.dardo){
+			for(int i=0;i<dragons.size();i++){
+				while(board.checkTile(pos) != 'X'){
+
+					if(dragons.get(i).posicao==pos){
+						dragons.get(i).posicao=-1;
+						h1.dardo=false;
+						
+						break;
+					}
+
+					switch (direcao) {
+					case 'w':
+						pos-=10;					
+						break;
+					case 's':
+						pos+=10;
+					case 'a':
+						pos-=1;					
+						break;
+					case 'd':
+						pos+=1;
+					default:
+						break;
+					}	
+				}
+				if(usedDart) return;
+			}
+		}
+	}
 }
