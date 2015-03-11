@@ -187,10 +187,15 @@ public class GameEngine {
 		return 0;
 	}
 	
+	/*
+	 * @brief Sorteia se o dragao fica acordado ou adormecido.
+	 * 
+	 */
+	
 	public void isAwake(){
-		Random r = new Random();
 		
 		for(int i=0; i<dragons.size(); i++){
+			Random r = new Random();
 			int n  = r.nextInt(2)+1;
 			if(n==1)
 				dragons.get(i).acordado=true;
@@ -247,11 +252,9 @@ public class GameEngine {
 
 	/*
 	 * @brief Testa se houve combate entre o h1.posicao e o
-	 * dragons.get(0).posicao, e determina o vencedor
+	 * dragons.get(i).posicao, e determina o vencedor
 	 */
 	
-	
-
 	public boolean combate() {
 		for(int i=0; i<dragons.size(); i++){
 			if (h1.posicao == dragons.get(i).posicao + 1
@@ -294,6 +297,10 @@ public class GameEngine {
 		return false;
 	}
 	
+	/*
+	 * @brief Sorteia se as Fireballs estao ativas.
+	 * 
+	 */
 	public boolean randomFireBall(){
 		Random r = new Random();
 		int n  = r.nextInt(10)+1;
@@ -303,6 +310,11 @@ public class GameEngine {
 			return false;
 	}
 	
+	/*
+	 * @brief Cria o numero de dragoes pedidos pelo user e insere-os na lista de dragoes (dragons).
+	 * 
+	 * @param number Numero de dragoes pedido pelo user
+	 */
 	public void generateDragons(int number){
 		int n=0;
 		Random r = new Random();
