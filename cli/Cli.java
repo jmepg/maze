@@ -81,7 +81,6 @@ public class Cli {
 		} while (choice != 1 && choice != 2 && choice != 3);
 		
 		return choice;
-			
 	}
 	
 	public int askForDragons(){

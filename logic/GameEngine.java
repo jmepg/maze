@@ -60,9 +60,11 @@ public class GameEngine {
 		mb.setMazeType(cli.askForType());
 		if (mb.opcao == 1)
 			mb.setMazeDim(cli.askForSize());
+		
 		board = mb.getMaze();
 		board.gera();
 		dragonMode = cli.askForMode();
+		generateDragons(cli.askForDragons());
 		
 		
 		
@@ -110,6 +112,7 @@ public class GameEngine {
 
 		/* Este conjunto de condicoes pode ser optimizado */
 		for(int i=0;i<dragons.size();i++){
+			
 			if (posEspada != -1)
 				if (dragons.get(i).posicao == posEspada)
 					board.changeBoard(posEspada, 'F');
@@ -181,15 +184,13 @@ public class GameEngine {
 		default:
 			break;
 		}
-
 		return 0;
-
 	}
 	
 	public void isAwake(){
+		Random r = new Random();
 		
 		for(int i=0; i<dragons.size(); i++){
-			Random r = new Random();
 			int n  = r.nextInt(2)+1;
 			if(n==1)
 				dragons.get(i).acordado=true;
@@ -272,32 +273,47 @@ public class GameEngine {
 						dragons.get(i).posicao = -1;
 				}
 
-			}
+			}/*
 			if (h1.posicao == dragons.get(i).posicao + 3
 					|| h1.posicao == dragons.get(i).posicao - 3
 					|| h1.posicao == dragons.get(i).posicao + 30
 					|| h1.posicao == dragons.get(i).posicao - 30
 					|| h1.posicao == dragons.get(i).posicao) {
 
-				if(!h1.escudo && dragons.get(i).acordado){
+				if(!h1.escudo && dragons.get(i).acordado && randomFireBall()){
 					placeEntities();
 					cli.printMaze(board.getDados());
 					cli.estadoFinal(1);
 					return true;
-				}
-			}
+				} 
+			}*/
 		}
 		
 		 
 
 		return false;
 	}
-	/*
+	
+	public boolean randomFireBall(){
+		Random r = new Random();
+		int n  = r.nextInt(10)+1;
+		if(n==1)
+			return true;
+		else 
+			return false;
+	}
+	
 	public void generateDragons(int number){
+		int n=0;
+		Random r = new Random();
+
 		for(int i=0;i<number;i++){
-			Dragon d1= new Dragon();
+			do {
+				n = r.nextInt((board.dimension * board.dimension) - 1);
+			} while (board.checkTile(n) == 'X');
+			Dragon d1= new Dragon(n);
+			dragons.add(d1);
 		}
-			
-	}*/
+	}
 
 }
