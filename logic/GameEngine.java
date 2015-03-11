@@ -12,6 +12,7 @@ public class GameEngine {
 	Hero h1 = new Hero();
 	Maze board;
 	int posEspada = 81;
+	int posEscudo=0;
 	Cli cli = new Cli();
 	int dragonMode;
 
@@ -70,6 +71,7 @@ public class GameEngine {
 		
 
 		Random r = new Random();
+		Random r2 = new Random();
 		int n;
 
 		if (mb.opcao == 1) {
@@ -77,22 +79,18 @@ public class GameEngine {
 				n = r.nextInt((board.dimension * board.dimension) - 1);
 			} while (board.checkTile(n) == 'X');
 
-			Dragon d1 = new Dragon(n);
-			dragons.add(d1);
-
-			do {
-				n = r.nextInt(board.dimension * board.dimension);
-			} while ((n == d1.posicao) || board.checkTile(n) == 'X');
 			posEspada = n;
+			
+			do {
+				n = r2.nextInt((board.dimension * board.dimension) - 1);
+			} while (board.checkTile(n) == 'X');
+
+			posEscudo = n;
 
 			do {
 				n = r.nextInt(board.dimension * board.dimension);
-			} while ((n == d1.posicao) || board.checkTile(n) == 'X'
-					|| n == posEspada);
+			} while (board.checkTile(n) == 'X'|| n == posEspada);
 			h1.posicao = n;
-		} else {
-			Dragon d1 = new Dragon();
-			dragons.add(d1);
 		}
 	}
 
@@ -103,6 +101,11 @@ public class GameEngine {
 		if (h1.posicao == posEspada) {
 			h1.armado = true;
 			posEspada = -1;
+		}
+		
+		if (h1.posicao == posEscudo) {
+			h1.escudo= true;
+			posEscudo = -1;
 		}
 
 		if (h1.armado)
@@ -118,9 +121,16 @@ public class GameEngine {
 					board.changeBoard(posEspada, 'F');
 				else
 					board.changeBoard(posEspada, 'E');
-			if (dragons.get(i).posicao != -1 && dragons.get(i).posicao != posEspada && dragons.get(0).acordado)
+			
+			if (posEscudo != -1)
+				if (dragons.get(i).posicao == posEspada)
+					board.changeBoard(posEscudo, 'F');
+				else
+					board.changeBoard(posEscudo, 'P');
+			
+			if (dragons.get(i).posicao != -1 && dragons.get(i).posicao != posEspada && dragons.get(i).acordado)
 				board.changeBoard(dragons.get(i).posicao, 'D');
-			if (dragons.get(i).posicao != -1 && dragons.get(i).posicao != posEspada && !dragons.get(0).acordado)
+			if (dragons.get(i).posicao != -1 && dragons.get(i).posicao != posEspada && !dragons.get(i).acordado)
 				board.changeBoard(dragons.get(i).posicao, 'd');
 		}
 	}
@@ -193,13 +203,13 @@ public class GameEngine {
 	 */
 	
 	public void isAwake(){
-		
+		Random r = new Random();
+		int n;
 		for(int i=0; i<dragons.size(); i++){
-			Random r = new Random();
-			int n  = r.nextInt(2)+1;
+			n  = r.nextInt(2)+1;
 			if(n==1)
 				dragons.get(i).acordado=true;
-			if(n==2) 
+			else 
 				dragons.get(i).acordado=false;
 		}
 	}
@@ -274,7 +284,7 @@ public class GameEngine {
 						dragons.get(i).posicao = -1;
 				}
 
-			}/*
+			}
 			if (h1.posicao == dragons.get(i).posicao + 3
 					|| h1.posicao == dragons.get(i).posicao - 3
 					|| h1.posicao == dragons.get(i).posicao + 30
@@ -287,13 +297,10 @@ public class GameEngine {
 					cli.estadoFinal(1);
 					return true;
 				} 
-			}*/
-			
+			}
 			
 		}
 		
-		 
-
 		return false;
 	}
 	
