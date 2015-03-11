@@ -218,8 +218,6 @@ public class GameEngine {
 			int n, t;
 			int ret = 1;
 
-
-
 			if(!dragons.get(i).acordado) return;
 			do {
 				n = r.nextInt(5) + 1;
@@ -235,7 +233,7 @@ public class GameEngine {
 						ret = 0;
 					}
 				} else {
-					
+
 					t = (n * 2 - 7); // f(3) = -1,f(4) = 1
 					if (canMove(dragons.get(i).posicao + t)) {
 						dragons.get(i).posicao += t;
@@ -287,6 +285,8 @@ public class GameEngine {
 					return true;
 				} 
 			}*/
+			
+			
 		}
 		
 		 
