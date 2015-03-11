@@ -7,5 +7,6 @@ public class Dart {
 		posicao = pos;
 	}
 	public Dart(){
+		teste
 	}
 }
