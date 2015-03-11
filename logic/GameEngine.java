@@ -9,6 +9,7 @@ import cli.Cli;
 public class GameEngine {
 
 	List<Dragon> dragons = new ArrayList<Dragon>();
+	List<>
 	Hero h1 = new Hero();
 	Maze board;
 	int posEspada = 81;
