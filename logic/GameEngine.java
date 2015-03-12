@@ -141,6 +141,7 @@ public class GameEngine {
 				if (dragons.get(i).posicao != -1 && dragons.get(i).posicao != posEspada && dragons.get(i).acordado
 						&& dragons.get(i).posicao != posEscudo && dragons.get(i).posicao != darts.get(j).posicao)
 					board.changeBoard(dragons.get(i).posicao, 'D');
+				
 				if (dragons.get(i).posicao != -1 && dragons.get(i).posicao != posEspada && !dragons.get(i).acordado
 						&& dragons.get(i).posicao != posEscudo && dragons.get(i).posicao != darts.get(j).posicao)
 					board.changeBoard(dragons.get(i).posicao, 'd');
@@ -386,7 +387,6 @@ public class GameEngine {
 		if(h1.dardo){
 			for(int i=0;i<dragons.size();i++){
 				int pos=h1.posicao;
-
 				while(board.checkTile(pos) != 'X'){
 
 					if(dragons.get(i).posicao==pos){
