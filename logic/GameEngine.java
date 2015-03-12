@@ -381,10 +381,11 @@ public class GameEngine {
 	}
 	
 	public void throwDarts(char direcao){
-		int pos=h1.posicao;
 		boolean usedDart=false;
 		if(h1.dardo){
 			for(int i=0;i<dragons.size();i++){
+				int pos=h1.posicao;
+
 				while(board.checkTile(pos) != 'X'){
 
 					if(dragons.get(i).posicao==pos){
