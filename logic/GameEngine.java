@@ -382,6 +382,7 @@ public class GameEngine {
 	
 	public void throwDarts(char direcao){
 		boolean usedDart=false;
+		
 		if(h1.dardo){
 			for(int i=0;i<dragons.size();i++){
 				int pos=h1.posicao;
@@ -390,8 +391,8 @@ public class GameEngine {
 
 					if(dragons.get(i).posicao==pos){
 						dragons.get(i).posicao=-1;
-						h1.dardo=false;
-						
+						h1.dardo = false;
+						usedDart = true;
 						break;
 					}
 
