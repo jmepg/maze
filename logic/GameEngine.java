@@ -55,7 +55,7 @@ public class GameEngine {
             if(ambiente == 0)
                 cli.printMaze(board.getDados());
             deleteEntities();
-            if (h1.posicao == board.exit) {
+            if (testWinCondition()) {
                 if(ambiente == 0)
                     cli.estadoFinal(0);
                 if(ambiente == 1)
@@ -92,14 +92,12 @@ public class GameEngine {
         board = mb.getMaze();
         board.gera();
 
-        /* ERRO: E suposto no labirinto estatico ele nao fazer esta pergunta. Nao me apetece corrigir agora. */
         if(ambiente == 0 && mb.opcao == 1)
             dragonMode = cli.askForMode();
 
         if(ambiente == 1)
             dragonMode = 1;
 
-        /* ERRO: E suposto no labirinto estatico ele nao fazer esta pergunta. Nao me apetece corrigir agora. */
         if(ambiente == 0 && mb.opcao == 1)
             generateDragons(cli.askForDragons());
         else if(mb.opcao == 0)
@@ -474,5 +472,16 @@ public class GameEngine {
                 if(usedDart) return;
             }
         }
+    }
+
+    public boolean testWinCondition(){
+        if((h1.posicao == board.exit) && (h1.isArmado())) {
+            for (int i = 0; i < dragons.size(); i++) {
+                if (dragons.get(i).posicao != -1)
+                    return false;
+            }
+            return true;
+        }
+        return false;
     }
 }

@@ -75,6 +75,51 @@ public class MyTest {
         Assert.assertEquals(g1.combate(),true);
     }
 
+    @Test
+
+    public void testIfDragonKilled(){
+        g1 = new GameEngine(1);
+        g1.initializeGame();
+
+        g1.posEspada = 12;
+        g1.moveHeroi('d');
+        g1.placeEntities();
+        g1.moveHeroi('a');
+        g1.moveHeroi('s');
+        Assert.assertEquals(g1.combate(),false);
+
+    }
+
+    @Test
+
+    public void testIfGameWon(){
+        g1 = new GameEngine(1);
+        g1.initializeGame();
+
+        g1.posEspada = 12;
+        g1.moveHeroi('d');
+        g1.placeEntities();
+        g1.moveHeroi('a');
+        g1.moveHeroi('s');
+
+        g1.moveHeroi('w');
+        g1.moveHeroi('d');
+        g1.moveHeroi('d');
+        g1.moveHeroi('d');
+        g1.moveHeroi('d');
+        g1.moveHeroi('d');
+        g1.moveHeroi('d');
+        g1.moveHeroi('d');
+        g1.moveHeroi('s');
+        g1.moveHeroi('s');
+        g1.moveHeroi('s');
+        g1.moveHeroi('s');
+        g1.moveHeroi('d');
+
+
+
+    }
+
 
 
     /*
