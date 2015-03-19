@@ -103,8 +103,8 @@ public class GameEngine {
         else if(mb.opcao == 0)
             dragons.add(new Dragon());
 
-        if(ambiente == 1)
-            generateDragons(1);
+        /*if(ambiente == 1)
+            generateDragons(1);*/
 
         if(ambiente == 0 && mb.opcao == 1)
             generateDarts();
@@ -179,9 +179,11 @@ public class GameEngine {
                     board.changeBoard(posEscudo, 'P');
 
             /* Oh Estrada, e se nao houver dardos como nao ha no estatico? Rip dragoes xD */
+            /*Nota, fazer isto de uma forma menos trolha */
             if(darts.size() == 0)
-                for(int k = 0; i < dragons.size();i++){
-                    board.changeBoard(dragons.get(k).posicao, 'D');
+                for(int k = 0; k < dragons.size();k++){
+                	 if (dragons.get(k).posicao != -1)
+                		 board.changeBoard(dragons.get(k).posicao, 'D');
                 }
 
             for(int j=0;j<darts.size();j++){
@@ -343,6 +345,7 @@ public class GameEngine {
 	 */
 
     public boolean combate() {
+    	/*Esta a depender da place Entities, mudar depois*/
         for(int i=0; i<dragons.size(); i++){
             if (h1.posicao == dragons.get(i).posicao + 1
                     || h1.posicao == dragons.get(i).posicao - 1
@@ -485,6 +488,7 @@ public class GameEngine {
             }
             return true;
         }
-        return false;
+        else
+        	return false;
     }
 }

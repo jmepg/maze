@@ -8,4 +8,17 @@ public class Dragon{
 	}
 	public Dragon(){
 	}
+	public int getPosicao() {
+		return posicao;
+	}
+	public void setPosicao(int posicao) {
+		this.posicao = posicao;
+	}
+	public boolean isAcordado() {
+		return acordado;
+	}
+	public void setAcordado(boolean acordado) {
+		this.acordado = acordado;
+	}
+	
 }

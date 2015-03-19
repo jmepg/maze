@@ -97,10 +97,20 @@ public class MyTest {
         g1.initializeGame();
 
         g1.posEspada = 12;
+        //g1.dragons.get(0).setPosicao(13);
+ 
         g1.moveHeroi('d');
         g1.placeEntities();
+        Assert.assertEquals(true,g1.h1.isArmado());
+        g1.placeEntities();
         g1.moveHeroi('a');
+        Assert.assertEquals(31,g1.dragons.get(0).getPosicao());
+
         g1.moveHeroi('s');
+        g1.combate();
+        
+        Assert.assertEquals(-1,g1.dragons.get(0).getPosicao());
+        g1.placeEntities();
 
         g1.moveHeroi('w');
         g1.moveHeroi('d');
@@ -116,11 +126,33 @@ public class MyTest {
         g1.moveHeroi('s');
         g1.moveHeroi('d');
 
+        System.out.println(g1.h1.posicao);
+        System.out.println(g1.board.getExit());
+        System.out.println(g1.h1.isArmado());
+        System.out.println(g1.dragons.get(0).getPosicao());
+        System.out.println(g1.dragons.size());
 
+
+        
+       Assert.assertEquals(true,g1.testWinCondition());
 
     }
 
+public void testIfGameNotWon(){
+	g1 = new GameEngine(1);
+    g1.initializeGame();
+    
+    for(int i=0;i<=7;i++){
+    	g1.moveHeroi('d');
+    }
 
+    for(int i=0;i<=4;i++){
+    	g1.moveHeroi('s');
+    }
+    
+    g1.moveHeroi('d');
+    
+}
 
     /*
     @return Estado final.
