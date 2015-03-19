@@ -8,6 +8,10 @@ public abstract class Maze {
 	public int exit = 59;
 	public int dimension = 10;
 
+	public int getExit() {
+		return exit;
+	}
+
 	/*
 	 * @brief Gera o labirinto. E chamado o construtor da classe consoante o membro opcao da classe MazeBuilder.
 	 */

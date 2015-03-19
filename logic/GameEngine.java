@@ -139,6 +139,9 @@ public class GameEngine {
      * @brief Coloca as entidades do jogo no mapa.
      */
     public void placeEntities() {
+    	if(board.checkTile(board.getExit())==' ')
+    		 board.changeBoard(board.getExit(), 'S');
+    		
         if (h1.posicao == posEspada) {
             h1.armado = true;
             posEspada = -1;
@@ -446,7 +449,7 @@ public class GameEngine {
             for(int i=0;i<dragons.size();i++){
                 int pos=h1.posicao;
                 while(board.checkTile(pos) != 'X'){
-
+                	if(usedDart) return;
                     if(dragons.get(i).posicao==pos){
                         dragons.get(i).posicao=-1;
                         h1.dardo = false;
@@ -469,7 +472,7 @@ public class GameEngine {
                             break;
                     }
                 }
-                if(usedDart) return;
+                
             }
         }
     }
