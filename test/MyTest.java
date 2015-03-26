@@ -1,10 +1,12 @@
 package test;
 
 import logic.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Random;
 
 public class MyTest {
 
@@ -177,8 +179,45 @@ public void testDragonMovemente(){
 
      }
 
+@Test
 
-    
+public void testFireBall(){
+	 g1 = new GameEngine(1);
+     g1.initializeGame();
+     
+     boolean fireball = false;
+	
+	while(!fireball){
+		fireball=g1.randomFireBall();
+	}
+	
+	Assert.assertEquals(true,fireball);
+}
+
+
+@Test
+
+public void testGenerateDragons(){
+	g1 = new GameEngine(1);
+	g1.initializeGame();
+
+	int nDragons = 1;
+	int ret;
+	ret=g1.generateDragons(nDragons);
+	Assert.assertEquals(nDragons,ret);
+	
+	nDragons=2;
+	ret=g1.generateDragons(nDragons);
+	Assert.assertEquals(nDragons,ret);
+	
+	Random r = new Random();
+	
+	nDragons = r.nextInt(99)+1;
+	ret=g1.generateDragons(nDragons);
+	Assert.assertEquals(nDragons,ret);
+}
+
+
    
     /*
     @return Estado final.

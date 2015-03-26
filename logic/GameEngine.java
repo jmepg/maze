@@ -443,10 +443,10 @@ public class GameEngine {
      *
      * @param number Numero de dragoes pedido pelo user
      */
-    public void generateDragons(int number){
+    public int generateDragons(int number){
         int n=0;
         Random r = new Random();
-
+       
         for(int i=0;i<number;i++){
             do {
                 n = r.nextInt((board.dimension * board.dimension) - 1);
@@ -454,6 +454,7 @@ public class GameEngine {
             Dragon d1= new Dragon(n);
             dragons.add(d1);
         }
+        return dragons.size();
     }
 	/*
 	 * @brief Cria o numero de dardos entre 0 e 5 re-os na lista de dardos (darts).
