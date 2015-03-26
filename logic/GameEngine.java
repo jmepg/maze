@@ -234,10 +234,10 @@ public class GameEngine {
      */
     public boolean canMove(int pos) {
         for(int i=0; i<dragons.size(); i++){
-            if(!dragons.get(i).acordado){
+         //   if(!dragons.get(i).acordado){
                 if(dragons.get(i).posicao==pos && !h1.armado)
                     return false;
-            }
+          //  }
         }
         return (board.checkTile(pos) != 'X');
     }
@@ -272,7 +272,8 @@ public class GameEngine {
             default:
                 break;
         }
-        throwDarts(direcao);
+        //throwDarts(direcao);
+        Darts(direcao);
         return 0;
     }
 	
@@ -431,7 +432,7 @@ public class GameEngine {
     public boolean randomFireBall(){
         Random r = new Random();
         int n  = r.nextInt(10)+1;
-        if(n==1)
+        if(n==2)
             return true;
         else
             return false;
@@ -461,7 +462,7 @@ public class GameEngine {
     public void generateDarts(){
         int n=0;
         Random r = new Random();
-        int number= r.nextInt(5)+1;
+        int number= r.nextInt(3)+1;
 
         for(int i=0;i<number;i++){
             do {
@@ -471,42 +472,129 @@ public class GameEngine {
             darts.add(d1);
         }
     }
+    
+
+    public void Darts(char direcao){
+    	if(!h1.dardo) return;
+    	int pos = h1.posicao;
+    	while(board.checkTile(pos)!='X'){
+    		switch (direcao) {
+    		case 'w':
+    			pos-=10;
+    			break;
+    		case 's':
+    			pos+=10;
+    		case 'a':
+    			pos-=1;
+    			break;
+    		case 'd':
+    			pos+=1;
+    		default:
+    			break;
+    		}
+    		for(int i=0;i<dragons.size();i++){
+    			if(dragons.get(i).posicao==pos){
+    				dragons.get(i).posicao=-1;
+    				h1.dardo=false;
+    				return;
+    			}
+    		}
+    		
+
+    	}
+    }
+/*
+
+    public void Dartsth(char direcao){
+
+    	if(!h1.dardo) return;
+
+    	boolean usedDart=false;
+
+
+    	for(int i=0;i<dragons.size();i++){
+
+    		int pos=h1.posicao;
+    		while(board.checkTile(pos)!='X'){
+    			if(usedDart) return;
+    			switch (direcao) {
+    			case 'w':
+    				pos-=10;
+    				break;
+    			case 's':
+    				pos+=10;
+    			case 'a':
+    				pos-=1;
+    				break;
+    			case 'd':
+    				pos+=1;
+    			default:
+    				break;
+    			}
+    			if(dragons.get(i).posicao==pos){
+    				dragons.get(i).posicao=-1;
+    				usedDart=true;
+    				h1.dardo=false;
+    				return;
+    			}
+    		}
+    	}
+    	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     public void throwDarts(char direcao){
         boolean usedDart=false;
-
+        
+        if(!h1.dardo) return;
+        
         if(h1.dardo){
-            for(int i=0;i<dragons.size();i++){
-                int pos=h1.posicao;
-                while(board.checkTile(pos) != 'X'){
-                	if(usedDart) return;
-                    if(dragons.get(i).posicao==pos){
-                        dragons.get(i).posicao=-1;
-                        h1.dardo = false;
-                        usedDart = true;
-                        break;
-                    }
+        	//  for(int i=0;i<dragons.size();i++){
+        	int pos=h1.posicao;
+        	while(board.checkTile(pos) != 'X'){
+        		for(int i=0;i<dragons.size();i++){
+        			if(usedDart) return;
+        			
+        			if(dragons.get(i).posicao==pos){
+        				dragons.get(i).posicao=-1;
+        				h1.dardo = false;
+        				usedDart = true;
+        				break;
+        			}
+        			else{
+        				switch (direcao) {
+        				case 'w':
+        					pos-=10;
+        					break;
+        				case 's':
+        					pos+=10;
+        				case 'a':
+        					pos-=1;
+        					break;
+        				case 'd':
+        					pos+=1;
+        				default:
+        					break;
+        				}
+        			}
+        		}
 
-                    switch (direcao) {
-                        case 'w':
-                            pos-=10;
-                            break;
-                        case 's':
-                            pos+=10;
-                        case 'a':
-                            pos-=1;
-                            break;
-                        case 'd':
-                            pos+=1;
-                        default:
-                            break;
-                    }
-                }
-                
-            }
+        	}
         }
     }
-
+*/
     public boolean testWinCondition(){
         if((h1.posicao == board.exit) && (h1.isArmado())) {
             for (int i = 0; i < dragons.size(); i++) {
