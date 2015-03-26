@@ -76,8 +76,7 @@ public class MyTest {
     }
 
     @Test
-
-    public void testIfDragonKilled(){
+public void testIfDragonKilled(){
         g1 = new GameEngine(1);
         g1.initializeGame();
 
@@ -91,8 +90,7 @@ public class MyTest {
     }
 
     @Test
-
-    public void testIfGameWon(){
+public void testIfGameWon(){
         g1 = new GameEngine(1);
         g1.initializeGame();
 
@@ -137,23 +135,51 @@ public class MyTest {
        Assert.assertEquals(true,g1.testWinCondition());
 
     }
+    
+    @Test
 
-public void testIfGameNotWon(){
+public void testIfCatchShield(){
 	g1 = new GameEngine(1);
     g1.initializeGame();
     
-    for(int i=0;i<=7;i++){
-    	g1.moveHeroi('d');
-    }
-
-    for(int i=0;i<=4;i++){
-    	g1.moveHeroi('s');
-    }
+   g1.posEscudo=12;
+   g1.moveHeroi('d');
+   g1.placeEntities();
+   
+   Assert.assertEquals(true,g1.h1.isEscudo());
+   }
     
-    g1.moveHeroi('d');
-    
-}
+@Test
 
+public void testDragonMovemente(){
+	 g1 = new GameEngine(1);
+     g1.initializeGame();
+     
+     g1.dragons.get(0).setPosicao(51);
+     
+    g1.moveDragao(1);
+    Assert.assertEquals(41,g1.dragons.get(0).getPosicao());
+     
+    g1.moveDragao(3);
+    g1.moveDragao(3);
+    Assert.assertEquals(61,g1.dragons.get(0).getPosicao());
+
+    g1.moveDragao(1);
+    Assert.assertEquals(51,g1.dragons.get(0).getPosicao());
+
+    g1.moveDragao(2);
+    Assert.assertEquals(52,g1.dragons.get(0).getPosicao());
+
+    g1.moveDragao(4);
+    g1.moveDragao(4);
+    g1.moveDragao(4);
+    Assert.assertEquals(51,g1.dragons.get(0).getPosicao());
+
+     }
+
+
+    
+   
     /*
     @return Estado final.
      */

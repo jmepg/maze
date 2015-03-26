@@ -298,6 +298,33 @@ public class GameEngine {
      *
      * @param direcao Direcao para onde ele se vai mover. (W/A/S/D)
      */
+    public void moveDragao(int move){
+    	if(ambiente==0) return;
+    
+    	switch(move){
+    	case 1: 
+    		if(canMove(dragons.get(0).getPosicao()-10))
+    			dragons.get(0).setPosicao(dragons.get(0).getPosicao()-10);
+    		break;
+    	case 2:
+    		if(canMove(dragons.get(0).getPosicao()+1))
+    			dragons.get(0).setPosicao(dragons.get(0).getPosicao()+1);
+    		break;
+    	case 3:
+    		if(canMove(dragons.get(0).getPosicao()+10))
+    			dragons.get(0).setPosicao(dragons.get(0).getPosicao()+10);
+    		break;
+    	case 4:
+    		if(canMove(dragons.get(0).getPosicao()-1))
+    			dragons.get(0).setPosicao(dragons.get(0).getPosicao()-1);
+    		break;
+    	default:
+    		break;    	
+    	}
+    }
+    
+    
+    
     public void moveDragao() {
         if(dragonMode == 1)
             return;
