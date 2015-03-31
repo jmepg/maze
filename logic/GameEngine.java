@@ -81,47 +81,58 @@ public class GameEngine {
     public void initializeGame() {
         MazeBuilder mb = new MazeBuilder();
 
-        if (ambiente == 0) {
+        if(ambiente == 0)
             mb.setMazeType(cli.askForType());
-
-            if (mb.opcao == 1) {
-                mb.setMazeDim(cli.askForSize());
-                board = mb.getMaze();
-                board.gera();
-                dragonMode = cli.askForMode();
-                generateDragons(cli.askForDragons());
-                generateDarts();
-            } else
-                dragons.add(new Dragon());
-
-            Random r = new Random();
-            Random r2 = new Random();
-            int n;
-
-            if (mb.opcao == 1) {
-                do {
-                    n = r.nextInt((board.dimension * board.dimension) - 1);
-                } while (board.checkTile(n) == 'X');
-
-                posEspada = n;
-
-                do {
-                    n = r2.nextInt((board.dimension * board.dimension) - 1);
-                } while (board.checkTile(n) == 'X');
-
-                posEscudo = n;
-
-                do {
-                    n = r.nextInt(board.dimension * board.dimension);
-                } while (board.checkTile(n) == 'X' || n == posEspada);
-                h1.posicao = n;
-            }
-
-        } else if (ambiente == 1) {
+        if(ambiente == 1)
             mb.setMazeType(0);
-            dragonMode = 1;
-        }
 
+        if (mb.opcao == 1)
+            mb.setMazeDim(cli.askForSize());
+
+        board = mb.getMaze();
+        board.gera();
+
+        if(ambiente == 0 && mb.opcao == 1)
+            dragonMode = cli.askForMode();
+
+        if(ambiente == 1)
+            dragonMode = 1;
+
+        if(ambiente == 0 && mb.opcao == 1)
+            generateDragons(cli.askForDragons());
+        else if(mb.opcao == 0)
+            dragons.add(new Dragon());
+
+        /*if(ambiente == 1)
+            generateDragons(1);*/
+
+        if(ambiente == 0 && mb.opcao == 1)
+            generateDarts();
+
+
+
+        Random r = new Random();
+        Random r2 = new Random();
+        int n;
+
+        if (mb.opcao == 1) {
+            do {
+                n = r.nextInt((board.dimension * board.dimension) - 1);
+            } while (board.checkTile(n) == 'X');
+
+            posEspada = n;
+
+            do {
+                n = r2.nextInt((board.dimension * board.dimension) - 1);
+            } while (board.checkTile(n) == 'X');
+
+            posEscudo = n;
+
+            do {
+                n = r.nextInt(board.dimension * board.dimension);
+            } while (board.checkTile(n) == 'X'|| n == posEspada);
+            h1.posicao = n;
+        }
     }
 
     /*
