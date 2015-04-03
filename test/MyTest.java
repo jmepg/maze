@@ -352,14 +352,14 @@ public void testRandMoveDragon(){
 
 	for(int i=0; i<1000; i++){
 		pos = g1.dragons.get(0).getPosicao();
-		g1.moveDragao();
+		g1.moveDragoes();
 		res = Math.abs(pos-g1.dragons.get(0).getPosicao());
 		Assert.assertTrue(res==0 || res==1 || res==10);
 	}
 	for(int i=0; i<1000; i++){
 		g1.dragonMode=Dragon.Mode.STATIC;
 		pos = g1.dragons.get(0).getPosicao();
-		g1.moveDragao();
+		g1.moveDragoes();
 		res = Math.abs(pos-g1.dragons.get(0).getPosicao());
 		Assert.assertTrue(res==0);
 	}
