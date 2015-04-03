@@ -17,7 +17,7 @@ public class GameEngine {
     public int posEscudo= -1;
     public Cli cli = new Cli();
     public MyTest test = new MyTest();
-    public int dragonMode;
+    public Dragon.Mode dragonMode;
     public int ambiente; //0=cli 1=test
 
     public GameEngine(int ambiente){
@@ -96,7 +96,7 @@ public class GameEngine {
             dragonMode = cli.askForMode();
 
         if(ambiente == 1)
-            dragonMode = 1;
+            dragonMode = Dragon.Mode.STATIC;
 
         if(ambiente == 0 && mb.opcao == 1)
             generateDragons(cli.askForDragons());
@@ -327,10 +327,10 @@ public class GameEngine {
     
     
     public void moveDragao() {
-        if(dragonMode == 1)
+        if(dragonMode == Dragon.Mode.STATIC)
             return;
 
-        if(dragonMode == 3)
+        if(dragonMode == Dragon.Mode.SLEEPING)
             isAwake();
 
         for(int i=0; i<dragons.size();i++){
@@ -397,6 +397,7 @@ public class GameEngine {
                         return false;
                     else
                         dragons.get(i).posicao = -1;
+                    
                 }
 
             }
@@ -406,7 +407,7 @@ public class GameEngine {
                     || h1.posicao == dragons.get(i).posicao - 30
                     || h1.posicao == dragons.get(i).posicao) {
 
-                if(!h1.escudo && dragons.get(i).acordado && randomFireBall()){
+                if(!h1.escudo && dragons.get(i).acordado && randomFireBall(0)){
                     placeEntities();
                     if(ambiente == 0) {
                         cli.printMaze(board.getDados());
@@ -429,10 +430,10 @@ public class GameEngine {
      * @brief Sorteia se as Fireballs estao ativas.
      *
      */
-    public boolean randomFireBall(){
+    public boolean randomFireBall(int test){
         Random r = new Random();
         int n  = r.nextInt(10)+1;
-        if(n==2)
+        if(n==2 || test==1)
             return true;
         else
             return false;
@@ -504,98 +505,7 @@ public class GameEngine {
 
     	}
     }
-/*
 
-    public void Dartsth(char direcao){
-
-    	if(!h1.dardo) return;
-
-    	boolean usedDart=false;
-
-
-    	for(int i=0;i<dragons.size();i++){
-
-    		int pos=h1.posicao;
-    		while(board.checkTile(pos)!='X'){
-    			if(usedDart) return;
-    			switch (direcao) {
-    			case 'w':
-    				pos-=10;
-    				break;
-    			case 's':
-    				pos+=10;
-    			case 'a':
-    				pos-=1;
-    				break;
-    			case 'd':
-    				pos+=1;
-    			default:
-    				break;
-    			}
-    			if(dragons.get(i).posicao==pos){
-    				dragons.get(i).posicao=-1;
-    				usedDart=true;
-    				h1.dardo=false;
-    				return;
-    			}
-    		}
-    	}
-    	
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    public void throwDarts(char direcao){
-        boolean usedDart=false;
-        
-        if(!h1.dardo) return;
-        
-        if(h1.dardo){
-        	//  for(int i=0;i<dragons.size();i++){
-        	int pos=h1.posicao;
-        	while(board.checkTile(pos) != 'X'){
-        		for(int i=0;i<dragons.size();i++){
-        			if(usedDart) return;
-        			
-        			if(dragons.get(i).posicao==pos){
-        				dragons.get(i).posicao=-1;
-        				h1.dardo = false;
-        				usedDart = true;
-        				break;
-        			}
-        			else{
-        				switch (direcao) {
-        				case 'w':
-        					pos-=10;
-        					break;
-        				case 's':
-        					pos+=10;
-        				case 'a':
-        					pos-=1;
-        					break;
-        				case 'd':
-        					pos+=1;
-        				default:
-        					break;
-        				}
-        			}
-        		}
-
-        	}
-        }
-    }
-*/
     public boolean testWinCondition(){
         if((h1.posicao == board.exit) && (h1.isArmado())) {
             for (int i = 0; i < dragons.size(); i++) {

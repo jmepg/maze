@@ -2,6 +2,7 @@ package logic;
 public class Dragon{
 	int posicao = 31;	//-1 = dragao morto
 	boolean acordado = true;
+	public static enum Mode {STATIC,MOVABLE,SLEEPING};
 	
 	public Dragon(int pos){
 		posicao = pos;

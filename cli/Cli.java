@@ -3,6 +3,8 @@ package cli;
 import java.util.Scanner;
 import java.util.List;
 
+import logic.Dragon;
+
 public class Cli {
 
 	Scanner keyboard = new Scanner(System.in);
@@ -72,15 +74,30 @@ public class Cli {
 		return tamanho;
 	}
 	
-	public int askForMode(){
+	public Dragon.Mode askForMode(){
 		int choice;
+		Dragon.Mode mode = null;
 		do{
 			System.out.print("Modo de Jogo? 1-Dragao estatico 2-Dragao com movimento 3-Dragao adormecido");
 		choice = keyboard.nextInt();
 		System.out.println();
 		} while (choice != 1 && choice != 2 && choice != 3);
 		
-		return choice;
+		switch(choice){
+		case 1: 
+			mode = Dragon.Mode.STATIC;
+			break;
+		case 2: 
+			mode = Dragon.Mode.MOVABLE;
+			break;
+		case 3:
+			mode = Dragon.Mode.SLEEPING;
+			break;
+		default:
+			break;
+		}
+		
+		return mode;
 	}
 	
 	public int askForDragons(){
