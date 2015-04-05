@@ -23,6 +23,7 @@ public class Gui extends JFrame {
 		
 		engine = new GameEngine(2);
 		engine.initializeGame();
+		engine.placeEntities();
 		maze = new GraphicMaze(engine);
 		getContentPane().add(maze);
 		setVisible(true);
