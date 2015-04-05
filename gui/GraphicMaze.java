@@ -200,6 +200,12 @@ public class GraphicMaze extends JPanel implements KeyListener {
 			cli.estadoFinal(1);
 			System.exit(0);
 		}
+		
+		if (ge.testWinCondition()){
+			cli.estadoFinal(0);
+			System.exit(0);
+		}
+			
 		ge.placeEntities();
 		for(int i = 0; i<ge.board.dimension;i++)
 			System.out.println("");
