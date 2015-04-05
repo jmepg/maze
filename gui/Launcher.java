@@ -1,9 +1,19 @@
 package gui;
 
+import java.awt.EventQueue;
+
 public class Launcher {
 	
 	public static void main(String[] args){
-		Gui window = new Gui();
-		window.start();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Gui window = new Gui();
+					window.getFrame().setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 }

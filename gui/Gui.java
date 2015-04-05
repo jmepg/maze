@@ -1,37 +1,66 @@
 package gui;
 
-import java.awt.Dimension;
+import java.awt.EventQueue;
 
+import javax.sound.midi.VoiceStatus;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.awt.BorderLayout;
+
 import logic.GameEngine;
 
-public class Gui extends JFrame {
-	private JPanel maze;
+public class Gui {
+
+	private JFrame frame;
 	private GameEngine engine;
+	private GraphicMaze panel;
+
 	
-	public Gui(){
-		initialize();
+	
+	public JFrame getFrame() {
+		return frame;
 	}
-	
-	public void initialize(){
-		setSize(new Dimension(GraphicMaze.hSize,GraphicMaze.vSize));
-		setTitle("Dungeon Game");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(GraphicMaze.hSize,GraphicMaze.vSize));
-		
+
+	public GameEngine getEngine() {
+		return engine;
+	}
+
+	public GraphicMaze getPanel() {
+		return panel;
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Gui() {
 		engine = new GameEngine(2);
 		engine.initializeGame();
 		engine.placeEntities();
-		maze = new GraphicMaze(engine);
-		getContentPane().add(maze);
-		setVisible(true);
 		
-		maze.requestFocus();
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(0,0,600,600);
+		
+		this.panel = new GraphicMaze(engine);
+		frame.getContentPane().add(panel, BorderLayout.EAST);
+		frame.setVisible(true);
+		panel.setBounds(0, 50, 800, 750);
+		
+		JPanel panel_1 = new StartQuitButtons(this);
+		frame.getContentPane().add(panel_1, BorderLayout.NORTH);
 	}
 	
-	public void start(){
-		
+	public void startGame(){
+		panel.inGame = true;
+		panel.requestFocus();
+		panel.repaint();
 	}
+
 }
