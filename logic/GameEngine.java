@@ -1,9 +1,13 @@
 package logic;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.junit.experimental.theories.suppliers.TestedOn;
 
@@ -32,12 +36,6 @@ public class GameEngine {
 		ambiente = 0;
 	}
 
-	public static void main(String[] args) {
-		GameEngine g = new GameEngine();
-		g.initializeGame();
-		g.jogar();
-	}
-
 	/*
 	 * @brief Ciclo principal do jogo.
 	 */
@@ -55,10 +53,14 @@ public class GameEngine {
 
 			if (ambiente == 0) {
 				cli.printMaze(board.getDados());
-
 			}
+			else if (ambiente == 2) {
+				//graphicMaze.refreshScreen();
+			}
+			
 			if (combate())
 				return;
+			
 			if (testWinCondition()) {
 				if (ambiente == 0)
 					cli.estadoFinal(0);
@@ -69,6 +71,10 @@ public class GameEngine {
 			// System.out.println(h1.posicao + " " + board.saida);
 			if (ambiente == 0)
 				moveHeroi(cli.askForDirection());
+			else if(ambiente == 2){
+				
+			}
+			
 			moveDragoes();
 			if (ambiente == 0)
 				Cli.clearConsole();
@@ -76,13 +82,13 @@ public class GameEngine {
 		}
 	}
 
-	/*
+	/* 
 	 * @brief Inicializa as variaveis necessarias ao bom funcionamento do jogo.
 	 */
 	public void initializeGame() {
 		MazeBuilder mb = new MazeBuilder();
 
-		if (ambiente == 0) {
+		if (ambiente == 0 || ambiente == 2) { //Para ja estou a fazer estas perguntas na cli, depois ve-se
 			mb.setMazeType(cli.askForType());
 
 			if (mb.opcao == 1) {
@@ -110,7 +116,7 @@ public class GameEngine {
 				// aleatorio
 			}
 		}
-
+		
 		if (mb.opcao == 1) {
 			Random r = new Random();
 			Random r2 = new Random();
@@ -204,8 +210,7 @@ public class GameEngine {
 
 	/*
 	 * @brief Remove as entidades estaticas do jogo do mapa, para serem repostas
-	 * depois nas novas posicoes. NOTA: E possivel fazer isto de forma mais
-	 * eficaz.
+	 * depois nas novas posicoes.
 	 */
 
 	public void deleteEntities() {
