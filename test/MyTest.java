@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 import logic.Dragon;
 import logic.Maze;
+import logic.MazeBuilder;
+import logic.RandomMaze;
 
 public class MyTest {
 
@@ -157,34 +159,7 @@ public void testIfCatchShield(){
    
    Assert.assertEquals(true,g1.h1.isEscudo());
    }
-    
-@Test
-
-public void testDragonMovemente(){
-	 g1 = new GameEngine(1);
-     g1.initializeGame();
-     
-     g1.dragons.get(0).setPosicao(51);
-     
-    g1.moveDragao(1);
-    Assert.assertEquals(41,g1.dragons.get(0).getPosicao());
-     
-    g1.moveDragao(3);
-    g1.moveDragao(3);
-    Assert.assertEquals(61,g1.dragons.get(0).getPosicao());
-
-    g1.moveDragao(1);
-    Assert.assertEquals(51,g1.dragons.get(0).getPosicao());
-
-    g1.moveDragao(2);
-    Assert.assertEquals(52,g1.dragons.get(0).getPosicao());
-
-    g1.moveDragao(4);
-    g1.moveDragao(4);
-    g1.moveDragao(4);
-    Assert.assertEquals(51,g1.dragons.get(0).getPosicao());
-
-     }
+ 
 
 @Test
 
@@ -304,6 +279,11 @@ public void testAwake(){
 	}
 	
 	Assert.assertEquals(true, awake);
+	
+	g1.dragons.get(0).setAcordado(false);
+	
+	Assert.assertFalse(g1.dragons.get(0).isAcordado());
+	
 }
 
 @Test
@@ -367,78 +347,6 @@ public void testRandMoveDragon(){
 
 @Test
 
-public void testPrintMaze(){
-	g1 = new GameEngine(1);
-	g1.initializeGame();
-	g1.cli.printMaze(g1.board.getDados());
-}
-
-@Test 
-
-public void testAskForDirection(){
-	g1 = new GameEngine(1);
-	g1.initializeGame();
-	char res;
-
-	res = g1.cli.askForDirection();
-	Assert.assertTrue(res =='w' || res == 's' || res == 'a' || res == 'd');
-}
-
-@Test 
-
-public void testAskForType(){
-	g1 = new GameEngine(1);
-	g1.initializeGame();
-	int res;
-
-	res = g1.cli.askForType();
-	Assert.assertTrue(res == 0 || res == 1);
-}
-
-@Test 
-
-public void testAskForSize(){
-	g1 = new GameEngine(1);
-	g1.initializeGame();
-	int res;
-
-	res = g1.cli.askForSize();
-	Assert.assertTrue(res > 7 && res%2==1);
-}
-
-@Test 
-
-public void testAskForMode(){
-	g1 = new GameEngine(1);
-	g1.initializeGame();
-	Dragon.Mode res;
-
-	res = g1.cli.askForMode();
-	Assert.assertTrue(res == Dragon.Mode.MOVABLE || res == Dragon.Mode.SLEEPING || res == Dragon.Mode.STATIC);
-}
-
-@Test 
-
-public void testAskForDragons(){
-	g1 = new GameEngine(1);
-	g1.initializeGame();
-	int res;
-
-	res = g1.cli.askForDragons();
-	Assert.assertTrue(res > 0);
-}
-
-@Test 
-
-public void testClearConsole(){
-	g1 = new GameEngine(1);
-	g1.initializeGame();
-	
-	Cli.clearConsole();
-}
-
-@Test
-
 public void testDeleteEntities(){
 	g1 = new GameEngine(1);
 	g1.initializeGame();
@@ -447,7 +355,7 @@ public void testDeleteEntities(){
 	g1.cli.printMaze(g1.board.maze);
 	g1.placeEntities();
 	try {
-	    Thread.sleep(2000);                 
+	    Thread.sleep(500);                 
 	} catch(InterruptedException ex) {
 	    Thread.currentThread().interrupt();
 	}
@@ -456,10 +364,67 @@ public void testDeleteEntities(){
 	}
 	g1.deleteEntities();
 	try {
-	    Thread.sleep(2000);                 
+	    Thread.sleep(500);                 
 	} catch(InterruptedException ex) {
 	    Thread.currentThread().interrupt();
 	}
+}
+
+@Test 
+
+public void testThrowDarts(){
+	g1 = new GameEngine(1);
+	g1.initializeGame();
+	g1.dragons.get(0).setPosicao(54);
+	g1.dragons.get(0).setAcordado(true);
+	g1.h1.setPosicao(84);
+	g1.h1.setDardo(true);
+	g1.throwDarts('w');
+	Assert.assertEquals(-1,g1.dragons.get(0).getPosicao());
+	
+	g1.dragons.get(0).setPosicao(54);
+	g1.h1.setPosicao(56);
+	g1.h1.setDardo(true);
+	g1.throwDarts('a');
+	Assert.assertEquals(-1,g1.dragons.get(0).getPosicao());
+	
+	g1.dragons.get(0).setPosicao(54);
+	g1.h1.setPosicao(52);
+	g1.h1.setDardo(true);
+	g1.throwDarts('d');
+	Assert.assertEquals(-1,g1.dragons.get(0).getPosicao());
+	
+	g1.dragons.get(0).setPosicao(54);
+	g1.h1.setPosicao(34);
+	g1.h1.setDardo(true);
+	g1.throwDarts('s');
+	Assert.assertEquals(-1,g1.dragons.get(0).getPosicao());
+	
+}
+
+@Test 
+
+public void testMaze(){
+	
+	MazeBuilder mb1 = new MazeBuilder();
+
+	mb1.setMazeType(0);
+	Maze m1 = mb1.getMaze();
+	
+	mb1.setMazeType(1);
+	mb1.setMazeDim(9);
+	
+	m1 = mb1.getMaze();
+	m1.gera();
+	
+	m1.changeBoard(11, 'X');
+	Assert.assertEquals('X', m1.checkTile(11));
+}
+
+@Test
+
+public void testMyRandom(){
+	
 }
 
 

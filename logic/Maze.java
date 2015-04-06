@@ -15,7 +15,7 @@ public abstract class Maze {
 	/*
 	 * @brief Gera o labirinto. E chamado o construtor da classe consoante o membro opcao da classe MazeBuilder.
 	 */
-	abstract void gera();
+	public abstract void gera();
 
 	/*
 	 * @brief Retorna o labirinto.
