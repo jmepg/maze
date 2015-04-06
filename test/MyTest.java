@@ -58,7 +58,7 @@ public class MyTest {
         g1 = new GameEngine(1);
         if(g1.ambiente != 1)
         	g1.ambiente = 1;
-        g1.initializeGame();
+        g1.initializeGame(null);
         
         if(g1.h1 == null || g1.h1.getPosicao() != 11){
         	g1.h1 = new Hero();
@@ -83,7 +83,7 @@ public class MyTest {
         if(g1.ambiente != 1)
         	g1.ambiente = 1;
         
-        g1.initializeGame();
+        g1.initializeGame(;
         
         if(g1.h1 == null || g1.h1.getPosicao() != 11){
         	g1.h1 = new Hero();

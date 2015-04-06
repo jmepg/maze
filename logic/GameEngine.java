@@ -47,9 +47,6 @@ public class GameEngine {
 			if (ambiente == 0) {
 				cli.printMaze(board.getDados());
 			}
-			else if (ambiente == 2) {
-				//graphicMaze.refreshScreen();
-			}
 			
 			if (combate())
 				return;
@@ -78,10 +75,8 @@ public class GameEngine {
 	/* 
 	 * @brief Inicializa as variaveis necessarias ao bom funcionamento do jogo.
 	 */
-	public void initializeGame() {
-		MazeBuilder mb = new MazeBuilder();
-
-		if (ambiente == 0 || ambiente == 2) { //Para ja estou a fazer estas perguntas na cli, depois ve-se
+	public void initializeGame(MazeBuilder mb) {
+		if (ambiente == 0) {
 			mb.setMazeType(cli.askForType());
 
 			if (mb.opcao == 1) {
@@ -97,16 +92,13 @@ public class GameEngine {
 			}
 
 		} else if (ambiente == 1) {
-			mb.setMazeType(0);
+			MazeBuilder mbt = new MazeBuilder();
+			mbt.setMazeType(0);
 			board = mb.getMaze();
 			board.gera();
-			if (mb.opcao == 0) {
+			if (mbt.opcao == 0) {
 				dragonMode = Dragon.Mode.STATIC;
 				dragons.add(new Dragon());
-			}
-			if (mb.opcao == 1) {
-				// Adiciona aqui as cenas para quando quiseres labirinto
-				// aleatorio
 			}
 		}
 		

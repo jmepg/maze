@@ -18,20 +18,61 @@ public class OptionButtons extends JPanel {
 	private JButton create;
 	private Gui gui;
 	private JFrame frame;
+	private Options optDialog;
 
 	public OptionButtons(JFrame frame, Gui gui) {
 		setLayout(new BorderLayout(0, 0));
 		createButtons();
 		this.gui = gui;
 	}
+	
+	
+
+	public JButton getOptions() {
+		return options;
+	}
+
+
+
+	public JButton getSaveload() {
+		return saveload;
+	}
+
+
+
+	public JButton getCreate() {
+		return create;
+	}
+
+
+
+	public Gui getGui() {
+		return gui;
+	}
+
+
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+
+
+	public Options getOptDialog() {
+		return optDialog;
+	}
+
+
 
 	public void createButtons() {
 		options = new JButton("Options");
 		options.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
 		add(options, BorderLayout.WEST);
+		optDialog = new Options(frame, "Opções de jogo");
+		optDialog.initialize();
 		options.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JDialog jd = new Options(frame, "Opções de jogo");
+				optDialog.setVisible(true);
 			}
 		});
 

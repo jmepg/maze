@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -19,25 +20,132 @@ import java.awt.event.ActionEvent;
 public class Options extends JDialog {
 
 	private JSlider tamanho;
+	private JSlider nDragoes;
+	
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	
+	private JLabel lblCima;
+	private JLabel lblBaixo;
+	private JLabel lblEsquerda;
+	private JLabel lblDireita;
+	private JLabel lblTamanhoDoLabirinto;
+	private JLabel lblNmeroDeDrages;
+	private JLabel lblModoDosDrages;
+	private JLabel lblControlos;
+	
+	private JButton btnOk;
+	private JButton btnCancelar;
+	
+	private int tamanhoLabirinto;
+	private int numeroDragoes;
+	private int modoDragoes;
+	
+	@SuppressWarnings("rawtypes")
+	private JComboBox comportamentoDragoes;
+	
+	
 
 	public Options(JFrame frame, String title) {
 		super(frame, title);
-		initialize();
+	}
+
+	public int getTamanhoLabirinto() {
+		return tamanhoLabirinto;
+	}
+
+	public int getNumeroDragoes() {
+		return numeroDragoes;
+	}
+
+	public int getModoDragoes() {
+		return modoDragoes;
+	}
+	
+	public JSlider getTamanho() {
+		return tamanho;
+	}
+
+	public JSlider getnDragoes() {
+		return nDragoes;
+	}
+
+	public JTextField getTextField() {
+		return textField;
+	}
+
+	public JTextField getTextField_1() {
+		return textField_1;
+	}
+
+	public JTextField getTextField_2() {
+		return textField_2;
+	}
+
+	public JTextField getTextField_3() {
+		return textField_3;
+	}
+
+	public JLabel getLblCima() {
+		return lblCima;
+	}
+
+	public JLabel getLblBaixo() {
+		return lblBaixo;
+	}
+
+	public JLabel getLblEsquerda() {
+		return lblEsquerda;
+	}
+
+	public JLabel getLblDireita() {
+		return lblDireita;
+	}
+
+	public JLabel getLblTamanhoDoLabirinto() {
+		return lblTamanhoDoLabirinto;
+	}
+
+	public JLabel getLblNmeroDeDrages() {
+		return lblNmeroDeDrages;
+	}
+
+	public JLabel getLblModoDosDrages() {
+		return lblModoDosDrages;
+	}
+
+	public JLabel getLblControlos() {
+		return lblControlos;
+	}
+
+	public JButton getBtnOk() {
+		return btnOk;
+	}
+
+	public JButton getBtnCancelar() {
+		return btnCancelar;
+	}
+
+	public JComboBox getComportamentoDragoes() {
+		return comportamentoDragoes;
 	}
 
 	public void initialize() {
+		tamanhoLabirinto = 15;
+		numeroDragoes = 5;
+		modoDragoes = 2;
+		
 		setModal(true);
 		setBounds(400, 300, 479, 329);
 		setOptions();
-		// setContentPane(tamanho);
+
 		setResizable(false);
-		setVisible(true);
+		setVisible(false);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setOptions() {
 		tamanho = new JSlider(JSlider.HORIZONTAL, 7, 55, 15);
 		tamanho.setBounds(12, 33, 455, 42);
@@ -50,23 +158,23 @@ public class Options extends JDialog {
 		getContentPane().setLayout(null);
 		getContentPane().add(tamanho);
 
-		JLabel lblTamanhoDoLabirinto = new JLabel("Tamanho do Labirinto");
+		lblTamanhoDoLabirinto = new JLabel("Tamanho do Labirinto");
 		lblTamanhoDoLabirinto.setBounds(12, 12, 173, 15);
 		getContentPane().add(lblTamanhoDoLabirinto);
 
-		JLabel lblNmeroDeDrages = new JLabel("Número de dragões");
+		lblNmeroDeDrages = new JLabel("Número de dragões");
 		lblNmeroDeDrages.setBounds(12, 87, 163, 15);
 		getContentPane().add(lblNmeroDeDrages);
 
-		JLabel lblModoDosDrages = new JLabel("Modo dos dragões");
+		lblModoDosDrages = new JLabel("Modo dos dragões");
 		lblModoDosDrages.setBounds(12, 172, 143, 15);
 		getContentPane().add(lblModoDosDrages);
 
-		JLabel lblControlos = new JLabel("Controlos");
+		lblControlos = new JLabel("Controlos");
 		lblControlos.setBounds(12, 204, 143, 15);
 		getContentPane().add(lblControlos);
 
-		final JSlider nDragoes = new JSlider(SwingConstants.HORIZONTAL, 0, 50,
+		nDragoes = new JSlider(SwingConstants.HORIZONTAL, 0, 50,
 				5);
 		nDragoes.setPaintTicks(true);
 		nDragoes.setPaintLabels(true);
@@ -77,8 +185,8 @@ public class Options extends JDialog {
 
 		String[] comportamentos = { "Dragões parados", "Dragões em movimento",
 				"Dragões adormecidos" };
-		@SuppressWarnings({ "rawtypes", "unchecked" })
-		final JComboBox comportamentoDragoes = new JComboBox(comportamentos);
+		
+		comportamentoDragoes = new JComboBox(comportamentos);
 		comportamentoDragoes.setMaximumRowCount(3);
 		comportamentoDragoes.setBounds(173, 172, 200, 20);
 		getContentPane().add(comportamentoDragoes);
@@ -104,35 +212,35 @@ public class Options extends JDialog {
 		textField_3.setBounds(405, 228, 40, 20);
 		getContentPane().add(textField_3);
 
-		JLabel lblCima = new JLabel("Cima");
+		lblCima = new JLabel("Cima");
 		lblCima.setBounds(28, 230, 70, 15);
 		getContentPane().add(lblCima);
 
-		JLabel lblBaixo = new JLabel("Baixo");
+		lblBaixo = new JLabel("Baixo");
 		lblBaixo.setBounds(122, 230, 70, 15);
 		getContentPane().add(lblBaixo);
 
-		JLabel lblEsquerda = new JLabel("Esquerda");
+		lblEsquerda = new JLabel("Esquerda");
 		lblEsquerda.setBounds(221, 230, 70, 15);
 		getContentPane().add(lblEsquerda);
 
-		JLabel lblDireita = new JLabel("Direita");
+		lblDireita = new JLabel("Direita");
 		lblDireita.setBounds(353, 230, 70, 15);
 		getContentPane().add(lblDireita);
 
-		JButton btnOk = new JButton("OK");
+		btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(nDragoes.getValue());
-				System.out.println(tamanho.getValue());
-				System.out.println(comportamentoDragoes.getSelectedIndex()+1);
+				numeroDragoes = nDragoes.getValue();
+				tamanhoLabirinto = tamanho.getValue();
+				modoDragoes = comportamentoDragoes.getSelectedIndex()+1;
 				dispose();
 			}
 		});
 		btnOk.setBounds(76, 269, 117, 25);
 		getContentPane().add(btnOk);
 
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
