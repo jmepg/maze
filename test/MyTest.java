@@ -5,13 +5,12 @@ import logic.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import cli.Cli;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 import logic.Dragon;
 import logic.Maze;
@@ -30,6 +29,8 @@ public class MyTest {
     @Test
     public void testPlayerMovement(){
         g1 = new GameEngine(1);
+        if(g1.ambiente != 1)
+        	g1.ambiente = 1;
         g1.initializeGame();
 
         if(g1.h1 == null || g1.h1.getPosicao() != 11){
@@ -55,6 +56,8 @@ public class MyTest {
     @Test
     public void testIfNotPassThroughWalls(){
         g1 = new GameEngine(1);
+        if(g1.ambiente != 1)
+        	g1.ambiente = 1;
         g1.initializeGame();
         
         if(g1.h1 == null || g1.h1.getPosicao() != 11){
@@ -77,6 +80,9 @@ public class MyTest {
     @Test
     public void testIfSwordCaught(){
         g1 = new GameEngine(1);
+        if(g1.ambiente != 1)
+        	g1.ambiente = 1;
+        
         g1.initializeGame();
         
         if(g1.h1 == null || g1.h1.getPosicao() != 11){
@@ -98,6 +104,8 @@ public class MyTest {
 
     public void testIfLost(){
         g1 = new GameEngine(1);
+        if(g1.ambiente != 1)
+        	g1.ambiente = 1;
         g1.initializeGame();
         
         if(g1.h1 == null || g1.h1.getPosicao() != 11){
@@ -112,6 +120,8 @@ public class MyTest {
         }
         
         g1.moveHeroi('s');
+        if(!g1.dragons.get(0).isAcordado())
+        	g1.dragons.get(0).setAcordado(true);
         Assert.assertEquals(g1.combate(),true);
     }
 
@@ -119,6 +129,8 @@ public class MyTest {
     
     public void testIfDragonKilled(){
         g1 = new GameEngine(1);
+        if(g1.ambiente != 1)
+        	g1.ambiente = 1;
         g1.initializeGame();
         
         if(g1.h1 == null || g1.h1.getPosicao() != 11){
@@ -144,6 +156,8 @@ public class MyTest {
     @Test
 public void testIfGameWon(){
         g1 = new GameEngine(1);
+        if(g1.ambiente != 1)
+        	g1.ambiente = 1;
         g1.initializeGame();
         g1.posEspada = 12;
         
@@ -164,8 +178,11 @@ public void testIfGameWon(){
         g1.placeEntities();
         g1.moveHeroi('a');
         Assert.assertEquals(31,g1.dragons.get(0).getPosicao());
-
         g1.moveHeroi('s');
+       
+        if(!g1.h1.isArmado())
+        	g1.h1.setArmado(true);
+        
         g1.combate();
         
         Assert.assertEquals(-1,g1.dragons.get(0).getPosicao());
@@ -192,6 +209,8 @@ public void testIfGameWon(){
 
 public void testIfCatchShield(){
 	g1 = new GameEngine(1);
+	 if(g1.ambiente != 1)
+     	g1.ambiente = 1;
     g1.initializeGame();
     
     if(g1.h1 == null || g1.h1.getPosicao() != 11){
@@ -211,6 +230,8 @@ public void testIfCatchShield(){
 
 public void testFireBall(){
 	 g1 = new GameEngine(1);
+	 if(g1.ambiente != 1)
+     	g1.ambiente = 1;
      g1.initializeGame();
      
      boolean fireball = g1.randomFireBall(1);
@@ -229,26 +250,33 @@ public void testFireBall(){
 
 public void testGenerateDragons(){
 	g1 = new GameEngine(1);
+	 if(g1.ambiente != 1)
+     	g1.ambiente = 1;
 	g1.initializeGame();
 	
 	g1.dragons.clear();
 	
 	int nDragons = 1;
-	int ret;
-	ret=g1.generateDragons(nDragons);
+	int ret=0;
+	
+	while(ret != nDragons)
+		ret=g1.generateDragons(nDragons);
 	Assert.assertEquals(nDragons,ret);
 	
 	g1.dragons.clear();
 	
 	nDragons=2;
-	ret=g1.generateDragons(nDragons);
+	while(ret != nDragons)
+		ret=g1.generateDragons(nDragons);
 	Assert.assertEquals(nDragons,ret);
 	
 	g1.dragons.clear();
 	Random r = new Random();
 	
 	nDragons = r.nextInt(99)+1;
-	ret=g1.generateDragons(nDragons);
+
+	while(ret != nDragons)
+		ret=g1.generateDragons(nDragons);
 	Assert.assertEquals(nDragons,ret);
 }
 
@@ -256,6 +284,8 @@ public void testGenerateDragons(){
 
 public void testCombate() {
 	g1 = new GameEngine(1);
+	 if(g1.ambiente != 1)
+     	g1.ambiente = 1;
 	g1.initializeGame(); 
 	
 	if(g1.h1 == null || g1.h1.getPosicao() != 11){
@@ -292,6 +322,8 @@ public void testCombate() {
 
 public void testFireballKill() {
 	g1 = new GameEngine(1);
+	 if(g1.ambiente != 1)
+     	g1.ambiente = 1;
 	g1.initializeGame();
 	g1.posEspada=-1;
 	boolean firekill = false;
@@ -341,6 +373,8 @@ public void testFireballKill() {
 
 public void testAwake(){
 	g1 = new GameEngine(1);
+	 if(g1.ambiente != 1)
+     	g1.ambiente = 1;
 	g1.initializeGame();
 	g1.dragons.clear();
 	g1.generateDragons(1);
@@ -362,6 +396,8 @@ public void testAwake(){
 
 public void testGenerateDarts(){
 	g1 = new GameEngine(1);
+	 if(g1.ambiente != 1)
+     	g1.ambiente = 1;
 	g1.initializeGame();
 	g1.generateDarts();
 	Assert.assertFalse(g1.darts.size()==0);
@@ -371,6 +407,8 @@ public void testGenerateDarts(){
 
 public void testJogar(){
 	g1 = new GameEngine(1);
+	 if(g1.ambiente != 1)
+     	g1.ambiente = 1;
 	g1.initializeGame();
 	g1.dragons.get(0).setPosicao(-1);
 	g1.h1.setArmado(true);
@@ -393,6 +431,8 @@ public void testJogar(){
 
 public void testRandMoveDragon(){
 	g1 = new GameEngine(1);
+	 if(g1.ambiente != 1)
+     	g1.ambiente = 1;
 	g1.initializeGame();
 	g1.dragonMode=Dragon.Mode.SLEEPING;
 	g1.dragons.get(0).setPosicao(55);
@@ -418,6 +458,8 @@ public void testRandMoveDragon(){
 
 public void testDeleteEntities(){
 	g1 = new GameEngine(1);
+	 if(g1.ambiente != 1)
+     	g1.ambiente = 1;
 	g1.initializeGame();
 	g1.dragons.clear();
 	g1.generateDragons(3);
@@ -443,7 +485,20 @@ public void testDeleteEntities(){
 
 public void testThrowDarts(){
 	g1 = new GameEngine(1);
+	 if(g1.ambiente != 1)
+     	g1.ambiente = 1;
 	g1.initializeGame();
+	
+    if(g1.h1 == null || g1.h1.getPosicao() != 11){
+    	g1.h1 = new Hero();
+    	g1.h1.setPosicao(11);
+    }
+    
+    if(g1.dragons.size() == 0 || g1.dragons.get(0).getPosicao() != 31){
+    	Dragon d1 = new Dragon();
+    	g1.dragons.add(d1);
+    }
+	
 	g1.dragons.get(0).setPosicao(54);
 	g1.dragons.get(0).setAcordado(true);
 	g1.h1.setPosicao(84);
