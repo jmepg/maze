@@ -4,31 +4,27 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class StartQuitButtons extends JPanel implements MouseListener {
+@SuppressWarnings("serial")
+public class StartQuitButtons extends JPanel {
 	private JButton StartButton;
 	private JButton QuitButton;
 	private Gui gui;
 
 	public StartQuitButtons(Gui gm) {
-		this.addMouseListener(this);
+		//this.addMouseListener(this);
 		setLayout(new BorderLayout(0, 0));
-		setSize(100, 700);
 		createButtons();
 		this.gui = gm;
 	}
 
 	public void createButtons() {
 		StartButton = new JButton("Start game");
-		StartButton.setPreferredSize(new Dimension(200, 25));
+		StartButton.setPreferredSize(new Dimension(Gui.hSize/2, 25));
 		add(StartButton, BorderLayout.WEST);
 		StartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -41,7 +37,7 @@ public class StartQuitButtons extends JPanel implements MouseListener {
 		});
 
 		QuitButton = new JButton("Quit");
-		QuitButton.setPreferredSize(new Dimension(200, 25));
+		QuitButton.setPreferredSize(new Dimension(Gui.hSize/2, 25));
 		add(QuitButton, BorderLayout.EAST);
 		QuitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -54,34 +50,4 @@ public class StartQuitButtons extends JPanel implements MouseListener {
 		});
 
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -1,15 +1,8 @@
 package logic;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import org.junit.experimental.theories.suppliers.TestedOn;
 
 import cli.Cli;
 import test.MyTest;

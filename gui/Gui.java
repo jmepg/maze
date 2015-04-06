@@ -1,8 +1,5 @@
 package gui;
 
-import java.awt.EventQueue;
-
-import javax.sound.midi.VoiceStatus;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -16,7 +13,8 @@ public class Gui {
 	private GameEngine engine;
 	private GraphicMaze panel;
 
-	
+	public static final int hSize = 600;
+	public static final int vSize = 600;
 	
 	public JFrame getFrame() {
 		return frame;
@@ -46,15 +44,20 @@ public class Gui {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(0,0,600,600);
+		frame.setBounds(0,0,hSize,vSize);
 		
 		this.panel = new GraphicMaze(engine);
-		frame.getContentPane().add(panel, BorderLayout.EAST);
+		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		frame.setVisible(true);
-		panel.setBounds(0, 50, 800, 750);
+		panel.setBounds(0, 50, hSize, vSize-100);
 		
 		JPanel panel_1 = new StartQuitButtons(this);
 		frame.getContentPane().add(panel_1, BorderLayout.NORTH);
+		
+		JPanel panel_2 = new OptionButtons(this);
+		frame.getContentPane().add(panel_2, BorderLayout.SOUTH);
+		
+		
 	}
 	
 	public void startGame(){
