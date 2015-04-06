@@ -402,6 +402,7 @@ public void testThrowDarts(){
 	
 }
 
+//-------------------------------cli test-------------------------------------------------------
 @Test 
 
 public void testMaze(){
@@ -423,8 +424,74 @@ public void testMaze(){
 
 @Test
 
-public void testMyRandom(){
+public void testPrintMaze(){
+	g1 = new GameEngine(1);
+	g1.initializeGame();
+	g1.cli.printMaze(g1.board.getDados());
+}
+
+@Test 
+
+public void testAskForDirection(){
+	g1 = new GameEngine(1);
+	g1.initializeGame();
+	char res;
+
+	res = g1.cli.askForDirection();
+	Assert.assertTrue(res =='w' || res == 's' || res == 'a' || res == 'd');
+}
+
+@Test 
+
+public void testAskForType(){
+	g1 = new GameEngine(1);
+	g1.initializeGame();
+	int res;
+
+	res = g1.cli.askForType();
+	Assert.assertTrue(res == 0 || res == 1);
+}
+
+@Test 
+
+public void testAskForSize(){
+	g1 = new GameEngine(1);
+	g1.initializeGame();
+	int res;
+
+	res = g1.cli.askForSize();
+	Assert.assertTrue(res > 7 && res%2==1);
+}
+
+@Test 
+
+public void testAskForMode(){
+	g1 = new GameEngine(1);
+	g1.initializeGame();
+	Dragon.Mode res;
+
+	res = g1.cli.askForMode();
+	Assert.assertTrue(res == Dragon.Mode.MOVABLE || res == Dragon.Mode.SLEEPING || res == Dragon.Mode.STATIC);
+}
+
+@Test 
+
+public void testAskForDragons(){
+	g1 = new GameEngine(1);
+	g1.initializeGame();
+	int res;
+
+	res = g1.cli.askForDragons();
+	Assert.assertTrue(res > 0);
+}
+
+@Test 
+
+public void testClearConsole(){
+	g1 = new GameEngine(1);
+	g1.initializeGame();
 	
+	Cli.clearConsole();
 }
 
 
