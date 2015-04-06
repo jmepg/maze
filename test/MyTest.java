@@ -31,7 +31,7 @@ public class MyTest {
         g1 = new GameEngine(1);
         if(g1.ambiente != 1)
         	g1.ambiente = 1;
-        g1.initializeGame();
+        g1.initializeGame(null);
 
         if(g1.h1 == null || g1.h1.getPosicao() != 11){
         	g1.h1 = new Hero();
@@ -83,7 +83,7 @@ public class MyTest {
         if(g1.ambiente != 1)
         	g1.ambiente = 1;
         
-        g1.initializeGame(;
+        g1.initializeGame(null);
         
         if(g1.h1 == null || g1.h1.getPosicao() != 11){
         	g1.h1 = new Hero();
@@ -106,7 +106,7 @@ public class MyTest {
         g1 = new GameEngine(1);
         if(g1.ambiente != 1)
         	g1.ambiente = 1;
-        g1.initializeGame();
+        g1.initializeGame(null);
         
         if(g1.h1 == null || g1.h1.getPosicao() != 11){
         	g1.h1 = new Hero();
@@ -131,7 +131,7 @@ public class MyTest {
         g1 = new GameEngine(1);
         if(g1.ambiente != 1)
         	g1.ambiente = 1;
-        g1.initializeGame();
+        g1.initializeGame(null);
         
         if(g1.h1 == null || g1.h1.getPosicao() != 11){
         	g1.h1 = new Hero();
@@ -158,7 +158,7 @@ public void testIfGameWon(){
         g1 = new GameEngine(1);
         if(g1.ambiente != 1)
         	g1.ambiente = 1;
-        g1.initializeGame();
+        g1.initializeGame(null);
         g1.posEspada = 12;
         
         if(g1.h1 == null || g1.h1.getPosicao() != 11){
@@ -211,7 +211,7 @@ public void testIfCatchShield(){
 	g1 = new GameEngine(1);
 	 if(g1.ambiente != 1)
      	g1.ambiente = 1;
-    g1.initializeGame();
+    g1.initializeGame(null);
     
     if(g1.h1 == null || g1.h1.getPosicao() != 11){
     	g1.h1 = new Hero();
@@ -232,7 +232,7 @@ public void testFireBall(){
 	 g1 = new GameEngine(1);
 	 if(g1.ambiente != 1)
      	g1.ambiente = 1;
-     g1.initializeGame();
+     g1.initializeGame(null);
      
      boolean fireball = g1.randomFireBall(1);
      
@@ -252,7 +252,7 @@ public void testGenerateDragons(){
 	g1 = new GameEngine(1);
 	 if(g1.ambiente != 1)
      	g1.ambiente = 1;
-	g1.initializeGame();
+	g1.initializeGame(null);
 	
 	g1.dragons.clear();
 	
@@ -286,7 +286,7 @@ public void testCombate() {
 	g1 = new GameEngine(1);
 	 if(g1.ambiente != 1)
      	g1.ambiente = 1;
-	g1.initializeGame(); 
+	g1.initializeGame(null); 
 	
 	if(g1.h1 == null || g1.h1.getPosicao() != 11){
     	g1.h1 = new Hero();
@@ -324,7 +324,7 @@ public void testFireballKill() {
 	g1 = new GameEngine(1);
 	 if(g1.ambiente != 1)
      	g1.ambiente = 1;
-	g1.initializeGame();
+	g1.initializeGame(null);
 	g1.posEspada=-1;
 	boolean firekill = false;
 	
@@ -375,7 +375,7 @@ public void testAwake(){
 	g1 = new GameEngine(1);
 	 if(g1.ambiente != 1)
      	g1.ambiente = 1;
-	g1.initializeGame();
+	g1.initializeGame(null);
 	g1.dragons.clear();
 	g1.generateDragons(1);
 	boolean awake=false;
@@ -398,7 +398,7 @@ public void testGenerateDarts(){
 	g1 = new GameEngine(1);
 	 if(g1.ambiente != 1)
      	g1.ambiente = 1;
-	g1.initializeGame();
+	g1.initializeGame(null);
 	g1.generateDarts();
 	Assert.assertFalse(g1.darts.size()==0);
 }
@@ -409,7 +409,7 @@ public void testJogar(){
 	g1 = new GameEngine(1);
 	 if(g1.ambiente != 1)
      	g1.ambiente = 1;
-	g1.initializeGame();
+	g1.initializeGame(null);
 	g1.dragons.get(0).setPosicao(-1);
 	g1.h1.setArmado(true);
 	g1.h1.setPosicao(59);
@@ -433,7 +433,7 @@ public void testRandMoveDragon(){
 	g1 = new GameEngine(1);
 	 if(g1.ambiente != 1)
      	g1.ambiente = 1;
-	g1.initializeGame();
+	g1.initializeGame(null);
 	g1.dragonMode=Dragon.Mode.SLEEPING;
 	g1.dragons.get(0).setPosicao(55);
 	g1.posEspada = -1;
@@ -460,7 +460,7 @@ public void testDeleteEntities(){
 	g1 = new GameEngine(1);
 	 if(g1.ambiente != 1)
      	g1.ambiente = 1;
-	g1.initializeGame();
+	g1.initializeGame(null);
 	g1.dragons.clear();
 	g1.generateDragons(3);
 	g1.cli.printMaze(g1.board.maze);
@@ -487,7 +487,7 @@ public void testThrowDarts(){
 	g1 = new GameEngine(1);
 	 if(g1.ambiente != 1)
      	g1.ambiente = 1;
-	g1.initializeGame();
+	g1.initializeGame(null);
 	
     if(g1.h1 == null || g1.h1.getPosicao() != 11){
     	g1.h1 = new Hero();

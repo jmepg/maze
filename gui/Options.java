@@ -15,6 +15,7 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyListener;
 
 @SuppressWarnings("serial")
 public class Options extends JDialog {
@@ -22,15 +23,6 @@ public class Options extends JDialog {
 	private JSlider tamanho;
 	private JSlider nDragoes;
 	
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	
-	private JLabel lblCima;
-	private JLabel lblBaixo;
-	private JLabel lblEsquerda;
-	private JLabel lblDireita;
 	private JLabel lblTamanhoDoLabirinto;
 	private JLabel lblNmeroDeDrages;
 	private JLabel lblModoDosDrages;
@@ -38,6 +30,12 @@ public class Options extends JDialog {
 	
 	private JButton btnOk;
 	private JButton btnCancelar;
+	private JButton btnCima;
+	private JButton btnBaixo;
+	private JButton btnEsquerda;
+	private JButton btnDireita;
+	
+	private Gui gui;
 	
 	private int tamanhoLabirinto;
 	private int numeroDragoes;
@@ -48,8 +46,9 @@ public class Options extends JDialog {
 	
 	
 
-	public Options(JFrame frame, String title) {
+	public Options(JFrame frame, String title, Gui gui) {
 		super(frame, title);
+		this.gui = gui;
 	}
 
 	public int getTamanhoLabirinto() {
@@ -70,38 +69,6 @@ public class Options extends JDialog {
 
 	public JSlider getnDragoes() {
 		return nDragoes;
-	}
-
-	public JTextField getTextField() {
-		return textField;
-	}
-
-	public JTextField getTextField_1() {
-		return textField_1;
-	}
-
-	public JTextField getTextField_2() {
-		return textField_2;
-	}
-
-	public JTextField getTextField_3() {
-		return textField_3;
-	}
-
-	public JLabel getLblCima() {
-		return lblCima;
-	}
-
-	public JLabel getLblBaixo() {
-		return lblBaixo;
-	}
-
-	public JLabel getLblEsquerda() {
-		return lblEsquerda;
-	}
-
-	public JLabel getLblDireita() {
-		return lblDireita;
 	}
 
 	public JLabel getLblTamanhoDoLabirinto() {
@@ -147,6 +114,8 @@ public class Options extends JDialog {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setOptions() {
+		getContentPane().setLayout(null);
+		
 		tamanho = new JSlider(JSlider.HORIZONTAL, 7, 55, 15);
 		tamanho.setBounds(12, 33, 455, 42);
 		tamanho.setMinorTickSpacing(2);
@@ -154,8 +123,6 @@ public class Options extends JDialog {
 		tamanho.setPaintTicks(true);
 		tamanho.setPaintLabels(true);
 		tamanho.setLabelTable(tamanho.createStandardLabels(4));
-
-		getContentPane().setLayout(null);
 		getContentPane().add(tamanho);
 
 		lblTamanhoDoLabirinto = new JLabel("Tamanho do Labirinto");
@@ -191,43 +158,6 @@ public class Options extends JDialog {
 		comportamentoDragoes.setBounds(173, 172, 200, 20);
 		getContentPane().add(comportamentoDragoes);
 
-		textField = new JTextField();
-		textField.setBounds(66, 228, 40, 20);
-		getContentPane().add(textField);
-		textField.setColumns(1);
-
-		textField_1 = new JTextField();
-		textField_1.setColumns(1);
-		textField_1.setBounds(164, 228, 40, 20);
-		getContentPane().add(textField_1);
-		//textfield_1.setDocument(new JTextFieldLimit(10));
-
-		textField_2 = new JTextField();
-		textField_2.setColumns(1);
-		textField_2.setBounds(293, 228, 40, 20);
-		getContentPane().add(textField_2);
-
-		textField_3 = new JTextField();
-		textField_3.setColumns(1);
-		textField_3.setBounds(405, 228, 40, 20);
-		getContentPane().add(textField_3);
-
-		lblCima = new JLabel("Cima");
-		lblCima.setBounds(28, 230, 70, 15);
-		getContentPane().add(lblCima);
-
-		lblBaixo = new JLabel("Baixo");
-		lblBaixo.setBounds(122, 230, 70, 15);
-		getContentPane().add(lblBaixo);
-
-		lblEsquerda = new JLabel("Esquerda");
-		lblEsquerda.setBounds(221, 230, 70, 15);
-		getContentPane().add(lblEsquerda);
-
-		lblDireita = new JLabel("Direita");
-		lblDireita.setBounds(353, 230, 70, 15);
-		getContentPane().add(lblDireita);
-
 		btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -239,6 +169,8 @@ public class Options extends JDialog {
 		});
 		btnOk.setBounds(76, 269, 117, 25);
 		getContentPane().add(btnOk);
+		
+		
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -246,8 +178,47 @@ public class Options extends JDialog {
 				dispose();
 			}
 		});
+		
 		btnCancelar.setBounds(275, 269, 117, 25);
 		getContentPane().add(btnCancelar);
 
+		
+		btnCima = new JButton("Cima");
+		
+		btnCima.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ControlsPopup popupCima = new ControlsPopup(null,0,gui);
+			}
+		});
+		btnCima.setBounds(17, 228, 100, 25);
+		getContentPane().add(btnCima);
+		
+		btnBaixo = new JButton("Baixo");
+		btnBaixo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ControlsPopup popupBaixo = new ControlsPopup(null,1,gui);
+			}
+		});
+		btnBaixo.setBounds(132, 228, 100, 25);
+		getContentPane().add(btnBaixo);
+		
+		btnEsquerda = new JButton("Esquerda");
+		btnEsquerda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ControlsPopup popupEsquerda = new ControlsPopup(null,2,gui);
+			}
+		});
+		btnEsquerda.setBounds(247, 228, 105, 25);
+		getContentPane().add(btnEsquerda);
+		
+		btnDireita = new JButton("Direita");
+		btnDireita.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ControlsPopup popupDireita = new ControlsPopup(null,3,gui);
+			}
+		});
+		btnDireita.setBounds(367, 228, 100, 25);
+		getContentPane().add(btnDireita);
+		
 	}
 }

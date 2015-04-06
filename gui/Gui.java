@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
 
 import logic.Dragon;
 import logic.GameEngine;
@@ -16,9 +17,18 @@ public class Gui {
 	private GraphicMaze panel;
 	private OptionButtons optionButtons;
 	private StartQuitButtons startQuitButtons;
+	private int[] controls;
 
 	public static final int hSize = 600;
 	public static final int vSize = 600;
+	
+	public int[] getControls() {
+		return controls;
+	}
+	
+	public void setControl(int index, int keyCode){
+		controls[index] = keyCode;
+	}
 	
 	public JFrame getFrame() {
 		return frame;
@@ -47,9 +57,10 @@ public class Gui {
 		frame = new JFrame();
 		frame.setBounds(0,0,hSize,vSize);
 		
-		this.panel = new GraphicMaze(engine);
+		this.panel = new GraphicMaze(this);
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		frame.setVisible(true);
+		frame.setResizable(false);
 		panel.setBounds(0, 50, hSize, vSize-100);
 		
 		startQuitButtons = new StartQuitButtons(this);
@@ -58,7 +69,9 @@ public class Gui {
 		optionButtons = new OptionButtons(frame, this);
 		frame.getContentPane().add(optionButtons, BorderLayout.SOUTH);
 		
+		int controls[] = {KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
 		
+		this.controls = controls;
 	}
 	
 	public void startGame(){
