@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
 import logic.GameEngine;
+import logic.MazeBuilder;
 
 public class Gui {
 
@@ -54,13 +55,15 @@ public class Gui {
 		JPanel panel_1 = new StartQuitButtons(this);
 		frame.getContentPane().add(panel_1, BorderLayout.NORTH);
 		
-		JPanel panel_2 = new OptionButtons(this);
+		JPanel panel_2 = new OptionButtons(frame, this);
 		frame.getContentPane().add(panel_2, BorderLayout.SOUTH);
 		
 		
 	}
 	
 	public void startGame(){
+		/*MazeBuilder mb = new MazeBuilder();
+		mb.setMazeType(op);*/
 		panel.inGame = true;
 		panel.requestFocus();
 		panel.repaint();

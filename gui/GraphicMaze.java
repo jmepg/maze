@@ -70,8 +70,8 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		this.ge = g;
 		try {
 			image = ImageIO.read(new File("src/resources/dungeon-demon_wide.jpg"));
-		} catch (FileNotFoundException e) {
-			System.out.println("FIcheiro nao existe!");
+		} catch (IOException e) {
+			System.out.println("Ficheiro nao existe!");
 		}
 		catch (Exception e) {
 			// TODO: handle exception
