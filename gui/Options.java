@@ -188,6 +188,7 @@ public class Options extends JDialog {
 		btnCima.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ControlsPopup popupCima = new ControlsPopup(null,0,gui);
+				gui.getPanel().requestFocus();
 			}
 		});
 		btnCima.setBounds(17, 228, 100, 25);
@@ -197,6 +198,7 @@ public class Options extends JDialog {
 		btnBaixo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ControlsPopup popupBaixo = new ControlsPopup(null,1,gui);
+				gui.getPanel().requestFocus();
 			}
 		});
 		btnBaixo.setBounds(132, 228, 100, 25);
@@ -206,6 +208,7 @@ public class Options extends JDialog {
 		btnEsquerda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ControlsPopup popupEsquerda = new ControlsPopup(null,2,gui);
+				gui.getPanel().requestFocus();
 			}
 		});
 		btnEsquerda.setBounds(247, 228, 105, 25);
@@ -215,6 +218,7 @@ public class Options extends JDialog {
 		btnDireita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ControlsPopup popupDireita = new ControlsPopup(null,3,gui);
+				gui.getPanel().requestFocus();
 			}
 		});
 		btnDireita.setBounds(367, 228, 100, 25);
