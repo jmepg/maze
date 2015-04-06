@@ -8,6 +8,7 @@ import org.junit.Test;
 import cli.Cli;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -16,6 +17,7 @@ import logic.Dragon;
 import logic.Maze;
 import logic.MazeBuilder;
 import logic.RandomMaze;
+import logic.MyRandom;
 
 public class MyTest {
 
@@ -30,6 +32,11 @@ public class MyTest {
         g1 = new GameEngine(1);
         g1.initializeGame();
 
+        if(g1.h1 == null || g1.h1.getPosicao() != 11){
+        	g1.h1 = new Hero();
+        	g1.h1.setPosicao(11);
+        }
+        
         g1.moveHeroi('d');
         Assert.assertEquals(g1.h1.getPosicao(),12);
 
@@ -49,6 +56,12 @@ public class MyTest {
     public void testIfNotPassThroughWalls(){
         g1 = new GameEngine(1);
         g1.initializeGame();
+        
+        if(g1.h1 == null || g1.h1.getPosicao() != 11){
+        	g1.h1 = new Hero();
+        	g1.h1.setPosicao(11);
+        }
+        
 
         g1.moveHeroi('w');
         Assert.assertEquals(g1.h1.getPosicao(),11);
@@ -65,6 +78,11 @@ public class MyTest {
     public void testIfSwordCaught(){
         g1 = new GameEngine(1);
         g1.initializeGame();
+        
+        if(g1.h1 == null || g1.h1.getPosicao() != 11){
+        	g1.h1 = new Hero();
+        	g1.h1.setPosicao(11);
+        }
 
         g1.posEspada = 14;
 
@@ -81,15 +99,38 @@ public class MyTest {
     public void testIfLost(){
         g1 = new GameEngine(1);
         g1.initializeGame();
-
+        
+        if(g1.h1 == null || g1.h1.getPosicao() != 11){
+        	g1.h1 = new Hero();
+        	g1.h1.setPosicao(11);
+        }
+        
+        if(g1.dragons.size() == 0 || g1.dragons.get(0).getPosicao() != 31){
+        	Dragon d1 = new Dragon();
+        	d1.setPosicao(31);
+        	g1.dragons.add(d1);
+        }
+        
         g1.moveHeroi('s');
         Assert.assertEquals(g1.combate(),true);
     }
 
     @Test
-public void testIfDragonKilled(){
+    
+    public void testIfDragonKilled(){
         g1 = new GameEngine(1);
         g1.initializeGame();
+        
+        if(g1.h1 == null || g1.h1.getPosicao() != 11){
+        	g1.h1 = new Hero();
+        	g1.h1.setPosicao(11);
+        }
+        
+        if(g1.dragons.size() == 0 || g1.dragons.get(0).getPosicao() != 31){
+        	Dragon d1 = new Dragon();
+        	d1.setPosicao(31);
+        	g1.dragons.add(d1);
+        }
 
         g1.posEspada = 12;
         g1.moveHeroi('d');
@@ -104,9 +145,18 @@ public void testIfDragonKilled(){
 public void testIfGameWon(){
         g1 = new GameEngine(1);
         g1.initializeGame();
-
         g1.posEspada = 12;
-        //g1.dragons.get(0).setPosicao(13);
+        
+        if(g1.h1 == null || g1.h1.getPosicao() != 11){
+        	g1.h1 = new Hero();
+        	g1.h1.setPosicao(11);
+        }
+        
+        if(g1.dragons.size() == 0 || g1.dragons.get(0).getPosicao() != 31){
+        	Dragon d1 = new Dragon();
+        	d1.setPosicao(31);
+        	g1.dragons.add(d1);
+        }
  
         g1.moveHeroi('d');
         g1.placeEntities();
@@ -135,16 +185,7 @@ public void testIfGameWon(){
         g1.moveHeroi('s');
         g1.moveHeroi('d');
 
-      /*  System.out.println(g1.h1.posicao);
-        System.out.println(g1.board.getExit());
-        System.out.println(g1.h1.isArmado());
-        System.out.println(g1.dragons.get(0).getPosicao());
-        System.out.println(g1.dragons.size());
-*/
-
-        
        Assert.assertEquals(true,g1.testWinCondition());
-
     }
     
     @Test
@@ -152,6 +193,11 @@ public void testIfGameWon(){
 public void testIfCatchShield(){
 	g1 = new GameEngine(1);
     g1.initializeGame();
+    
+    if(g1.h1 == null || g1.h1.getPosicao() != 11){
+    	g1.h1 = new Hero();
+    	g1.h1.setPosicao(11);
+    }
     
    g1.posEscudo=12;
    g1.moveHeroi('d');
@@ -167,13 +213,15 @@ public void testFireBall(){
 	 g1 = new GameEngine(1);
      g1.initializeGame();
      
-     boolean fireball = false;
-	
-	while(!fireball){
-		fireball=g1.randomFireBall(0);
+     boolean fireball = g1.randomFireBall(1);
+     
+     Assert.assertTrue(fireball);
+     
+     
+	for(int i=0; i<1000; i++){
+		fireball = g1.randomFireBall(0);
+		Assert.assertTrue(fireball == true || fireball==false);
 	}
-	
-	Assert.assertEquals(true,fireball);
 }
 
 
@@ -209,22 +257,36 @@ public void testGenerateDragons(){
 public void testCombate() {
 	g1 = new GameEngine(1);
 	g1.initializeGame(); 
+	
+	if(g1.h1 == null || g1.h1.getPosicao() != 11){
+    	g1.h1 = new Hero();
+    	g1.h1.setPosicao(11);
+    }
+    
+    if(g1.dragons.size() == 0 || g1.dragons.get(0).getPosicao() != 31){
+    	Dragon d1 = new Dragon();
+    	g1.dragons.add(d1);
+    }
+	
 	g1.dragons.get(0).setPosicao(55);
 	g1.posEspada=-1;
 	
 	g1.h1.setPosicao(56);
-	Assert.assertEquals(true,g1.combate());
+	Assert.assertTrue(g1.combate());
 
 	g1.h1.setPosicao(54);
-	Assert.assertEquals(true,g1.combate());
+	Assert.assertTrue(g1.combate());
 	
 	g1.h1.setPosicao(65);
-	Assert.assertEquals(true,g1.combate());
+	Assert.assertTrue(g1.combate());
 	
 	g1.h1.setPosicao(45);
-	Assert.assertEquals(true,g1.combate());
-}
+	Assert.assertTrue(g1.combate());
 
+	g1.h1.setPosicao(11);
+	Assert.assertFalse(g1.combate());
+}
+	
 
 @Test 
 
@@ -233,6 +295,16 @@ public void testFireballKill() {
 	g1.initializeGame();
 	g1.posEspada=-1;
 	boolean firekill = false;
+	
+    if(g1.h1 == null || g1.h1.getPosicao() != 11){
+    	g1.h1 = new Hero();
+    	g1.h1.setPosicao(11);
+    }
+    
+    if(g1.dragons.size() == 0 || g1.dragons.get(0).getPosicao() != 31){
+    	Dragon d1 = new Dragon();
+    	g1.dragons.add(d1);
+    }
 	
 	g1.dragons.get(0).setPosicao(55);
 	
@@ -304,10 +376,7 @@ public void testJogar(){
 	g1.h1.setArmado(true);
 	g1.h1.setPosicao(59);
 	g1.jogar();
-	//g1.h1.setPosicao(59);
-	//System.out.println(g1.dragons.get(0).getPosicao());
 	
-	//g1.jogar();
 	Assert.assertEquals(-1,g1.dragons.get(0).getPosicao());
 	
 	g1.dragons.get(0).setPosicao(31);
@@ -316,7 +385,7 @@ public void testJogar(){
 	boolean pass = true;
 	
 	g1.jogar(); 
-	Assert.assertEquals(true,pass);
+	Assert.assertTrue(pass);
 	
 }
 
@@ -425,6 +494,25 @@ public void testMaze(){
 
 public void testMyRandom(){
 	
+	int res=0;
+	MyRandom mr = new MyRandom();
+
+	for(int i=0; i<1000; i++){
+		res=mr.nextInt();
+		Assert.assertTrue(res==0||res==1||res==2||res==3);
+	}
+
+	int[] n = {10,12,34,56,77,888};
+	mr = new MyRandom(n);
+	res=0;
+	
+	for(int i=0; i<n.length; i++){
+		res = mr.nextInt();
+		
+		boolean assertionAnswer = Arrays.asList(n).contains(res);
+		
+		Assert.assertEquals(false,assertionAnswer);
+	}
 }
 
 
