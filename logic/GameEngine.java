@@ -389,29 +389,64 @@ public class GameEngine {
 				}
 
 			}
-			if (h1.posicao == dragons.get(i).posicao + 3
-					|| h1.posicao == dragons.get(i).posicao - 3
-					|| h1.posicao == dragons.get(i).posicao + 30
-					|| h1.posicao == dragons.get(i).posicao - 30
-					|| h1.posicao == dragons.get(i).posicao) {
 
-				if (!h1.escudo && dragons.get(i).acordado && randomFireBall(0)) {
-					// placeEntities();
-					if (ambiente == 0) {
-						cli.printMaze(board.getDados());
-						cli.estadoFinal(1);
+		}
+		if(fireballKill())
+			return true;
+
+		return false;
+	}
+
+	public boolean fireballKill(){
+
+		for(int i=0;i<dragons.size();i++){
+			int pos = dragons.get(i).posicao;
+			int ydragao = pos%10;
+			int xdragao = pos/10;
+			int xheroi = h1.getPosicao()/10;
+			int yheroi = h1.getPosicao()%10;
+			int maxpos=0;
+
+			if(randomFireBall(1) && dragons.get(i).isAcordado()){
+				if(ydragao == yheroi){
+					if(xdragao<xheroi)
+						maxpos = pos+3;
+					else 
+						maxpos = pos-3;
+					while(board.checkTile(pos)!='X' && pos<maxpos){
+						if(h1.getPosicao()==pos){
+							cli.printMaze(board.getDados());
+							cli.estadoFinal(1);
+							return true;
+							}
+						else if(h1.getPosicao() < pos)
+							pos--;
+						else
+							pos++;
 					}
-					if (ambiente == 1) {
-						test.printMaze(board.getDados());
-						test.estadoFinal(1);
+				}
+				if(xdragao==xheroi){
+					if(ydragao<yheroi)
+						maxpos = pos+30;
+					else 
+						maxpos = pos-30;
+					while(board.checkTile(pos)!='X' && pos<maxpos){
+						if(h1.getPosicao()==pos){
+							cli.printMaze(board.getDados());
+							cli.estadoFinal(1);
+							return true;
+							}
+						else if(h1.getPosicao() < pos)
+							pos-=10;
+						else
+							pos+=10;
 					}
-					return true;
 				}
 			}
 
 		}
-
 		return false;
+
 	}
 
 	/*
