@@ -4,6 +4,12 @@ public class Hero {
 	boolean armado = false;
 	boolean dardo = false;
 	boolean escudo = false;
+	
+	public void resetEquipment(){
+		armado = false;
+		dardo = false;
+		escudo = false;
+	}
 
     public int getPosicao() {
         return posicao;

@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,6 +18,7 @@ public class OptionButtons extends JPanel {
 	private Gui gui;
 	private JFrame frame;
 	private Options optDialog;
+	private SaveLoad saveLoadDialog;
 
 	public OptionButtons(JFrame frame, Gui gui) {
 		setLayout(new BorderLayout(0, 0));
@@ -69,22 +69,24 @@ public class OptionButtons extends JPanel {
 		options.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
 		add(options, BorderLayout.WEST);
 		optDialog = new Options(frame, "Opções de jogo",gui);
-		optDialog.initialize();
 		options.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				optDialog.setVisible(true);
+				gui.getPanel().requestFocus();
 			}
+			
 		});
 
 		saveload = new JButton("Save/Load Game");
 		saveload.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
 		add(saveload, BorderLayout.CENTER);
+		saveLoadDialog = new SaveLoad(frame, "Save/Load Game", gui);
 		saveload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "To be implemented later!",
-						"Oops!", JOptionPane.INFORMATION_MESSAGE);
-
+				saveLoadDialog.setVisible(true);
+				gui.getPanel().requestFocus();
 			}
+			
 		});
 
 		create = new JButton("Create Maze");

@@ -33,6 +33,7 @@ public class StartQuitButtons extends JPanel {
 				if (res == JOptionPane.YES_OPTION) {
 					gui.startGame();
 				}
+				gui.getPanel().requestFocus();
 			}
 		});
 
@@ -46,6 +47,7 @@ public class StartQuitButtons extends JPanel {
 				if (res == JOptionPane.YES_OPTION) {
 					System.exit(0);
 				}
+				gui.getPanel().requestFocus();
 			}
 		});
 

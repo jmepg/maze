@@ -1,21 +1,15 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.RenderingHints;
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JSlider;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyListener;
 
 @SuppressWarnings("serial")
 public class Options extends JDialog {
@@ -49,6 +43,7 @@ public class Options extends JDialog {
 	public Options(JFrame frame, String title, Gui gui) {
 		super(frame, title);
 		this.gui = gui;
+		initialize();
 	}
 
 	public int getTamanhoLabirinto() {
@@ -95,6 +90,7 @@ public class Options extends JDialog {
 		return btnCancelar;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public JComboBox getComportamentoDragoes() {
 		return comportamentoDragoes;
 	}
@@ -122,6 +118,7 @@ public class Options extends JDialog {
 		tamanho.setMajorTickSpacing(4);
 		tamanho.setPaintTicks(true);
 		tamanho.setPaintLabels(true);
+		tamanho.setSnapToTicks(true);
 		tamanho.setLabelTable(tamanho.createStandardLabels(4));
 		getContentPane().add(tamanho);
 
@@ -158,8 +155,8 @@ public class Options extends JDialog {
 		comportamentoDragoes.setBounds(173, 172, 200, 20);
 		getContentPane().add(comportamentoDragoes);
 
-		btnOk = new JButton("OK");
-		btnOk.addActionListener(new ActionListener() {
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				numeroDragoes = nDragoes.getValue();
 				tamanhoLabirinto = tamanho.getValue();
@@ -167,27 +164,27 @@ public class Options extends JDialog {
 				dispose();
 			}
 		});
-		btnOk.setBounds(76, 269, 117, 25);
-		getContentPane().add(btnOk);
+		btnCancelar.setBounds(76, 269, 117, 25);
+		getContentPane().add(btnCancelar);
 		
 		
 
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
+		btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
 		
-		btnCancelar.setBounds(275, 269, 117, 25);
-		getContentPane().add(btnCancelar);
+		btnOk.setBounds(275, 269, 117, 25);
+		getContentPane().add(btnOk);
 
 		
 		btnCima = new JButton("Cima");
 		
 		btnCima.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlsPopup popupCima = new ControlsPopup(null,0,gui);
+				new ControlsPopup(null,0,gui);
 				gui.getPanel().requestFocus();
 			}
 		});
@@ -197,7 +194,7 @@ public class Options extends JDialog {
 		btnBaixo = new JButton("Baixo");
 		btnBaixo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlsPopup popupBaixo = new ControlsPopup(null,1,gui);
+				new ControlsPopup(null,1,gui);
 				gui.getPanel().requestFocus();
 			}
 		});
@@ -207,7 +204,7 @@ public class Options extends JDialog {
 		btnEsquerda = new JButton("Esquerda");
 		btnEsquerda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlsPopup popupEsquerda = new ControlsPopup(null,2,gui);
+				new ControlsPopup(null,2,gui);
 				gui.getPanel().requestFocus();
 			}
 		});
@@ -217,7 +214,7 @@ public class Options extends JDialog {
 		btnDireita = new JButton("Direita");
 		btnDireita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlsPopup popupDireita = new ControlsPopup(null,3,gui);
+				new ControlsPopup(null,3,gui);
 				gui.getPanel().requestFocus();
 			}
 		});

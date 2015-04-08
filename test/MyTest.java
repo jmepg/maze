@@ -5,18 +5,9 @@ import logic.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-
-import logic.Dragon;
-import logic.Maze;
-import logic.MazeBuilder;
-import logic.RandomMaze;
-import logic.MyRandom;
 
 public class MyTest {
 

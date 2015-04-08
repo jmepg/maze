@@ -1,8 +1,6 @@
 package gui;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 
@@ -54,7 +52,7 @@ public class Gui {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("Escape the Maze");
 		frame.setBounds(0,0,hSize,vSize);
 		
 		this.panel = new GraphicMaze(this);
@@ -103,6 +101,10 @@ public class Gui {
 		panel.inGame = true;
 		panel.requestFocus();
 		panel.repaint();
+	}
+
+	public void setEngine(GameEngine engine) {
+		this.engine = engine;
 	}
 
 }

@@ -1,20 +1,8 @@
 package gui;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-
-import org.omg.CORBA.PRIVATE_MEMBER;
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
-
 import javax.swing.JLabel;
 
 import java.awt.event.KeyAdapter;

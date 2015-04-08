@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Maze {
+	
 	public List<Character> maze = new ArrayList<Character>();
 	public int exit = 59;
 	public int dimension = 10;
