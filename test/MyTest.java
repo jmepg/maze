@@ -454,7 +454,7 @@ public void testDeleteEntities(){
 	g1.initializeGame(null);
 	g1.dragons.clear();
 	g1.generateDragons(3);
-	g1.cli.printMaze(g1.board.getMaze());
+	g1.cli.printMaze(g1.board.maze);
 	g1.placeEntities();
 	try {
 	    Thread.sleep(500);                 

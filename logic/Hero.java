@@ -1,9 +1,9 @@
 package logic;
 public class Hero {
-	private int posicao = 11;
-	private boolean armado = false;
-	private boolean dardo = false;
-	private boolean escudo = false;
+	public int posicao = 11;
+	boolean armado = false;
+	boolean dardo = false;
+	boolean escudo = false;
 	
 	public void resetEquipment(){
 		armado = false;

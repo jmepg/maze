@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Maze {
 	
-	private List<Character> maze = new ArrayList<Character>();
+	public List<Character> maze = new ArrayList<Character>();
 	private int exit = 59;
 	private int dimension = 10;
 	
@@ -17,10 +17,6 @@ public abstract class Maze {
 	}
 	public void setExit(int exit){
 		this.exit = exit;	
-	}
-	
-	public List<Character> getMaze(){
-		return maze;
 	}
 	
 	/*

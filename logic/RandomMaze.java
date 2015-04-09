@@ -19,7 +19,7 @@ public class RandomMaze extends Maze{
 	 * @brief Muda uma entidade de posicao no labirinto.
 	 */
 	public void changeBoard(int tile, char entity) {
-		getMaze().set(tile, entity);
+		maze.set(tile, entity);
 	}
 
 	/*
@@ -28,7 +28,7 @@ public class RandomMaze extends Maze{
 	 * @param tile Tile a testar
 	 */
 	public char checkTile(int tile) {
-		return getMaze().get(tile);
+		return maze.get(tile);
 	}
 
 	/*
@@ -95,7 +95,7 @@ public class RandomMaze extends Maze{
 		/* Encher o maze com X */
 
 		for (int i = 0; i < getDimension() * getDimension(); i++) {
-			getMaze().add('X');
+			maze.add('X');
 		}
 
 		/*
@@ -114,7 +114,7 @@ public class RandomMaze extends Maze{
 
 		for (long i = 0; i < getDimension() * getDimension(); i++) {
 			if ((((i / getDimension()) * (i % getDimension())) % 2) != 0) {
-				getMaze().set((int) i, ' ');
+				maze.set((int) i, ' ');
 				visitedCells.add((int) i);
 			}
 		}
@@ -148,16 +148,16 @@ public class RandomMaze extends Maze{
 		 */
 		if (currentPivot / vcSize == 0) {
 			setExit(iterador - getDimension());
-			getMaze().set(getExit(), 'S');
+			maze.set(getExit(), 'S');
 		} else if ((currentPivot / vcSize) >= (vcSize - 1)) {
 			setExit(iterador + getDimension());
-			getMaze().set(getExit(), 'S');
+			maze.set(getExit(), 'S');
 		} else if (currentPivot % vcSize == 0) {
 			setExit(iterador - 1);
-			getMaze().set(getExit(), 'S');
+			maze.set(getExit(), 'S');
 		} else {
 			setExit(iterador + 1);
-			getMaze().set(getExit(), 'S');
+			maze.set(getExit(), 'S');
 		}
 
 		/* Escolha dos proximos pivots */
@@ -197,19 +197,19 @@ public class RandomMaze extends Maze{
 			 */
 			switch (nextDirection) {
 			case 0:
-				getMaze().set(iterador - getDimension(), ' ');
+				maze.set(iterador - getDimension(), ' ');
 				currentPivot -= vcSize;
 				break;
 			case 1:
-				getMaze().set(iterador + getDimension(), ' ');
+				maze.set(iterador + getDimension(), ' ');
 				currentPivot += vcSize;
 				break;
 			case 2:
-				getMaze().set(iterador - 1, ' ');
+				maze.set(iterador - 1, ' ');
 				currentPivot -= 1;
 				break;
 			case 3:
-				getMaze().set(iterador + 1, ' ');
+				maze.set(iterador + 1, ' ');
 				currentPivot += 1;
 				break;
 			}

@@ -2,7 +2,7 @@ package logic;
 
 public class Dart {
 	
-	private int posicao=0;
+	int posicao=0;
 	
 	public Dart(int pos){
 		posicao=pos;
@@ -10,9 +10,5 @@ public class Dart {
 	
 	public int getPosicao(){
 		return posicao;
-	}
-	
-	public void setPosicao(int pos){
-		this.posicao = pos;
 	}
 }
