@@ -115,13 +115,13 @@ public class GameEngine implements Serializable {
 			generateDarts();
 
 			do {
-				n = r.nextInt((board.dimension * board.dimension) - 1);
+				n = r.nextInt((board.getDimension() * board.getDimension()) - 1);
 			} while (board.checkTile(n) != ' ');
 
 			posEspada = n;
 
 			do {
-				n = r2.nextInt((board.dimension * board.dimension) - 1);
+				n = r2.nextInt((board.getDimension() * board.getDimension()) - 1);
 			} while (board.checkTile(n) != ' ');
 
 			posEscudo = n;
@@ -133,13 +133,13 @@ public class GameEngine implements Serializable {
 			 */
 			do {
 				do {
-					n = r.nextInt(board.dimension * board.dimension);
+					n = r.nextInt(board.getDimension() * board.getDimension());
 				} while (board.checkTile(n) != ' ');
 			} while (board.checkTile(n + 1) == 'D'
 					|| board.checkTile(n - 1) == 'D'
-					|| board.checkTile(n + board.dimension) == 'D'
-					|| board.checkTile(n - board.dimension) == 'D');
-			h1.posicao = n;
+					|| board.checkTile(n + board.getDimension()) == 'D'
+					|| board.checkTile(n - board.getDimension()) == 'D');
+			h1.setPosicao(n);
 			board.maze.set(n, 'H');
 		}
 
@@ -156,14 +156,14 @@ public class GameEngine implements Serializable {
 		if (board.checkTile(board.getExit()) == ' ')
 			board.changeBoard(board.getExit(), 'S');
 
-		if (h1.posicao == posEspada) {
+		if (h1.getPosicao() == posEspada) {
 			h1.armado = true;
 			posEspada = -1;
 		} else if (posEspada != -1) {
 			board.changeBoard(posEspada, 'E');
 		}
 
-		if (h1.posicao == posEscudo) {
+		if (h1.getPosicao() == posEscudo) {
 			h1.escudo = true;
 			posEscudo = -1;
 		} else if (posEscudo != -1) {
@@ -171,11 +171,11 @@ public class GameEngine implements Serializable {
 		}
 
 		for (int dardo = 0; dardo < darts.size(); dardo++) {
-			if (h1.posicao == darts.get(dardo).posicao) {
+			if (h1.getPosicao() == darts.get(dardo).getPosicao()) {
 				h1.dardo = true;
 				darts.get(dardo).posicao = -1;
-			} else if (darts.get(dardo).posicao != -1)
-				board.changeBoard(darts.get(dardo).posicao, 'T');
+			} else if (darts.get(dardo).getPosicao() != -1)
+				board.changeBoard(darts.get(dardo).getPosicao(), 'T');
 		}
 
 		if (h1.armado)
@@ -184,9 +184,9 @@ public class GameEngine implements Serializable {
 			board.changeBoard(h1.posicao, 'H');
 
 		for (int dragon = 0; dragon < dragons.size(); dragon++) {
-			if (dragons.get(dragon).posicao == posEscudo && posEscudo != -1)
+			if (dragons.get(dragon).getPosicao() == posEscudo && posEscudo != -1)
 				board.changeBoard(posEscudo, 'F');
-			else if (dragons.get(dragon).posicao == posEspada
+			else if (dragons.get(dragon).getPosicao() == posEspada
 					&& posEspada != -1)
 				board.changeBoard(posEspada, 'F');
 			else
@@ -237,11 +237,19 @@ public class GameEngine implements Serializable {
 		 * W -> -10 posicoes no array S -> +10 posicoes no array A -> -1 posicao
 		 * no array D -> +1 posicao no array
 		 */
+		boolean dragonsKilled = true; // Esta variável indica se todos os dragoes estao mortos e por isso é possível sair do labirinto
+		for(int i=0; i<dragons.size();i++){
+			if(dragons.get(i).getPosicao() != -1)
+				dragonsKilled = false;
+		}
+
 		switch (direcao) {
 		case 'w':
-			if (canMove(h1.posicao - board.dimension)) {
-				board.maze.set(h1.posicao, ' ');
-				h1.posicao -= board.dimension;
+			if(h1.getPosicao()-board.getDimension() == board.getExit() && !dragonsKilled)
+				return 0;
+			if (canMove(h1.getPosicao() - board.getDimension())) {
+				board.maze.set(h1.getPosicao(), ' ');
+				h1.setPosicao(h1.getPosicao()-board.getDimension());
 				/*if (h1.armado)
 					board.changeBoard(h1.posicao, 'A');
 				else
@@ -249,9 +257,11 @@ public class GameEngine implements Serializable {
 			}
 			break;
 		case 's':
-			if (canMove(h1.posicao + board.dimension)) {
-				board.maze.set(h1.posicao, ' ');
-				h1.posicao += board.dimension;
+			if(h1.getPosicao()+board.getDimension() == board.getExit() && !dragonsKilled)
+				return 0;
+			if (canMove(h1.getPosicao() + board.getDimension())) {
+				board.maze.set(h1.getPosicao(), ' ');
+				h1.setPosicao(h1.getPosicao() + board.getDimension());
 				/*if (h1.armado)
 					board.changeBoard(h1.posicao, 'A');
 				else
@@ -259,9 +269,11 @@ public class GameEngine implements Serializable {
 			}
 			break;
 		case 'a':
-			if (canMove(h1.posicao - 1)) {
-				board.maze.set(h1.posicao, ' ');
-				h1.posicao -= 1;
+			if(h1.getPosicao()-1 == board.getExit() && !dragonsKilled)
+				return 0;
+			if (canMove(h1.getPosicao() - 1)) {
+				board.maze.set(h1.getPosicao(), ' ');
+				h1.setPosicao(h1.getPosicao() - 1);
 				/*if (h1.armado)
 					board.changeBoard(h1.posicao, 'A');
 				else
@@ -269,9 +281,11 @@ public class GameEngine implements Serializable {
 			}
 			break;
 		case 'd':
-			if (canMove(h1.posicao + 1)) {
-				board.maze.set(h1.posicao, ' ');
-				h1.posicao += 1;
+			if(h1.getPosicao()+1 == board.getExit() && !dragonsKilled)
+				return 0;
+			if (canMove(h1.getPosicao() + 1)) {
+				board.maze.set(h1.getPosicao(), ' ');
+				h1.setPosicao(h1.getPosicao() + 1);
 				/*if (h1.armado)
 					board.changeBoard(h1.posicao, 'A');
 				else
@@ -295,9 +309,9 @@ public class GameEngine implements Serializable {
 		for (int i = 0; i < dragons.size(); i++) {
 			n = r.nextInt(2) + 1;
 			if (n == 1)
-				dragons.get(i).acordado = true;
+				dragons.get(i).setAcordado(true);
 			else
-				dragons.get(i).acordado = false;
+				dragons.get(i).setAcordado(false);
 		}
 	}
 
@@ -323,33 +337,33 @@ public class GameEngine implements Serializable {
 
 			if (dragons.get(i).getPosicao() == -1)
 				continue;
-			if (!dragons.get(i).acordado) {
-				board.maze.set(dragons.get(i).posicao, 'd');
+			if (!dragons.get(i).isAcordado()) {
+				board.maze.set(dragons.get(i).getPosicao(), 'd');
 				continue;
 			}
 
-			board.maze.set(dragons.get(i).posicao, ' ');
+			board.maze.set(dragons.get(i).getPosicao(), ' ');
 
 			do {
 				n = r.nextInt(5) + 1;
 				if (n == 5) {
-					board.maze.set(dragons.get(i).posicao, 'D');
+					board.maze.set(dragons.get(i).getPosicao(), 'D');
 					continue Dragon;
 				} else if (n <= 2) {
-					t = (board.dimension * (n * 2 - 3));// Calculo feito para
+					t = (board.getDimension() * (n * 2 - 3));// Calculo feito para
 					// minimizar o
 					// numero de ifs feitos pela
 					// funcao
-					if (canMove(dragons.get(i).posicao + t)
-							&& board.maze.get(dragons.get(i).posicao + t) != 'S') {
-						dragons.get(i).posicao += t;
+					if (canMove(dragons.get(i).getPosicao() + t)
+							&& board.maze.get(dragons.get(i).getPosicao() + t) != 'S') {
+						dragons.get(i).setPosicao(dragons.get(i).getPosicao() + t);
 						ret = 0;
 					}
 				} else {
 					t = (n * 2 - 7); // f(3) = -1,f(4) = 1
 					if (canMove(dragons.get(i).posicao + t)
-							&& board.maze.get(dragons.get(i).posicao + t) != 'S') {
-						dragons.get(i).posicao += t;
+							&& board.maze.get(dragons.get(i).getPosicao() + t) != 'S') {
+						dragons.get(i).setPosicao(dragons.get(i).posicao + t);
 						ret = 0;
 					}
 				}
@@ -366,11 +380,11 @@ public class GameEngine implements Serializable {
 
 	public boolean combate() {
 		for (int i = 0; i < dragons.size(); i++) {
-			if (h1.posicao == dragons.get(i).posicao + 1
-					|| h1.posicao == dragons.get(i).posicao - 1
-					|| h1.posicao == dragons.get(i).posicao + board.dimension
-					|| h1.posicao == dragons.get(i).posicao - board.dimension
-					|| h1.posicao == dragons.get(i).posicao) {
+			if (h1.getPosicao() == dragons.get(i).getPosicao() + 1
+					|| h1.getPosicao() == dragons.get(i).getPosicao() - 1
+					|| h1.getPosicao() == dragons.get(i).getPosicao() + board.getDimension()
+					|| h1.getPosicao() == dragons.get(i).getPosicao() - board.getDimension()
+					|| h1.getPosicao() == dragons.get(i).getPosicao()) {
 				if (!h1.armado && dragons.get(i).acordado) {
 					// placeEntities();
 
@@ -384,11 +398,11 @@ public class GameEngine implements Serializable {
 					}
 					return true;
 				} else {
-					if (!h1.armado && !dragons.get(i).acordado)
+					if (!h1.armado && !dragons.get(i).isAcordado())
 						return false;
 					else {
-						board.changeBoard(dragons.get(i).posicao, ' ');
-						dragons.get(i).posicao = -1;
+						board.changeBoard(dragons.get(i).getPosicao(), ' ');
+						dragons.get(i).setPosicao(-1);
 						return false;
 					}
 				}
@@ -396,21 +410,25 @@ public class GameEngine implements Serializable {
 			}
 
 		}
-		if(fireballKill())
-			return true;
+		//if(fireballKill())
+		//	return true;
 
 		return false;
 	}
 
 	public boolean fireballKill(){
 
+		if(h1.isEscudo())
+			return false;
+		
 		for(int i=0;i<dragons.size();i++){
-			int pos = dragons.get(i).posicao;
-			int ydragao = pos%10;
-			int xdragao = pos/10;
-			int xheroi = h1.getPosicao()/10;
-			int yheroi = h1.getPosicao()%10;
-			int maxpos=0;
+			
+			int pos = dragons.get(i).getPosicao();
+			int xdragao = pos % board.getDimension();
+			int ydragao = pos / board.getDimension();
+			int xheroi = h1.getPosicao() % board.getDimension();
+			int yheroi = h1.getPosicao() / board.getDimension();
+			int maxpos = 0;
 
 			if(randomFireBall(1) && dragons.get(i).isAcordado()){
 				if(ydragao == yheroi){
@@ -432,9 +450,9 @@ public class GameEngine implements Serializable {
 				}
 				if(xdragao==xheroi){
 					if(ydragao<yheroi)
-						maxpos = pos+30;
+						maxpos = pos+3*board.getDimension();
 					else 
-						maxpos = pos-30;
+						maxpos = pos-3*board.getDimension();
 					while(board.checkTile(pos)!='X' && pos<maxpos){
 						if(h1.getPosicao()==pos){
 							cli.printMaze(board.getDados());
@@ -442,9 +460,9 @@ public class GameEngine implements Serializable {
 							return true;
 							}
 						else if(h1.getPosicao() < pos)
-							pos-=10;
+							pos-=board.getDimension();
 						else
-							pos+=10;
+							pos+=board.getDimension();
 					}
 				}
 			}
@@ -478,7 +496,7 @@ public class GameEngine implements Serializable {
 
 		for (int i = 0; i < number; i++) {
 			do {
-				n = r.nextInt((board.dimension * board.dimension) - 1);
+				n = r.nextInt((board.getDimension() * board.getDimension()) - 1);
 			} while (board.checkTile(n) == 'X');
 			Dragon d1 = new Dragon(n);
 			dragons.add(d1);
@@ -500,7 +518,7 @@ public class GameEngine implements Serializable {
 
 		for (int i = 0; i < number; i++) {
 			do {
-				n = r.nextInt((board.dimension * board.dimension) - 1);
+				n = r.nextInt((board.getDimension() * board.getDimension()) - 1);
 			} while (board.checkTile(n) != ' ');
 			Dart d1 = new Dart(n);
 			darts.add(d1);
@@ -526,10 +544,10 @@ public class GameEngine implements Serializable {
 
 					switch (direcao) {
 					case 'w':
-						pos -= board.dimension;
+						pos -= board.getDimension();
 						break;
 					case 's':
-						pos += board.dimension;
+						pos += board.getDimension();
 						break;
 					case 'a':
 						pos -= 1;
@@ -546,9 +564,9 @@ public class GameEngine implements Serializable {
 	}
 
 	public boolean testWinCondition() {
-		if ((h1.posicao == board.exit) && (h1.isArmado())) {
+		if ((h1.getPosicao() == board.getExit()) && (h1.isArmado())) {
 			for (int i = 0; i < dragons.size(); i++) {
-				if (dragons.get(i).posicao != -1)
+				if (dragons.get(i).getPosicao() != -1)
 					return false;
 			}
 			return true;

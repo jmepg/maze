@@ -6,11 +6,28 @@ import java.util.List;
 public abstract class Maze {
 	
 	public List<Character> maze = new ArrayList<Character>();
-	public int exit = 59;
-	public int dimension = 10;
-
+	private int exit = 59;
+	private int dimension = 10;
+	
+	/*
+	 * @brief Retorna a posicao da saída do labirinto
+	 */
 	public int getExit() {
 		return exit;
+	}
+	public void setExit(int exit){
+		this.exit = exit;	
+	}
+	
+	/*
+	 * @brief Retorna a dimensao total do labirinto
+	 */
+	public int getDimension(){
+		return dimension;
+	}
+	
+	public void setDimension(int dim){
+		this.dimension = dim; 
 	}
 
 	/*
@@ -40,6 +57,8 @@ public abstract class Maze {
 	public char checkTile(int tile) {
 		return maze.get(tile);
 	}
+
+
 
 	
 

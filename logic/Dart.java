@@ -7,4 +7,8 @@ public class Dart {
 	public Dart(int pos){
 		posicao=pos;
 	}
+	
+	public int getPosicao(){
+		return posicao;
+	}
 }

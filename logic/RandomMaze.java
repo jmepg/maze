@@ -11,7 +11,7 @@ public class RandomMaze extends Maze{
 	 * @brief Construtor da classe.
 	 */
 	public RandomMaze(int size) {
-		this.dimension = size;
+		this.setDimension(size);
 		
 	}
 
@@ -94,7 +94,7 @@ public class RandomMaze extends Maze{
 	public void gera() {
 		/* Encher o maze com X */
 
-		for (int i = 0; i < dimension * dimension; i++) {
+		for (int i = 0; i < getDimension() * getDimension(); i++) {
 			maze.add('X');
 		}
 
@@ -112,8 +112,8 @@ public class RandomMaze extends Maze{
 		 * adequam. Este metodo pode possivelmente ser optimizado.
 		 */
 
-		for (long i = 0; i < dimension * dimension; i++) {
-			if ((((i / dimension) * (i % dimension)) % 2) != 0) {
+		for (long i = 0; i < getDimension() * getDimension(); i++) {
+			if ((((i / getDimension()) * (i % getDimension())) % 2) != 0) {
 				maze.set((int) i, ' ');
 				visitedCells.add((int) i);
 			}
@@ -124,7 +124,7 @@ public class RandomMaze extends Maze{
 		 * pivot usar quando se ficar preso.
 		 */
 		Stack<Integer> pathHistory = new Stack<Integer>();
-		int vcSize = (dimension - 1) / 2; // Tamanho do array de pivots
+		int vcSize = (getDimension() - 1) / 2; // Tamanho do array de pivots
 
 		Random r = new Random();
 		int currentPivot;
@@ -147,17 +147,17 @@ public class RandomMaze extends Maze{
 		 * de o pivot inicial estar num dos 4 cantos do array de pivots.
 		 */
 		if (currentPivot / vcSize == 0) {
-			exit = iterador - dimension;
-			maze.set(exit, 'S');
+			setExit(iterador - getDimension());
+			maze.set(getExit(), 'S');
 		} else if ((currentPivot / vcSize) >= (vcSize - 1)) {
-			exit = iterador + dimension;
-			maze.set(exit, 'S');
+			setExit(iterador + getDimension());
+			maze.set(getExit(), 'S');
 		} else if (currentPivot % vcSize == 0) {
-			exit = iterador - 1;
-			maze.set(exit, 'S');
+			setExit(iterador - 1);
+			maze.set(getExit(), 'S');
 		} else {
-			exit = iterador + 1;
-			maze.set(exit, 'S');
+			setExit(iterador + 1);
+			maze.set(getExit(), 'S');
 		}
 
 		/* Escolha dos proximos pivots */
@@ -178,7 +178,7 @@ public class RandomMaze extends Maze{
 							pathHistory.pop();
 						else {
 							currentPivot = pathHistory.peek();
-							iterador = (2 * (currentPivot / vcSize) + 1) * dimension
+							iterador = (2 * (currentPivot / vcSize) + 1) * getDimension()
 									+ (2 * (currentPivot % vcSize) + 1);
 							break;
 						}
@@ -197,11 +197,11 @@ public class RandomMaze extends Maze{
 			 */
 			switch (nextDirection) {
 			case 0:
-				maze.set(iterador - dimension, ' ');
+				maze.set(iterador - getDimension(), ' ');
 				currentPivot -= vcSize;
 				break;
 			case 1:
-				maze.set(iterador + dimension, ' ');
+				maze.set(iterador + getDimension(), ' ');
 				currentPivot += vcSize;
 				break;
 			case 2:

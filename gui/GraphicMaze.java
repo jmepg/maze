@@ -137,7 +137,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 			}
 
 			gui.getEngine().placeEntities();
-			for (int i = 0; i < gui.getEngine().board.dimension; i++)
+			for (int i = 0; i < gui.getEngine().board.getDimension(); i++)
 				System.out.println("");
 			cli.printMaze(gui.getEngine().board.getDados());
 			repaint();
