@@ -8,8 +8,8 @@ public class Dragon implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -7248944592308816164L;
-	int posicao = 31;	//-1 = dragao morto
-	boolean acordado = true;
+	private int posicao = 31;	//-1 = dragao morto
+	private boolean acordado = true;
 	public static enum Mode {STATIC,MOVABLE,SLEEPING};
 	
 	public Dragon(int pos){

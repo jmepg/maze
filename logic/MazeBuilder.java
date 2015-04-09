@@ -5,9 +5,18 @@ import logic.StaticMaze;
 import logic.Maze;
 
 public class MazeBuilder {
-	int opcao = -1;
-	int dimension = 10;
+	private int opcao = -1;
+	private int dimension = 10;
 
+	public int  getOpcao(){
+		return opcao;
+	}
+	
+	public void setOpcao(int op){
+		this.opcao = op;
+	}
+	
+	
 	/*
 	 * @brief Define o tipo de labirinto (aleatorio ou o ja definido).
 	 * 

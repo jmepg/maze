@@ -8,7 +8,7 @@ public class Dart implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -6878183323940828823L;
-	int posicao=0;
+	private int posicao=0;
 	
 	public Dart(int pos){
 		posicao=pos;
@@ -16,5 +16,8 @@ public class Dart implements Serializable{
 	
 	public int getPosicao(){
 		return posicao;
+	}
+	public void setPosicao(int pos){
+		this.posicao=pos;
 	}
 }
