@@ -1,16 +1,21 @@
 package logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Maze {
+public abstract class Maze implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9170202473439340886L;
 	public List<Character> maze = new ArrayList<Character>();
-	private int exit = 59;
-	private int dimension = 10;
+	protected int exit = 59;
+	protected int dimension = 10;
 	
 	/*
-	 * @brief Retorna a posicao da saída do labirinto
+	 * @brief Retorna a posicao da saï¿½da do labirinto
 	 */
 	public int getExit() {
 		return exit;

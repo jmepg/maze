@@ -102,6 +102,24 @@ public class Gui {
 		panel.requestFocus();
 		panel.repaint();
 	}
+	
+	public void createGame(){
+		panel.inCreationMode = true;
+		
+		MazeBuilder mb = new MazeBuilder();
+		mb.setMazeType(2);
+		mb.setMazeDim(optionButtons.getOptDialog().getTamanhoLabirinto());
+		engine.board = mb.getMaze();
+		engine.board.gera();
+		
+		
+		
+		panel.repaint();
+	}
+	
+	public void stopGameCreation(){
+		
+	}
 
 	public void setEngine(GameEngine engine) {
 		this.engine = engine;

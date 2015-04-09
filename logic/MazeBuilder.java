@@ -10,12 +10,13 @@ public class MazeBuilder {
 
 	/*
 	 * @brief Define o tipo de labirinto (aleatorio ou o ja definido).
-	 * @param op opcao a representar o tipo (0 = ja definido, 1 = aleatorio)
+	 * 
+	 * @param op opcao a representar o tipo (0 = estatico, 1 = aleatorio, 2= criado pelo utilizador))
 	 */
 	public void setMazeType(int op) {
 		opcao = op;
 	}
-	
+
 	/*
 	 * @brief Define a dimensao do labirinto.
 	 */
@@ -29,7 +30,10 @@ public class MazeBuilder {
 	public Maze getMaze() {
 		if (opcao == 1)
 			return new RandomMaze(dimension);
-		else
+		else if(opcao == 2)
 			return new StaticMaze();
+		else
+			return new CreatedMaze(dimension);
+
 	}
 }

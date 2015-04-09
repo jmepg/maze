@@ -7,11 +7,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-@SuppressWarnings("serial")
 public class OptionButtons extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton options;
 	private JButton saveload;
 	private JButton create;
@@ -83,6 +85,7 @@ public class OptionButtons extends JPanel {
 		saveLoadDialog = new SaveLoad(frame, "Save/Load Game", gui);
 		saveload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				saveLoadDialog.updateListOfSaves();
 				saveLoadDialog.setVisible(true);
 				gui.getPanel().requestFocus();
 			}
@@ -94,8 +97,7 @@ public class OptionButtons extends JPanel {
 		add(create, BorderLayout.EAST);
 		create.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "To be implemented later!",
-						"Oops!", JOptionPane.ERROR_MESSAGE);
+				gui.createGame();
 			}
 		});
 

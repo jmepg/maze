@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class MyTest {
+public class MyTest{
 
-    GameEngine g1;
+	GameEngine g1;
 
     /*
         @brief Testa se o heroi se move para espaços em branco

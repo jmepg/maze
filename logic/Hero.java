@@ -1,5 +1,10 @@
 package logic;
-public class Hero {
+
+import java.io.Serializable;
+
+public class Hero implements Serializable {
+	
+	private static final long serialVersionUID = 4073426483821224846L;
 	public int posicao = 11;
 	boolean armado = false;
 	boolean dardo = false;

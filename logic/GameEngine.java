@@ -20,8 +20,8 @@ public class GameEngine implements Serializable {
 	public Maze board;
 	public int posEspada = 81;
 	public int posEscudo = -1;
-	public Cli cli = new Cli();
-	public MyTest test = new MyTest();
+	public transient Cli cli = new Cli();
+	public transient MyTest test = new MyTest();
 	public Dragon.Mode dragonMode;
 	public int ambiente; // 0=cli 1=test
 	public int[] posicoes = { 0, 0, 0, 0, 0 };
@@ -237,7 +237,7 @@ public class GameEngine implements Serializable {
 		 * W -> -10 posicoes no array S -> +10 posicoes no array A -> -1 posicao
 		 * no array D -> +1 posicao no array
 		 */
-		boolean dragonsKilled = true; // Esta variável indica se todos os dragoes estao mortos e por isso é possível sair do labirinto
+		boolean dragonsKilled = true; // Esta variï¿½vel indica se todos os dragoes estao mortos e por isso ï¿½ possï¿½vel sair do labirinto
 		for(int i=0; i<dragons.size();i++){
 			if(dragons.get(i).getPosicao() != -1)
 				dragonsKilled = false;

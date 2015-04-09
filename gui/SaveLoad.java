@@ -48,6 +48,7 @@ public class SaveLoad extends JDialog {
 		setBounds(400, 300, 400, 172);
 		setResizable(false);
 		setVisible(false);
+		
 
 		initialize();
 
@@ -133,8 +134,6 @@ public class SaveLoad extends JDialog {
 		});
 		getContentPane().add(btnLoad);
 
-		getListOfSaves();
-
 		if (saves.size() != 0) {
 			SpinnerListModel meses = new SpinnerListModel(saves);
 			spinner = new JSpinner(meses);
@@ -167,17 +166,20 @@ public class SaveLoad extends JDialog {
 
 			try {
 				ObjectOutputStream os = new ObjectOutputStream(
-						new FileOutputStream("Cenas.txt"));
+						new FileOutputStream(savedGamesFolder + textField.getText() + ".dat"));
 				os.writeObject(gui.getEngine());
 				os.close();
 				JOptionPane.showMessageDialog(null, "Game successfully saved.");
 				setVisible(false);
 			} catch (IOException arg0) {
+				arg0.printStackTrace();
 				JOptionPane.showMessageDialog(null,
 						"Game was not successfully saved.");
 			}
 
 		}
+		
+		updateListOfSaves();
 	}
 
 	public void loadStateFromFile() {
@@ -193,7 +195,7 @@ public class SaveLoad extends JDialog {
 
 	}
 
-	public void getListOfSaves() {
+	public void updateListOfSaves() {
 		File folder = new File(savedGamesFolder);
 		if (!folder.isDirectory())
 			return;
@@ -201,5 +203,7 @@ public class SaveLoad extends JDialog {
 		saves.clear();
 		for (File file : folder.listFiles())
 			saves.add(file.getName());
+		
+		spinner.setValue(saves);
 	}
 }

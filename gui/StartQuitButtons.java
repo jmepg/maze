@@ -29,7 +29,7 @@ public class StartQuitButtons extends JPanel {
 		StartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int res = JOptionPane.showConfirmDialog(null,
-						"Are you sure you want to start a new game?");
+						"Are you sure you want to start a new game?", "Confirmation", JOptionPane.YES_NO_OPTION);
 				if (res == JOptionPane.YES_OPTION) {
 					gui.startGame();
 				}
@@ -43,7 +43,7 @@ public class StartQuitButtons extends JPanel {
 		QuitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int res = JOptionPane.showConfirmDialog(null,
-						"Are you sure you want to quit the game?");
+						"Are you sure you want to quit the game?", "Confirmation", JOptionPane.YES_NO_OPTION);
 				if (res == JOptionPane.YES_OPTION) {
 					System.exit(0);
 				}

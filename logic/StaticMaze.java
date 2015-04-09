@@ -2,6 +2,11 @@ package logic;
 
 public class StaticMaze extends Maze {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2251878716836205717L;
+
 	public void gera() {
 		
 		char[][] staticMaze = {

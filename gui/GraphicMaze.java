@@ -3,6 +3,7 @@ package gui;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -26,6 +27,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	public Gui gui;
 	public Cli cli = new Cli();
 	public boolean inGame = false;
+	public boolean inCreationMode = false;
+	
+	private CreationMenu cm;
 
 	Image image;
 
@@ -33,10 +37,12 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	 * Create the application.
 	 */
 	public GraphicMaze(Gui g) {
-		this.addKeyListener(this);
-		this.setPreferredSize(new Dimension(hSize, vSize));
-		this.setMinimumSize(new Dimension(hSize, vSize));
-		this.gui = g;
+		addKeyListener(this);
+		setPreferredSize(new Dimension(hSize, vSize));
+		setMinimumSize(new Dimension(hSize, vSize));
+		setLayout(new BorderLayout());
+		
+		gui = g;
 		try {
 			image = ImageIO.read(new File(
 					"src/resources/dungeon-demon_wide.jpg"));
@@ -59,53 +65,11 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		}
 
 		if (inGame) {
-			int size = (int) Math.sqrt(gui.getEngine().board.getDados().size());
-			int tileHSize = hSize / size;
-			int tileVSize = vSize / size;
-
-			for (int vTile = 0; vTile < size; vTile++) {
-				for (int hTile = 0; hTile < size; hTile++) {
-					switch (gui.getEngine().board.getDados().get(
-							vTile * size + hTile)) {
-					case 'X':
-						g.setColor(Color.red);
-						break;
-					case ' ':
-						g.setColor(Color.white);
-						break;
-					case 'H':
-						g.setColor(Color.cyan);
-						break;
-					case 'D':
-						g.setColor(Color.green);
-						break;
-					case 'd':
-						g.setColor(Color.green); // E preciso mudar isto
-						break;
-					case 'E':
-						g.setColor(Color.gray);
-						break;
-					case 'A':
-						g.setColor(Color.darkGray);
-						break;
-					case 'P':
-						g.setColor(Color.pink);
-						break;
-					case 'F':
-						g.setColor(Color.orange);
-						break;
-					case 'T':
-						g.setColor(Color.yellow);
-						break;
-					case 'S':
-						g.setColor(Color.BLUE);
-					default:
-						break;
-					}
-					g.fillRect(hTile * tileHSize, vTile * tileVSize, tileHSize,
-							tileVSize);
-				}
-			}
+			printMaze(g);
+		} else if (inCreationMode) {
+			cm = new CreationMenu();
+			printMaze(g);
+			add(cm, BorderLayout.NORTH);
 		} else {
 			g.drawImage(image, 0, 0, null);
 		}
@@ -141,6 +105,57 @@ public class GraphicMaze extends JPanel implements KeyListener {
 				System.out.println("");
 			cli.printMaze(gui.getEngine().board.getDados());
 			repaint();
+		}
+
+	}
+	
+	public void printMaze(Graphics g){
+		int size = (int) Math.sqrt(gui.getEngine().board.getDados().size());
+		int tileHSize = hSize / size;
+		int tileVSize = vSize / size;
+		
+		for (int vTile = 0; vTile < size; vTile++) {
+			for (int hTile = 0; hTile < size; hTile++) {
+				switch (gui.getEngine().board.getDados().get(
+						vTile * size + hTile)) {
+				case 'X':
+					g.setColor(Color.red);
+					break;
+				case ' ':
+					g.setColor(Color.white);
+					break;
+				case 'H':
+					g.setColor(Color.cyan);
+					break;
+				case 'D':
+					g.setColor(Color.green);
+					break;
+				case 'd':
+					g.setColor(Color.green); // E preciso mudar isto
+					break;
+				case 'E':
+					g.setColor(Color.gray);
+					break;
+				case 'A':
+					g.setColor(Color.darkGray);
+					break;
+				case 'P':
+					g.setColor(Color.pink);
+					break;
+				case 'F':
+					g.setColor(Color.orange);
+					break;
+				case 'T':
+					g.setColor(Color.yellow);
+					break;
+				case 'S':
+					g.setColor(Color.BLUE);
+				default:
+					break;
+				}
+				g.fillRect(hTile * tileHSize, vTile * tileVSize, tileHSize,
+						tileVSize);
+			}
 		}
 	}
 

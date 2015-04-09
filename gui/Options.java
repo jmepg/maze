@@ -35,8 +35,7 @@ public class Options extends JDialog {
 	private int numeroDragoes;
 	private int modoDragoes;
 	
-	@SuppressWarnings("rawtypes")
-	private JComboBox comportamentoDragoes;
+	private JComboBox<?> comportamentoDragoes;
 	
 	
 
@@ -90,8 +89,8 @@ public class Options extends JDialog {
 		return btnCancelar;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public JComboBox getComportamentoDragoes() {
+	
+	public JComboBox<?> getComportamentoDragoes() {
 		return comportamentoDragoes;
 	}
 
@@ -158,9 +157,6 @@ public class Options extends JDialog {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				numeroDragoes = nDragoes.getValue();
-				tamanhoLabirinto = tamanho.getValue();
-				modoDragoes = comportamentoDragoes.getSelectedIndex()+1;
 				dispose();
 			}
 		});
@@ -172,6 +168,9 @@ public class Options extends JDialog {
 		btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				numeroDragoes = nDragoes.getValue();
+				tamanhoLabirinto = tamanho.getValue();
+				modoDragoes = comportamentoDragoes.getSelectedIndex()+1;
 				dispose();
 			}
 		});

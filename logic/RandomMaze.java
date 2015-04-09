@@ -7,6 +7,11 @@ import java.util.Stack;
 
 public class RandomMaze extends Maze{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2811496529589474364L;
+
 	/*
 	 * @brief Construtor da classe.
 	 */
