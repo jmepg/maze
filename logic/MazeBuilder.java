@@ -39,7 +39,7 @@ public class MazeBuilder {
 	public Maze getMaze() {
 		if (opcao == 1)
 			return new RandomMaze(dimension);
-		else if(opcao == 2)
+		else if(opcao == 0)
 			return new StaticMaze();
 		else
 			return new CreatedMaze(dimension);
