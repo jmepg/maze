@@ -21,8 +21,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static final int hSize = Gui.hSize;
-	public static final int vSize = Gui.vSize - 75;
+
 
 	public Gui gui;
 	public Cli cli = new Cli();
@@ -38,8 +37,8 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	 */
 	public GraphicMaze(Gui g) {
 		addKeyListener(this);
-		setPreferredSize(new Dimension(hSize, vSize));
-		setMinimumSize(new Dimension(hSize, vSize));
+		setPreferredSize(new Dimension(Gui.hSize, Gui.vSize));
+		setMinimumSize(new Dimension(Gui.hSize, Gui.vSize));
 		setLayout(new BorderLayout());
 		
 		gui = g;
@@ -51,28 +50,37 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-
+		
+		cm = new CreationMenu();
+		add(cm, BorderLayout.NORTH);
+		cm.setVisible(false);
 	}
+	
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		try {
 			image = ImageIO.read(new File("resources/dungeon-demon_wide.jpg"))
-					.getScaledInstance(hSize, vSize, Image.SCALE_SMOOTH);
+					.getScaledInstance(Gui.hSize, Gui.vSize, Image.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO: handle exception
 		}
 
 		if (inGame) {
-			printMaze(g);
-		} else if (inCreationMode) {
-			cm = new CreationMenu();
-			printMaze(g);
-			add(cm, BorderLayout.NORTH);
-		} else {
+			printMaze(g,Gui.hSize, Gui.hSize-50);
+		}
+		else if(inCreationMode){
+			cm.setVisible(true);
+			printMaze(g,Gui.hSize, Gui.hSize-75);
+		}
+		else {
 			g.drawImage(image, 0, 0, null);
 		}
+	}
+	
+	public void setCreateMenuAsVisible(){
+		
 	}
 
 	@Override
@@ -109,8 +117,8 @@ public class GraphicMaze extends JPanel implements KeyListener {
 
 	}
 	
-	public void printMaze(Graphics g){
-		int size = (int) Math.sqrt(gui.getEngine().board.getDados().size());
+	public void printMaze(Graphics g, int hSize, int vSize){
+		int size = gui.getEngine().board.getDimension();
 		int tileHSize = hSize / size;
 		int tileVSize = vSize / size;
 		

@@ -133,12 +133,20 @@ public class SaveLoad extends JDialog {
 			}
 		});
 		getContentPane().add(btnLoad);
+		
+		String[] emptyList = {""};
+		
+		SpinnerListModel meses;
+		updateListOfSaves();
 
 		if (saves.size() != 0) {
-			SpinnerListModel meses = new SpinnerListModel(saves);
-			spinner = new JSpinner(meses);
+			meses = new SpinnerListModel(saves);
+			
 		} else
-			spinner = new JSpinner();
+			meses = new SpinnerListModel(emptyList);
+		
+		spinner = new JSpinner(meses);
+		
 		springLayout.putConstraint(SpringLayout.NORTH, spinner, 2,
 				SpringLayout.NORTH, lblLoad);
 		springLayout.putConstraint(SpringLayout.WEST, spinner, 0,
@@ -202,8 +210,8 @@ public class SaveLoad extends JDialog {
 
 		saves.clear();
 		for (File file : folder.listFiles())
-			saves.add(file.getName());
+			if(file.getName().contains(".dat"))
+				saves.add(file.getName());
 		
-		spinner.setValue(saves);
 	}
 }

@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.JFrame;
+
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 
@@ -111,9 +112,7 @@ public class Gui {
 		mb.setMazeDim(optionButtons.getOptDialog().getTamanhoLabirinto());
 		engine.board = mb.getMaze();
 		engine.board.gera();
-		
-		
-		
+		panel.setCreateMenuAsVisible();
 		panel.repaint();
 	}
 	

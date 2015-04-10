@@ -90,42 +90,6 @@ public class GameEngine implements Serializable {
 				board.gera();
 				dragonMode = cli.askForMode();
 				generateDragons(cli.askForDragons());
-				Random r = new Random();
-				Random r2 = new Random();
-				int n;
-
-				generateDarts();
-
-				do {
-					n = r.nextInt((board.getDimension() * board.getDimension()) - 1);
-				} while (board.checkTile(n) != ' ');
-
-				posEspada = n;
-
-				do {
-					n = r2.nextInt((board.getDimension() * board.getDimension()) - 1);
-				} while (board.checkTile(n) != ' ');
-
-				posEscudo = n;
-
-				/*
-				 * O heroi nao pode comecar numa posicao adjacente a dragoes,
-				 * senao o jogo e perdido automaticamente. Isto nao deve causar
-				 * erros de acesso ilegal a memoria, visto que as bordas nunca
-				 * tem um ' '
-				 */
-				do {
-					do {
-						n = r.nextInt(board.getDimension()
-								* board.getDimension());
-					} while (board.checkTile(n) != ' ');
-				} while (board.checkTile(n + 1) == 'D'
-						|| board.checkTile(n - 1) == 'D'
-						|| board.checkTile(n + board.getDimension()) == 'D'
-						|| board.checkTile(n - board.getDimension()) == 'D');
-				h1.setPosicao(n);
-				board.maze.set(n, 'H');
-
 			} else {
 				board = mb.getMaze();
 				board.gera();
@@ -141,6 +105,39 @@ public class GameEngine implements Serializable {
 				dragons.add(new Dragon());
 			}
 		}
+		
+		Random r = new Random();
+		Random r2 = new Random();
+		int n;
+
+		generateDarts();
+
+		do {
+			n = r.nextInt((board.getDimension() * board.getDimension()) - 1);
+		} while (board.checkTile(n) != ' ');
+
+		posEspada = n;
+
+		do {
+			n = r2.nextInt((board.getDimension() * board.getDimension()) - 1);
+		} while (board.checkTile(n) != ' ');
+
+		posEscudo = n;
+
+		/*
+		 * O heroi nao pode comecar numa posicao adjacente a dragoes, senao o
+		 * jogo e perdido automaticamente. Isto nao deve causar erros de acesso
+		 * ilegal a memoria, visto que as bordas nunca tem um ' '
+		 */
+		do {
+			do {
+				n = r.nextInt(board.getDimension() * board.getDimension());
+			} while (board.checkTile(n) != ' ');
+		} while (board.checkTile(n + 1) == 'D' || board.checkTile(n - 1) == 'D'
+				|| board.checkTile(n + board.getDimension()) == 'D'
+				|| board.checkTile(n - board.getDimension()) == 'D');
+		h1.setPosicao(n);
+		board.maze.set(n, 'H');
 
 	}
 
@@ -444,7 +441,8 @@ public class GameEngine implements Serializable {
 						maxpos = pos + 3;
 					else
 						maxpos = pos - 3;
-					while (board.checkTile(pos) != 'X' && Math.abs(maxpos-pos)>0) {
+					while (board.checkTile(pos) != 'X'
+							&& Math.abs(maxpos - pos) > 0) {
 						if (h1.getPosicao() == pos) {
 							cli.printMaze(board.getDados());
 							cli.estadoFinal(1);
@@ -460,7 +458,8 @@ public class GameEngine implements Serializable {
 						maxpos = pos + 3 * board.getDimension();
 					else
 						maxpos = pos - 3 * board.getDimension();
-					while (board.checkTile(pos) != 'X' && Math.abs(maxpos-pos)>0) {
+					while (board.checkTile(pos) != 'X'
+							&& Math.abs(maxpos - pos) > 0) {
 						if (h1.getPosicao() == pos) {
 							cli.printMaze(board.getDados());
 							cli.estadoFinal(1);
