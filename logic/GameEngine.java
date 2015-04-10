@@ -444,7 +444,7 @@ public class GameEngine implements Serializable {
 						maxpos = pos + 3;
 					else
 						maxpos = pos - 3;
-					while (board.checkTile(pos) != 'X' && pos < maxpos) {
+					while (board.checkTile(pos) != 'X' && Math.abs(maxpos-pos)>0) {
 						if (h1.getPosicao() == pos) {
 							cli.printMaze(board.getDados());
 							cli.estadoFinal(1);
@@ -460,7 +460,7 @@ public class GameEngine implements Serializable {
 						maxpos = pos + 3 * board.getDimension();
 					else
 						maxpos = pos - 3 * board.getDimension();
-					while (board.checkTile(pos) != 'X' && pos < maxpos) {
+					while (board.checkTile(pos) != 'X' && Math.abs(maxpos-pos)>0) {
 						if (h1.getPosicao() == pos) {
 							cli.printMaze(board.getDados());
 							cli.estadoFinal(1);

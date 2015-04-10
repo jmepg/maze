@@ -321,7 +321,7 @@ public void testFireballKill() {
 	
     if(g1.h1 == null || g1.h1.getPosicao() != 11){
     	g1.h1 = new Hero();
-    	g1.h1.setPosicao(11);
+    	
     }
     
     if(g1.dragons.size() == 0 || g1.dragons.get(0).getPosicao() != 31){
@@ -329,34 +329,31 @@ public void testFireballKill() {
     	g1.dragons.add(d1);
     }
 	
-	g1.dragons.get(0).setPosicao(55);
-	
+	g1.dragons.get(0).setPosicao(54);
+	g1.dragons.get(0).setAcordado(true);
 	g1.h1.setPosicao(52);
 	while(!firekill){
-		firekill=g1.combate();
+		firekill=g1.fireballKill();
 	}
-	Assert.assertEquals(true,firekill);
+
+	firekill = false;
+	g1.h1.setPosicao(56);
+	while(!firekill){
+		firekill=g1.fireballKill();
+	}
 	
 	firekill = false;
-	g1.h1.setPosicao(58);
+	g1.h1.setPosicao(74);
 	while(!firekill){
-		firekill=g1.combate();
+		firekill=g1.fireballKill();
 	}
-	Assert.assertEquals(true,firekill);
 	
 	firekill = false;
-	g1.h1.setPosicao(85);
+	g1.h1.setPosicao(34);
 	while(!firekill){
-		firekill=g1.combate();
+		firekill=g1.fireballKill();
 	}
-	Assert.assertEquals(true,firekill);
 	
-	firekill = false;
-	g1.h1.setPosicao(25);
-	while(!firekill){
-		firekill=g1.combate();
-	}
-	Assert.assertEquals(true,firekill);
 	
 }
 
