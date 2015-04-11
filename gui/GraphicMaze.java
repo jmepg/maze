@@ -13,22 +13,62 @@ import cli.Cli;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.awt.event.MouseAdapter;
+
+import logic.Maze;
+import logic.MazeBuilder;
 
 public class GraphicMaze extends JPanel implements KeyListener {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static final int hSize = Gui.hSize;
+	public static final int vSize = Gui.vSize - 50;
 
+	private static final int createGameXi = 0;
+	private static final int createGameYi = 25;
 
 	public Gui gui;
 	public Cli cli = new Cli();
-	public boolean inGame = false;
-	public boolean inCreationMode = false;
-	
+	private boolean inGame = false;
+	private boolean inCreationMode = false;
 	private CreationMenu cm;
+
+	public boolean isInGame() {
+		return inGame;
+	}
+
+	public void setInGame(boolean inGame) {
+		this.inGame = inGame;
+	}
+
+	public boolean isInCreationMode() {
+		return inCreationMode;
+	}
+
+	public void setInCreationMode(boolean inCreationMode) {
+		this.inCreationMode = inCreationMode;
+	}
+
+	public void setGui(Gui gui) {
+		this.gui = gui;
+	}
+
+	public void setCli(Cli cli) {
+		this.cli = cli;
+	}
+
+	public void setCm(CreationMenu cm) {
+		this.cm = cm;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
 
 	Image image;
 
@@ -36,11 +76,18 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	 * Create the application.
 	 */
 	public GraphicMaze(Gui g) {
+		addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				cm.changeBoard(arg0.getX() - createGameXi, arg0.getY()
+						- createGameYi, cm.getSeleccaoTile());
+				repaint();
+			}
+		});
 		addKeyListener(this);
 		setPreferredSize(new Dimension(Gui.hSize, Gui.vSize));
 		setMinimumSize(new Dimension(Gui.hSize, Gui.vSize));
 		setLayout(new BorderLayout());
-		
+
 		gui = g;
 		try {
 			image = ImageIO.read(new File(
@@ -50,37 +97,28 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-		cm = new CreationMenu();
-		add(cm, BorderLayout.NORTH);
+
+		cm = new CreationMenu(gui);
 		cm.setVisible(false);
 	}
-	
+
+	public CreationMenu getCm() {
+		return cm;
+	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		try {
-			image = ImageIO.read(new File("resources/dungeon-demon_wide.jpg"))
-					.getScaledInstance(Gui.hSize, Gui.vSize, Image.SCALE_SMOOTH);
-		} catch (IOException e) {
-			// TODO: handle exception
-		}
-
 		if (inGame) {
-			printMaze(g,Gui.hSize, Gui.hSize-50);
-		}
-		else if(inCreationMode){
-			cm.setVisible(true);
-			printMaze(g,Gui.hSize, Gui.hSize-75);
-		}
-		else {
+			printMaze(g, gui.getEngine().board, 0, 0, GraphicMaze.hSize,
+					GraphicMaze.vSize);
+		} else if (inCreationMode) {
+			printMaze(g, cm.getCustomBoard().board, createGameXi, createGameYi,
+					CreationMenu.hSize - createGameXi, CreationMenu.vSize
+							- createGameYi);
+		} else {
 			g.drawImage(image, 0, 0, null);
 		}
-	}
-	
-	public void setCreateMenuAsVisible(){
-		
 	}
 
 	@Override
@@ -114,18 +152,17 @@ public class GraphicMaze extends JPanel implements KeyListener {
 			cli.printMaze(gui.getEngine().board.getDados());
 			repaint();
 		}
-
 	}
-	
-	public void printMaze(Graphics g, int hSize, int vSize){
-		int size = gui.getEngine().board.getDimension();
+
+	public void printMaze(Graphics g, Maze board, int xi, int yi, int hSize,
+			int vSize) {
+		int size = board.getDimension();
 		int tileHSize = hSize / size;
 		int tileVSize = vSize / size;
-		
+
 		for (int vTile = 0; vTile < size; vTile++) {
 			for (int hTile = 0; hTile < size; hTile++) {
-				switch (gui.getEngine().board.getDados().get(
-						vTile * size + hTile)) {
+				switch (board.getDados().get(vTile * size + hTile)) {
 				case 'X':
 					g.setColor(Color.red);
 					break;
@@ -161,10 +198,35 @@ public class GraphicMaze extends JPanel implements KeyListener {
 				default:
 					break;
 				}
-				g.fillRect(hTile * tileHSize, vTile * tileVSize, tileHSize,
-						tileVSize);
+				g.fillRect(hTile * tileHSize + xi, vTile * tileVSize + yi,
+						tileHSize, tileVSize);
 			}
 		}
+	}
+
+	public void startMenuCreation() {
+		MazeBuilder mb = new MazeBuilder();
+		mb.setMazeType(2);
+		mb.setMazeDim(gui.getOptionButtons().getOptDialog()
+				.getTamanhoLabirinto());
+		if (cm.getCustomBoard() == null)
+			cm.createCustomBoard();
+		cm.getCustomBoard().board = mb.getMaze();
+		cm.getCustomBoard().board.gera();
+	}
+
+	public void setCreateMenuAsVisible() {
+		add(cm, BorderLayout.NORTH);
+		cm.setVisible(true);
+	}
+
+	public void disposeCreateMenu(boolean discardChanges) {
+		inCreationMode = false;
+		remove(gui.getPanel().getCm());
+		cm.setVisible(false);
+		gui.getPanel().repaint();
+		if (discardChanges)
+			cm.setCustomBoard(null);
 	}
 
 	@Override
@@ -174,8 +236,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
+	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}
+
 }

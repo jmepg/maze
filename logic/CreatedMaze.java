@@ -16,6 +16,7 @@ public class CreatedMaze extends Maze {
 		for (int i = 0; i < dimension * dimension; i++){
 			maze.add('X');
 		}
+		setExit(-1);
 	}
 
 }
