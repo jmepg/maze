@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -82,11 +84,14 @@ public class OptionButtons extends JPanel {
 		saveload = new JButton("Save/Load Game");
 		saveload.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
 		add(saveload, BorderLayout.CENTER);
-		saveLoadDialog = new SaveLoad(frame, "Save/Load Game", gui);
+		saveLoadDialog = new SaveLoad(gui);
 		saveload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				saveLoadDialog.updateListOfSaves();
 				saveLoadDialog.setVisible(true);
+				/*fc = new JFileChooser();
+				fc.setDialogTitle("Specify a file to save"); 
+				fc.setCurrentDirectory(new File(SaveLoad.savedGamesFolder));
+				int userSelection = fc.showSaveDialog(null);*/
 				gui.getPanel().requestFocus();
 			}
 			

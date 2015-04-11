@@ -78,9 +78,11 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	public GraphicMaze(Gui g) {
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
+				if(inCreationMode){
 				cm.changeBoard(arg0.getX() - createGameXi, arg0.getY()
 						- createGameYi, cm.getSeleccaoTile());
 				repaint();
+				}
 			}
 		});
 		addKeyListener(this);
@@ -217,6 +219,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 
 	public void setCreateMenuAsVisible() {
 		add(cm, BorderLayout.NORTH);
+		inGame = false;
 		cm.setVisible(true);
 	}
 
@@ -224,9 +227,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		inCreationMode = false;
 		remove(gui.getPanel().getCm());
 		cm.setVisible(false);
-		gui.getPanel().repaint();
+		repaint();
 		if (discardChanges)
-			cm.setCustomBoard(null);
+			cm.getCustomBoard().board = null;
 	}
 
 	@Override
