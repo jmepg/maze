@@ -6,8 +6,10 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.imageio.ImageIO;
@@ -19,6 +21,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import logic.GameEngine;
 
 @SuppressWarnings("serial")
 public class SaveLoad extends JDialog {
@@ -33,7 +37,7 @@ public class SaveLoad extends JDialog {
 	private JPanel buttons;
 	private JTextArea logs;
 	private JFileChooser fc;
-	
+
 	private FileNameExtensionFilter f1;
 	private FileNameExtensionFilter f2;
 	private FileNameExtensionFilter f3;
@@ -65,11 +69,10 @@ public class SaveLoad extends JDialog {
 		fc = new JFileChooser();
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.setCurrentDirectory(new File(savedGamesFolder));
-		
+
 		f1 = new FileNameExtensionFilter(
 				"Maze Escape Save Files (*.cmsf, *.mgsf)", cmsf, mgsf);
-		f2 = new FileNameExtensionFilter(
-				"Mid-game Save File (*.mgsf)", mgsf);
+		f2 = new FileNameExtensionFilter("Mid-game Save File (*.mgsf)", mgsf);
 		f3 = new FileNameExtensionFilter("Custom Maze Save File (*.cmsf)", cmsf);
 
 	}
@@ -87,43 +90,70 @@ public class SaveLoad extends JDialog {
 		openSavedGame = new JButton("Open a saved game");
 		openSavedGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (gui.getPanel().isInGame() || gui.getPanel()
+						.isInCreationMode()) {
+					JOptionPane
+							.showMessageDialog(
+									null,
+									"You can only open a save if you are not in the middle of a game or creating a maze!",
+									"Error", JOptionPane.ERROR_MESSAGE);
+					logs.append("Open command failed." + newline);
+					return;
+				}
 				fc.resetChoosableFileFilters();
 				fc.setFileFilter(f2);
 				int returnVal = fc.showOpenDialog(SaveLoad.this);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
-					// This is where a real application would open the file.
-					logs.append("Opening: " + file.getName() + "." + newline);
+					ObjectInputStream is = null;
+					try {
+						is = new ObjectInputStream(new FileInputStream(savedGamesFolder + file.getName()));
+						gui.setEngine((GameEngine) is.readObject());
+						is.close();
+					} catch (IOException | ClassNotFoundException e1) {}
+					gui.startGame(false);
+					logs.append("Opening: " + file.getName() + newline);
 				} else {
 					logs.append("Open command cancelled by user." + newline);
 				}
 				logs.setCaretPosition(logs.getDocument().getLength());
 			}
 		});
-		
-		
-		
 
 		openCustomMaze = new JButton("Open a custom maze");
 		openCustomMaze.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (gui.getPanel().isInGame() || gui.getPanel()
+						.isInCreationMode()) {
+					JOptionPane
+							.showMessageDialog(
+									null,
+									"You can only open a save if you are not in the middle of a game or creating a maze!",
+									"Error", JOptionPane.ERROR_MESSAGE);
+					logs.append("Open command failed." + newline);
+					return;
+				}
 				fc.resetChoosableFileFilters();
 				fc.setFileFilter(f3);
 				int returnVal = fc.showOpenDialog(SaveLoad.this);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
-
-					logs.append("Opening: " + file.getName() + "." + newline);
+					ObjectInputStream is = null;
+					try {
+						is = new ObjectInputStream(new FileInputStream(savedGamesFolder + file.getName()));
+						GameEngine teste = (GameEngine) is.readObject();
+						gui.getPanel().getCm().setCustomBoard(teste);
+						is.close();
+					} catch (IOException | ClassNotFoundException e1) {}
+					gui.startGame(true);
+					logs.append("Opening: " + file.getName() + newline);
 				} else {
 					logs.append("Open command cancelled by user." + newline);
 				}
 				logs.setCaretPosition(logs.getDocument().getLength());
 			}
 		});
-		
-		
-		
-		
+
 		saveCurrentState = new JButton("Save current state");
 		saveCurrentState.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -157,6 +187,7 @@ public class SaveLoad extends JDialog {
 									savedGamesFolder + file.getName() + "."
 											+ cmsf));
 						}
+						
 						os.writeObject(gui.getEngine());
 						os.close();
 						JOptionPane.showMessageDialog(null,
@@ -173,16 +204,13 @@ public class SaveLoad extends JDialog {
 				logs.setCaretPosition(logs.getDocument().getLength());
 			}
 		});
-		
-		
-		
+
 		cancel = new JButton("Cancel");
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		
 
 		try {
 			Image img = ImageIO.read(getClass().getResource(

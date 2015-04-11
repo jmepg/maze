@@ -63,7 +63,6 @@ public class GameEngine implements Serializable {
 					test.estadoFinal(0);
 				return;
 			}
-			// System.out.println(h1.posicao + " " + board.saida);
 			if (ambiente == 0)
 				moveHeroi(cli.askForDirection());
 			else if (ambiente == 2) {
