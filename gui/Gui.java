@@ -78,6 +78,7 @@ public class Gui {
 		if (ge != null) {
 			engine = ge;
 		} else {
+			/* Isto pode passado quase tudo para a initializeGame, depois trato disso */
 			MazeBuilder mb = new MazeBuilder();
 			mb.setMazeType(1);
 			mb.setMazeDim(getOptionButtons().getOptDialog()
