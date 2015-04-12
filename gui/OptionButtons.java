@@ -70,7 +70,7 @@ public class OptionButtons extends JPanel {
 		options = new JButton("Options");
 		options.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
 		add(options, BorderLayout.WEST);
-		optDialog = new Options(frame, "Opções de jogo",gui);
+		optDialog = new Options(frame, "Game Options",gui);
 		options.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				optDialog.setVisible(true);
@@ -86,10 +86,6 @@ public class OptionButtons extends JPanel {
 		saveload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				saveLoadDialog.setVisible(true);
-				/*fc = new JFileChooser();
-				fc.setDialogTitle("Specify a file to save"); 
-				fc.setCurrentDirectory(new File(SaveLoad.savedGamesFolder));
-				int userSelection = fc.showSaveDialog(null);*/
 				gui.getPanel().requestFocus();
 			}
 			

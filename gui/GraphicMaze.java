@@ -15,7 +15,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
 import java.awt.event.MouseAdapter;
 
 import logic.Maze;
@@ -94,10 +93,8 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		try {
 			image = ImageIO.read(new File(
 					"src/resources/dungeon-demon_wide.jpg"));
-		} catch (IOException e) {
-			System.out.println("Ficheiro nao existe!");
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 		cm = new CreationMenu(gui);
@@ -139,13 +136,13 @@ public class GraphicMaze extends JPanel implements KeyListener {
 
 			gui.getEngine().moveDragoes();
 			if (gui.getEngine().combate()) {
-				cli.estadoFinal(1);
-				System.exit(0);
+				gui.estadoFinal(1);
+				disposeGame();
 			}
 
 			if (gui.getEngine().testWinCondition()) {
-				cli.estadoFinal(0);
-				System.exit(0);
+				gui.estadoFinal(0);
+				disposeGame();
 			}
 
 			gui.getEngine().placeEntities();
@@ -218,6 +215,11 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		cm.getCustomBoard().board.gera();
 	}
 
+	public void disposeGame(){
+		inGame = false;
+		repaint();
+	}
+	
 	public void setCreateMenuAsVisible() {
 		add(cm, BorderLayout.NORTH);
 		inGame = false;
@@ -234,15 +236,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void keyReleased(KeyEvent arg0) {}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void keyTyped(KeyEvent e) {}
 
 }

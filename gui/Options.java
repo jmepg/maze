@@ -124,7 +124,6 @@ public class Options extends JDialog {
 		return null;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setOptions() {
 		getContentPane().setLayout(null);
 		
@@ -138,19 +137,19 @@ public class Options extends JDialog {
 		tamanho.setLabelTable(tamanho.createStandardLabels(4));
 		getContentPane().add(tamanho);
 
-		lblTamanhoDoLabirinto = new JLabel("Tamanho do Labirinto");
+		lblTamanhoDoLabirinto = new JLabel("Maze Size");
 		lblTamanhoDoLabirinto.setBounds(12, 12, 173, 15);
 		getContentPane().add(lblTamanhoDoLabirinto);
 
-		lblNmeroDeDrages = new JLabel("Número de dragões");
+		lblNmeroDeDrages = new JLabel("Number of Dragons");
 		lblNmeroDeDrages.setBounds(12, 87, 163, 15);
 		getContentPane().add(lblNmeroDeDrages);
 
-		lblModoDosDrages = new JLabel("Modo dos dragões");
+		lblModoDosDrages = new JLabel("Dragon Behaviour");
 		lblModoDosDrages.setBounds(12, 172, 143, 15);
 		getContentPane().add(lblModoDosDrages);
 
-		lblControlos = new JLabel("Controlos");
+		lblControlos = new JLabel("Controls");
 		lblControlos.setBounds(12, 204, 143, 15);
 		getContentPane().add(lblControlos);
 
@@ -163,15 +162,15 @@ public class Options extends JDialog {
 		nDragoes.setBounds(12, 114, 455, 42);
 		getContentPane().add(nDragoes);
 
-		String[] comportamentos = { "Dragões parados", "Dragões em movimento",
-				"Dragões adormecidos" };
+		String[] comportamentos = { "Static Dragons", "Moving Dragons",
+				"Sleepy Dragons" };
 		
-		comportamentoDragoes = new JComboBox(comportamentos);
+		comportamentoDragoes = new JComboBox<>(comportamentos);
 		comportamentoDragoes.setMaximumRowCount(3);
 		comportamentoDragoes.setBounds(173, 172, 200, 20);
 		getContentPane().add(comportamentoDragoes);
 
-		btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancel");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -196,7 +195,7 @@ public class Options extends JDialog {
 		getContentPane().add(btnOk);
 
 		
-		btnCima = new JButton("Cima");
+		btnCima = new JButton("Up");
 		
 		btnCima.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -207,7 +206,7 @@ public class Options extends JDialog {
 		btnCima.setBounds(17, 228, 100, 25);
 		getContentPane().add(btnCima);
 		
-		btnBaixo = new JButton("Baixo");
+		btnBaixo = new JButton("Down");
 		btnBaixo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new ControlsPopup(null,1,gui);
@@ -217,7 +216,7 @@ public class Options extends JDialog {
 		btnBaixo.setBounds(132, 228, 100, 25);
 		getContentPane().add(btnBaixo);
 		
-		btnEsquerda = new JButton("Esquerda");
+		btnEsquerda = new JButton("Left");
 		btnEsquerda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new ControlsPopup(null,2,gui);
@@ -227,7 +226,7 @@ public class Options extends JDialog {
 		btnEsquerda.setBounds(247, 228, 105, 25);
 		getContentPane().add(btnEsquerda);
 		
-		btnDireita = new JButton("Direita");
+		btnDireita = new JButton("Right");
 		btnDireita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new ControlsPopup(null,3,gui);

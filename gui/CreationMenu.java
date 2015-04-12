@@ -60,7 +60,7 @@ public class CreationMenu extends JPanel {
 		jcbEntidades.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
 		add(jcbEntidades, BorderLayout.WEST);
 
-		btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancel");
 		btnCancelar.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

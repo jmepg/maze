@@ -13,7 +13,7 @@ public class ControlsPopup extends JDialog {
 	private Gui gui;
 
 	public ControlsPopup(Options jdialog, int nControl, Gui gui) {
-		super(jdialog, "Definir uma tecla...");
+		super(jdialog, "Set key");
 		this.gui = gui;
 		this.nControl = nControl;
 		
@@ -31,7 +31,7 @@ public class ControlsPopup extends JDialog {
 		
 		setResizable(false);
 		
-		JLabel lblPrimaUmaTecla = new JLabel(" Prima uma tecla para atribuição...");
+		JLabel lblPrimaUmaTecla = new JLabel(" Hit a key for assignment...");
 		getContentPane().add(lblPrimaUmaTecla, BorderLayout.CENTER);
 		setVisible(true);
 	}

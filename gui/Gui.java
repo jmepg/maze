@@ -1,10 +1,11 @@
 package gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
-
 import logic.GameEngine;
 import logic.MazeBuilder;
 
@@ -87,7 +88,11 @@ public class Gui {
 			engine.dragonMode = getOptionButtons().getOptDialog().getModoDragoes();
 			engine.generateDragons(getOptionButtons().getOptDialog()
 					.getNumeroDragoes());
-
+			
+			engine.h1.setArmado(false);
+			engine.h1.setEscudo(false);
+			engine.h1.setDardo(false);
+			
 			engine.initializeGame(mb);
 			engine.placeEntities();
 		}
@@ -102,6 +107,25 @@ public class Gui {
 		panel.setCreateMenuAsVisible();
 		panel.requestFocus();
 		panel.repaint();
+	}
+	
+	public void estadoFinal(int estado) {
+
+		switch (estado) {
+		case 0:
+			JOptionPane.showMessageDialog(null,
+					"You win!", "Escape the Maze",
+					JOptionPane.INFORMATION_MESSAGE,new ImageIcon("src/resources/Trophy.png"));
+			break;
+		case 1:
+			JOptionPane.showMessageDialog(null,
+					"You lose!", "Escape the Maze",
+					JOptionPane.ERROR_MESSAGE,new ImageIcon("src/resources/logo.png"));
+			break;
+		default:
+			break;
+		}
+		return;
 	}
 
 	public void setEngine(GameEngine engine) {

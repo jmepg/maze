@@ -497,6 +497,8 @@ public class GameEngine implements Serializable {
 	public int generateDragons(int number) {
 		int n = 0;
 		Random r = new Random();
+		
+		dragons.clear();
 
 		for (int i = 0; i < number; i++) {
 			do {
@@ -519,6 +521,8 @@ public class GameEngine implements Serializable {
 		int n = 0;
 		Random r = new Random();
 		int number = r.nextInt(5) + 1;
+		
+		darts.clear();
 
 		for (int i = 0; i < number; i++) {
 			do {
