@@ -4,37 +4,51 @@ import logic.RandomMaze;
 import logic.StaticMaze;
 import logic.Maze;
 
+/**
+ * Class used to generate a maze according to the type of maze specified.
+ */
 public class MazeBuilder {
+	
+	/**
+	 * Type of maze to generate.
+	 */
 	private int opcao = -1;
+	
+	/**
+	 * Size of the maze.
+	 */
 	private int dimension = 10;
 
+	/**
+	 * Get @see dardo
+	 * 
+	 * @return opcao {@link opcao}
+	 */
 	public int  getOpcao(){
 		return opcao;
 	}
 	
-	public void setOpcao(int op){
-		this.opcao = op;
-	}
-	
-	
-	/*
-	 * @brief Define o tipo de labirinto (aleatorio ou o ja definido).
+	/**
+	 * Set @see opcao
 	 * 
-	 * @param op opcao a representar o tipo (0 = estatico, 1 = aleatorio, 2= criado pelo utilizador))
+	 * @param op {@link opcao} (0 = static, 1 = random, 2= user-created)
 	 */
-	public void setMazeType(int op) {
+	public void setOpcao(int op) {
 		opcao = op;
 	}
 
-	/*
-	 * @brief Define a dimensao do labirinto.
+	/**
+	 * Set @see dimension
+	 * 
+	 * @param dim {@link dimension}
 	 */
 	public void setMazeDim(int dim) {
 		dimension = dim;
 	}
 
-	/*
-	 * @brief Cria o labirinto.
+	/**
+	 * Creates the labyrinth.
+	 * @return The labyrinth generated.
 	 */
 	public Maze getMaze() {
 		if (opcao == 1)

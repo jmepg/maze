@@ -197,12 +197,12 @@ public class CreationMenu extends JPanel {
 			return 2;
 
 		/* Testa se ha dragoes, espada e escudo */
-		for (char tile = 0; tile < customBoard.board.getDados().size(); tile++) {
-			if (customBoard.board.getDados().get(tile) == 'D')
+		for (char tile = 0; tile < customBoard.board.getMaze().size(); tile++) {
+			if (customBoard.board.getMaze().get(tile) == 'D')
 				habemusDragao = true;
-			else if (customBoard.board.getDados().get(tile) == 'E')
+			else if (customBoard.board.getMaze().get(tile) == 'E')
 				habemusEspada = true;
-			else if (customBoard.board.getDados().get(tile) == 'P')
+			else if (customBoard.board.getMaze().get(tile) == 'P')
 				habemusEscudo = true;
 		}
 		if (!habemusDragao)
@@ -265,7 +265,7 @@ public class CreationMenu extends JPanel {
 			customBoard.board.setExit(tile);
 			break;
 		case 'H':
-			if (customBoard.board.getDados().get(tile) != ' ') {
+			if (customBoard.board.getMaze().get(tile) != ' ') {
 				JOptionPane.showMessageDialog(null,
 						"The hero has to be placed on the floor!", "Error",
 						JOptionPane.ERROR_MESSAGE);
@@ -275,7 +275,7 @@ public class CreationMenu extends JPanel {
 			customBoard.h1.setPosicao(tile);
 			break;
 		case 'D':
-			if (customBoard.board.getDados().get(tile) != ' ') {
+			if (customBoard.board.getMaze().get(tile) != ' ') {
 				JOptionPane.showMessageDialog(null,
 						"A dragon has to be placed on the floor!", "Error",
 						JOptionPane.ERROR_MESSAGE);
@@ -284,7 +284,7 @@ public class CreationMenu extends JPanel {
 			customBoard.dragons.add(new Dragon(tile));
 			break;
 		case 'T':
-			if (customBoard.board.getDados().get(tile) != ' ') {
+			if (customBoard.board.getMaze().get(tile) != ' ') {
 				JOptionPane.showMessageDialog(null,
 						"A dart has to be placed on the floor!", "Error",
 						JOptionPane.ERROR_MESSAGE);
@@ -293,7 +293,7 @@ public class CreationMenu extends JPanel {
 			customBoard.darts.add(new Dart(tile));
 			break;
 		case 'E':
-			if (customBoard.board.getDados().get(tile) != ' ') {
+			if (customBoard.board.getMaze().get(tile) != ' ') {
 				JOptionPane.showMessageDialog(null,
 						"The sword has to be placed on the floor!", "Error",
 						JOptionPane.ERROR_MESSAGE);
@@ -303,7 +303,7 @@ public class CreationMenu extends JPanel {
 			customBoard.posEspada = tile;
 			break;
 		case 'P':
-			if (customBoard.board.getDados().get(tile) != ' ') {
+			if (customBoard.board.getMaze().get(tile) != ' ') {
 				JOptionPane.showMessageDialog(null,
 						"The shield has to be placed on the floor!", "Error",
 						JOptionPane.ERROR_MESSAGE);
@@ -314,7 +314,7 @@ public class CreationMenu extends JPanel {
 			break;
 		}
 		
-		if(customBoard.board.getDados().get(tile) == 'D')
+		if(customBoard.board.getMaze().get(tile) == 'D')
 			for(int dragon = 0; dragon < customBoard.dragons.size(); dragon++){
 				if(customBoard.dragons.get(dragon).getPosicao() == tile) {
 					customBoard.dragons.remove(dragon);
@@ -322,7 +322,7 @@ public class CreationMenu extends JPanel {
 				}
 			}
 		
-		else if(customBoard.board.getDados().get(tile) == 'T')
+		else if(customBoard.board.getMaze().get(tile) == 'T')
 			for(int dart = 0; dart < customBoard.darts.size(); dart++){
 				if(customBoard.dragons.get(dart).getPosicao() == tile) {
 					customBoard.dragons.remove(dart);

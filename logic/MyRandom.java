@@ -2,8 +2,10 @@ package logic;
 
 import java.util.Random;
 
+/**
+ * I have absolutely no idea what this is for. This is not even used.
+ */
 public class MyRandom {
-	
 	public boolean rand = true;
 	public int[] v;
 	public Random r = new Random();

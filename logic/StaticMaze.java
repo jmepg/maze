@@ -1,13 +1,20 @@
 package logic;
 
+
+/**
+ * Subclass of Maze that uses the demo labyrinth.
+ */
 public class StaticMaze extends Maze {
 
 	/**
-	 * 
+	 * Serial version ID.
 	 */
 	private static final long serialVersionUID = 2251878716836205717L;
 
-	public void gera() {
+	/**
+	 * Generates the static maze.
+	 */
+	public void generate() {
 		
 		char[][] staticMaze = {
 				{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },

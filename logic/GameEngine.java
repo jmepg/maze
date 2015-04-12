@@ -8,34 +8,68 @@ import java.util.Random;
 import cli.Cli;
 import test.MyTest;
 
+/**
+ * The class that holds all the information "behind the scenes" in the maze.
+ */
 public class GameEngine implements Serializable {
 
 	/**
-	 * 
+	 * Serial version ID.
 	 */
 	private static final long serialVersionUID = 6468700820813573469L;
+	
+	/**
+	 * List of the dragons in the maze
+	 */
 	public List<Dragon> dragons = new ArrayList<Dragon>();
+	
+	/**
+	 * List of the darts in the maze
+	 */
 	public List<Dart> darts = new ArrayList<Dart>();
+	
+	/**
+	 * The hero.
+	 */
 	public Hero h1 = new Hero();
+	
+	/**
+	 * The board layout.
+	 */
 	public Maze board;
+	
+	/**
+	 * The sword's position.
+	 */
 	public int posEspada = 81;
+	
+	/**
+	 * The shield's position.
+	 */
 	public int posEscudo = -1;
+	
+	/* Nao vou documentar estes dois membros porque vao muito provavelmente ser apagados */
 	public transient Cli cli = new Cli();
 	public transient MyTest test = new MyTest();
+	
+	/** The dragons' behaviour
+	 * 
+	 */
 	public Dragon.Mode dragonMode;
+	
+	/** The interface used to play */
 	public int ambiente; // 0=cli 1=test
-	public int[] controls = { 0, 0, 0, 0, 0 };
 
+	/** 
+	 * The class constructor.
+	 * @param ambiente the interface used to play.
+	 */
 	public GameEngine(int ambiente) {
 		this.ambiente = ambiente;
 	}
 
-	public GameEngine() {
-		ambiente = 0;
-	}
-
-	/*
-	 * @brief Ciclo principal do jogo.
+	/**
+	 * The games' main loop.
 	 */
 	public void jogar() {
 		/*
@@ -50,7 +84,7 @@ public class GameEngine implements Serializable {
 			placeEntities();
 
 			if (ambiente == 0) {
-				cli.printMaze(board.getDados());
+				cli.printMaze(board.getMaze());
 			}
 
 			if (combate())
@@ -76,29 +110,30 @@ public class GameEngine implements Serializable {
 		}
 	}
 
-	/*
-	 * @brief Inicializa as variaveis necessarias ao bom funcionamento do jogo.
+	/**
+	 * Initializes the variables needed for the good functioning of the game.
+	 * @param mb {@link logic.MazeBuilder}
 	 */
 	public void initializeGame(MazeBuilder mb) {
 		if (ambiente == 0) {
-			mb.setMazeType(cli.askForType());
+			mb.setOpcao(cli.askForType());
 
 			if (mb.getOpcao() == 1) {
 				mb.setMazeDim(cli.askForSize());
 				board = mb.getMaze();
-				board.gera();
+				board.generate();
 				dragonMode = cli.askForMode();
 				generateDragons(cli.askForDragons());
 			} else {
 				board = mb.getMaze();
-				board.gera();
+				board.generate();
 				dragons.add(new Dragon());
 			}
 		} else if (ambiente == 1) {
 			MazeBuilder mbt = new MazeBuilder();
-			mbt.setMazeType(0);
+			mbt.setOpcao(0);
 			board = mbt.getMaze();
-			board.gera();
+			board.generate();
 			if (mbt.getOpcao() == 0) {
 				dragonMode = Dragon.Mode.STATIC;
 				dragons.add(new Dragon());
@@ -140,8 +175,8 @@ public class GameEngine implements Serializable {
 
 	}
 
-	/*
-	 * @brief Coloca as entidades estaticas do jogo no mapa.
+	/**
+	 * Places the static entities on the map.
 	 */
 	public void placeEntities() {
 		/*
@@ -195,9 +230,8 @@ public class GameEngine implements Serializable {
 		}
 	}
 
-	/*
-	 * @brief Remove as entidades estaticas do jogo do mapa, para serem repostas
-	 * depois nas novas posicoes.
+	/**
+	 * Deletes the static entities from the map.
 	 */
 
 	public void deleteEntities() {
@@ -210,26 +244,22 @@ public class GameEngine implements Serializable {
 				board.changeBoard(darts.get(i).getPosicao(), ' ');
 	}
 
-	/*
-	 * @brief Testa se a posicao dada e transponivel ou nao.
-	 * 
-	 * @param pos posicao a testar.
+	/**
+	 * Tests if the given tile can be crossed.
+	 * @param tile Tile to test.
+	 * @return True if the tile can be crossed, false otherwise.
 	 */
-	public boolean canMove(int pos) {
-		/*
-		 * for (int i = 0; i < dragons.size(); i++) { if
-		 * (!dragons.get(i).acordado) { if (dragons.get(i).posicao == pos &&
-		 * !h1.armado) return false; } }
-		 */
-		return !(board.checkTile(pos) == 'X' || board.checkTile(pos) == 'D');
+	public boolean canMove(int tile) {
+
+		return !(board.checkTile(tile) == 'X' || board.checkTile(tile) == 'D');
 	}
 
-	/*
-	 * @brief Move o heroi de posicao.
+	/**
+	 * Moves the hero.
 	 * 
-	 * @param direcao Direcao para onde ele se vai mover. (W/A/S/D)
+	 * @param direcao Direction to move him to
 	 */
-	public int moveHeroi(char direcao) {
+	public void moveHeroi(char direcao) {
 		/*
 		 * W -> -10 posicoes no array S -> +10 posicoes no array A -> -1 posicao
 		 * no array D -> +1 posicao no array
@@ -246,62 +276,46 @@ public class GameEngine implements Serializable {
 		case 'w':
 			if (h1.getPosicao() - board.getDimension() == board.getExit()
 					&& !dragonsKilled)
-				return 0;
+				return;
 			if (canMove(h1.getPosicao() - board.getDimension())) {
 				board.maze.set(h1.getPosicao(), ' ');
 				h1.setPosicao(h1.getPosicao() - board.getDimension());
-				/*
-				 * if (h1.armado) board.changeBoard(h1.posicao, 'A'); else
-				 * board.changeBoard(h1.posicao, 'H');
-				 */
 			}
 			break;
 		case 's':
 			if (h1.getPosicao() + board.getDimension() == board.getExit()
 					&& !dragonsKilled)
-				return 0;
+				return;
 			if (canMove(h1.getPosicao() + board.getDimension())) {
 				board.maze.set(h1.getPosicao(), ' ');
 				h1.setPosicao(h1.getPosicao() + board.getDimension());
-				/*
-				 * if (h1.armado) board.changeBoard(h1.posicao, 'A'); else
-				 * board.changeBoard(h1.posicao, 'H');
-				 */
 			}
 			break;
 		case 'a':
 			if (h1.getPosicao() - 1 == board.getExit() && !dragonsKilled)
-				return 0;
+				return;
 			if (canMove(h1.getPosicao() - 1)) {
 				board.maze.set(h1.getPosicao(), ' ');
 				h1.setPosicao(h1.getPosicao() - 1);
-				/*
-				 * if (h1.armado) board.changeBoard(h1.posicao, 'A'); else
-				 * board.changeBoard(h1.posicao, 'H');
-				 */
 			}
 			break;
 		case 'd':
 			if (h1.getPosicao() + 1 == board.getExit() && !dragonsKilled)
-				return 0;
+				return;
 			if (canMove(h1.getPosicao() + 1)) {
 				board.maze.set(h1.getPosicao(), ' ');
 				h1.setPosicao(h1.getPosicao() + 1);
-				/*
-				 * if (h1.armado) board.changeBoard(h1.posicao, 'A'); else
-				 * board.changeBoard(h1.posicao, 'H');
-				 */
 			}
 			break;
 		default:
 			break;
 		}
 		throwDarts(direcao);
-		return 0;
+		return;
 	}
 
-	/*
-	 * @brief Sorteia se o dragao fica acordado ou adormecido.
+	/**
+	 * Randomly sets a dragon as awake or not.
 	 */
 
 	public void isAwake() {
@@ -316,8 +330,8 @@ public class GameEngine implements Serializable {
 		}
 	}
 
-	/*
-	 * @brief Move o dragao de posicao.
+	/**
+	 * Randomly moves the dragons.
 	 */
 
 	public void moveDragoes() {
@@ -375,9 +389,9 @@ public class GameEngine implements Serializable {
 		}
 	}
 
-	/*
-	 * @brief Testa se houve combate entre o h1.posicao e o
-	 * dragons.get(i).posicao, e determina o vencedor
+	/**
+	 * Tests if there was a fight between the hero and one of the dragons, and determines the winner.
+	 * @return true if a dragon wins, false if the hero wins.
 	 */
 
 	public boolean combate() {
@@ -390,14 +404,13 @@ public class GameEngine implements Serializable {
 							- board.getDimension()
 					|| h1.getPosicao() == dragons.get(i).getPosicao()) {
 				if (!h1.isArmado() && dragons.get(i).isAcordado()) {
-					// placeEntities();
 
 					if (ambiente == 0) {
-						cli.printMaze(board.getDados());
+						cli.printMaze(board.getMaze());
 						cli.estadoFinal(1);
 					}
 					if (ambiente == 1) {
-						test.printMaze(board.getDados());
+						test.printMaze(board.getMaze());
 						test.estadoFinal(1);
 					}
 					return true;
@@ -414,12 +427,14 @@ public class GameEngine implements Serializable {
 			}
 
 		}
-		// if(fireballKill())
-		// return true;
-
+		
 		return false;
 	}
 
+	/**
+	 * Tests if a fireball kills the hero.
+	 * @return true if the hero is killed, false otherwise.
+	 */
 	public boolean fireballKill() {
 
 		if (h1.isEscudo())
@@ -443,7 +458,7 @@ public class GameEngine implements Serializable {
 					while (board.checkTile(pos) != 'X'
 							&& Math.abs(maxpos - pos) > 0) {
 						if (h1.getPosicao() == pos) {
-							cli.printMaze(board.getDados());
+							cli.printMaze(board.getMaze());
 							cli.estadoFinal(1);
 							return true;
 						} else if (h1.getPosicao() < pos)
@@ -460,7 +475,7 @@ public class GameEngine implements Serializable {
 					while (board.checkTile(pos) != 'X'
 							&& Math.abs(maxpos - pos) > 0) {
 						if (h1.getPosicao() == pos) {
-							cli.printMaze(board.getDados());
+							cli.printMaze(board.getMaze());
 							cli.estadoFinal(1);
 							return true;
 						} else if (h1.getPosicao() < pos)
@@ -476,8 +491,10 @@ public class GameEngine implements Serializable {
 
 	}
 
-	/*
-	 * @brief Sorteia se as Fireballs estao ativas.
+	/**
+	 * Randomly decides whether the dragon spits a fireball or not.
+	 * @param test ISTO E PARA SAIR DAQUI ESTRADA
+	 * @return true If a fireball is generated, false otherwise.
 	 */
 	public boolean randomFireBall(int test) {
 		Random r = new Random();
@@ -488,13 +505,13 @@ public class GameEngine implements Serializable {
 			return false;
 	}
 
-	/*
-	 * @brief Cria o numero de dragoes pedidos pelo user e insere-os na lista de
-	 * dragoes (dragons).
+	/**
+	 * Creates the number of dragons specified by the user and places them
+	 * in the list of dragons and in the board.
 	 * 
-	 * @param number Numero de dragoes pedido pelo user
+	 * @param number Number of dragons to generate.
 	 */
-	public int generateDragons(int number) {
+	public void generateDragons(int number) {
 		int n = 0;
 		Random r = new Random();
 		
@@ -509,18 +526,18 @@ public class GameEngine implements Serializable {
 			board.maze.set(n, 'D');
 		}
 
-		return dragons.size();
+		return;
 	}
 
-	/*
-	 * @brief Cria o numero de dardos entre 0 e 5 re-os na lista de dardos
-	 * (darts).
+	/**
+	 * Generates a random number of darts between 0 and the number of dragons, and places them
+	 * on the list of darts and in the board.
 	 */
 
 	public void generateDarts() {
 		int n = 0;
 		Random r = new Random();
-		int number = r.nextInt(5) + 1;
+		int number = r.nextInt(dragons.size()+1);
 		
 		darts.clear();
 
@@ -533,6 +550,12 @@ public class GameEngine implements Serializable {
 		}
 	}
 
+	/**
+	 * Checks whether the user has a dart, and whether the hero is in the range of a dragon,
+	 * and throws it if so
+	 * 
+	 * @param direcao The direction to look to.
+	 */
 	public void throwDarts(char direcao) {
 		boolean usedDart = false;
 
@@ -571,6 +594,11 @@ public class GameEngine implements Serializable {
 		}
 	}
 
+	/**
+	 * Tests if the game's winning condition has been met.
+	 * 
+	 * @return true if it has been met, false otherwise.
+	 */
 	public boolean testWinCondition() {
 		if ((h1.getPosicao() == board.getExit()) && (h1.isArmado())) {
 			for (int i = 0; i < dragons.size(); i++) {

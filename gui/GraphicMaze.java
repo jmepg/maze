@@ -231,7 +231,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 
 		for (int vTile = 0; vTile < size; vTile++) {
 			for (int hTile = 0; hTile < size; hTile++) {
-				switch (board.getDados().get(vTile * size + hTile)) {
+				switch (board.getMaze().get(vTile * size + hTile)) {
 				case 'X':
 					g.setColor(Color.red);
 					break;
@@ -281,14 +281,14 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	 */
 	public void startMenuCreation() {
 		MazeBuilder mb = new MazeBuilder();
-		mb.setMazeType(2);
+		mb.setOpcao(2);
 		mb.setMazeDim(gui.getOptionButtons().getOptDialog()
 				.getTamanhoLabirinto());
 		if (cm.getCustomBoard() == null)
 			cm.createCustomBoard();
 		cm.getCustomBoard().dragonMode = gui.getOptionButtons().getOptDialog().getModoDragoes();
 		cm.getCustomBoard().board = mb.getMaze();
-		cm.getCustomBoard().board.gera();
+		cm.getCustomBoard().board.generate();
 	}
 
 	/**

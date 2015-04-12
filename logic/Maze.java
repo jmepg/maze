@@ -4,67 +4,105 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Maze implements Serializable{
-	
+/**
+ * Abstract class containing the Maze's information.
+ * <p>
+ * All classes extending this one must implement the generate() method.
+ */
+public abstract class Maze implements Serializable {
+
 	/**
-	 * 
+	 * Serial version ID.
 	 */
 	private static final long serialVersionUID = 9170202473439340886L;
+
+	/**
+	 * The list containing the maze.
+	 */
 	public List<Character> maze = new ArrayList<Character>();
+
+	/**
+	 * The exit's location.
+	 */
 	protected int exit = 59;
+
+	/**
+	 * The maze's dimension
+	 */
 	protected int dimension = 10;
-	
-	/*
-	 * @brief Retorna a posicao da sa�da do labirinto
+
+	/**
+	 * Get @see exit
+	 * 
+	 * @return {@link exit}
 	 */
 	public int getExit() {
 		return exit;
 	}
-	public void setExit(int exit){
-		this.exit = exit;	
-	}
-	
-	/*
-	 * @brief Retorna a dimensao total do labirinto
+
+	/**
+	 * Set @see dardo
+	 * 
+	 * @param exit
+	 *            {@link exit}
 	 */
-	public int getDimension(){
+	public void setExit(int exit) {
+		this.exit = exit;
+	}
+
+	/**
+	 * Get @see dimension
+	 * 
+	 * @return {@link dimension}
+	 */
+	public int getDimension() {
 		return dimension;
 	}
-	
-	public void setDimension(int dim){
-		this.dimension = dim; 
+
+	/**
+	 * Set @see dimension
+	 * 
+	 * @param dim {@link dimension}
+	 */
+	public void setDimension(int dim) {
+		this.dimension = dim;
 	}
 
-	/*
-	 * @brief Gera o labirinto. E chamado o construtor da classe consoante o membro opcao da classe MazeBuilder.
+	/**
+	 * x Generates the labyrinth.
 	 */
-	public abstract void gera();
+	public abstract void generate();
 
-	/*
-	 * @brief Retorna o labirinto.
+	/**
+	 * Get @see maze
+	 * 
+	 * @return {@link maze}
 	 */
-	public List<Character> getDados() {
+	public List<Character> getMaze() {
 		return maze;
 	}
 
-	/*
-	 * @brief Muda uma entidade de posicao no labirinto.
+	/**
+	 * Changes the tile specified to the entity given.
+	 * 
+	 * @param tile
+	 *            Tile to change.
+	 * @param entity
+	 *            Entity to put in the tile.
 	 */
 	public void changeBoard(int tile, char entity) {
 		maze.set(tile, entity);
 	}
 
-	/*
-	 * @brief Retorna o item existente numa tile.
+	/**
+	 * Gets the tile in the specified position
 	 * 
-	 * @param tile Tile a testar
+	 * @param tile
+	 *            tile to test.
+	 * @return the entity in the tile.
 	 */
 	public char checkTile(int tile) {
 		return maze.get(tile);
 	}
-
-
-
-	
 
 }

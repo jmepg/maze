@@ -151,11 +151,11 @@ public class Gui {
 		} else {
 			/* Isto pode passado quase tudo para a initializeGame, depois trato disso */
 			MazeBuilder mb = new MazeBuilder();
-			mb.setMazeType(1);
+			mb.setOpcao(1);
 			mb.setMazeDim(getOptionButtons().getOptDialog()
 					.getTamanhoLabirinto());
 			engine.board = mb.getMaze();
-			engine.board.gera();
+			engine.board.generate();
 
 			engine.dragonMode = getOptionButtons().getOptDialog().getModoDragoes();
 			engine.generateDragons(getOptionButtons().getOptDialog()

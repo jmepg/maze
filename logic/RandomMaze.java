@@ -5,43 +5,34 @@ import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
+/**
+ * Subclass of Maze that randomly generates a labyrinth.
+ */
 public class RandomMaze extends Maze{
 
 	/**
-	 * 
+	 * Serial version ID.
 	 */
 	private static final long serialVersionUID = -2811496529589474364L;
 
-	/*
-	 * @brief Construtor da classe.
+	/**
+	 * Class constructor.
+	 * @param size Size of the labyrinth.
 	 */
 	public RandomMaze(int size) {
 		this.setDimension(size);
 		
 	}
 
-	/*
-	 * @brief Muda uma entidade de posicao no labirinto.
-	 */
-	public void changeBoard(int tile, char entity) {
-		maze.set(tile, entity);
-	}
 
 	/*
-	 * @brief Retorna o item existente numa tile.
+	 * Determines if all the current pivot's neighbours have been visited already.
+	 * <p> Used in the maze generation algorithm. 
 	 * 
-	 * @param tile Tile a testar
-	 */
-	public char checkTile(int tile) {
-		return maze.get(tile);
-	}
-
-	/*
-	 * @brief Determina se todos os vizinhos do pivot atual ja foram visitados.
+	 * @param currentPivot Pivot to use.
+	 * @param visitedCells Array with the information regarding the pivots.
 	 * 
-	 * @param currentPivot Pivot a usar
-	 * 
-	 * @param visitedCells Array com a informacao referente aos pivots
+	 * @return True if all the neighbours have been visited, false otherwise.
 	 */
 
 	public boolean isStuck(int currentPivot, List<Integer> visitedCells) {
@@ -52,15 +43,17 @@ public class RandomMaze extends Maze{
 		return true;
 	}
 
-	/*
-	 * @brief Determina se, a partir de um pivot, e depois de gerada uma
-	 * direccao, e possivel seguir nessa direccao.
+	/**
+	 * Determines if, after choosing a pivot and generating a direction,
+	 * if its possible to go in that direction.
+
+	 * @param currentPivot pivot to use.
 	 * 
-	 * @param currentPivot Pivot a usar
+	 * @param visitedCells array with the pivor information.
 	 * 
-	 * @param visitedCells Array com a informacao referente aos pivots
+	 * @param direction direction to take.
 	 * 
-	 * @param direction Direccao a tomar
+	 * @return true if possible, false otherwise.
 	 */
 	public boolean possiblePivot(int direction, int currentPivot,
 			List<Integer> visitedCells) {
@@ -91,12 +84,12 @@ public class RandomMaze extends Maze{
 		return true;
 	}
 
-	/*
-	 * @brief Gera um maze aleatoriamente. Segue o algoritmo explicado nesta
-	 * pagina: http://difusal.blogspot.pt/2014/02/maze-generation-algorithm.html
+	/**
+	 * Randomly generates a maze. Uses the algorithm explained in this page:
+	 * http://difusal.blogspot.pt/2014/02/maze-generation-algorithm.html
 	 */
 
-	public void gera() {
+	public void generate() {
 		/* Encher o maze com X */
 
 		for (int i = 0; i < getDimension() * getDimension(); i++) {
