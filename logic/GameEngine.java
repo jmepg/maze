@@ -104,8 +104,6 @@ public class GameEngine implements Serializable {
 			}
 
 			moveDragoes();
-			if (ambiente == 0)
-				Cli.clearConsole();
 			deleteEntities();
 		}
 	}
@@ -115,7 +113,10 @@ public class GameEngine implements Serializable {
 	 * @param mb {@link logic.MazeBuilder}
 	 */
 	public void initializeGame(MazeBuilder mb) {
+	
 		if (ambiente == 0) {
+			if(!cli.mainMenu())
+				System.exit(0);
 			mb.setOpcao(cli.askForType());
 
 			if (mb.getOpcao() == 1) {

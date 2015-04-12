@@ -7,6 +7,15 @@ import java.awt.EventQueue;
  */
 public class Launcher {
 	
+	/**
+	 * Default constructor
+	 */
+	
+	public Launcher(){}
+	/**
+	 * The main!
+	 * @param args arguments of the main.
+	 */
 	public static void main(String[] args){
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

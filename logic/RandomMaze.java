@@ -21,7 +21,6 @@ public class RandomMaze extends Maze{
 	 */
 	public RandomMaze(int size) {
 		this.setDimension(size);
-		
 	}
 
 

@@ -161,9 +161,7 @@ public class Gui {
 			engine.generateDragons(getOptionButtons().getOptDialog()
 					.getNumeroDragoes());
 			
-			engine.h1.setArmado(false);
-			engine.h1.setEscudo(false);
-			engine.h1.setDardo(false);
+			engine.h1.resetEquipment();
 			
 			engine.initializeGame(mb);
 			engine.placeEntities();

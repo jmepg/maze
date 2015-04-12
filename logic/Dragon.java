@@ -26,7 +26,11 @@ public class Dragon implements Serializable {
 	 * Stores information regarding the dragon's behaviour.
 	 */
 	public static enum Mode {
-		STATIC, MOVABLE, SLEEPING
+		/** The dragons never move */
+		STATIC,
+		/** The dragons always move */ MOVABLE,
+		/** The dragons move but sometimes fall asleep */
+		SLEEPING
 	};
 
 	/**

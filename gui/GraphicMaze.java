@@ -197,18 +197,18 @@ public class GraphicMaze extends JPanel implements KeyListener {
 
 			gui.getEngine().moveDragoes();
 			if (gui.getEngine().combate()) {
+				repaint();
 				gui.estadoFinal(1);
 				disposeGame();
 			}
 
 			if (gui.getEngine().testWinCondition()) {
+				repaint();
 				gui.estadoFinal(0);
 				disposeGame();
 			}
 
 			gui.getEngine().placeEntities();
-			for (int i = 0; i < gui.getEngine().board.getDimension(); i++)
-				System.out.println("");
 			repaint();
 		}
 	}
