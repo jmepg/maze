@@ -33,7 +33,7 @@ public class StartQuitButtons extends JPanel {
 							"Are you sure you want to start a new game?",
 							"Confirmation", JOptionPane.YES_NO_OPTION);
 					if (res == JOptionPane.YES_OPTION) {
-						gui.startGame(false);
+						gui.startGame(null);
 					}
 				} else {
 					if (gui.getPanel().isInCreationMode()) {
@@ -51,9 +51,9 @@ public class StartQuitButtons extends JPanel {
 									"Choose the labirinth",
 									JOptionPane.YES_NO_CANCEL_OPTION);
 					if (res == JOptionPane.YES_OPTION) {
-						gui.startGame(true);
+						gui.startGame(gui.getPanel().getCm().getCustomBoard());
 					} else if (res == JOptionPane.NO_OPTION)
-						gui.startGame(false);
+						gui.startGame(null);
 				}
 				gui.getPanel().requestFocus();
 			}

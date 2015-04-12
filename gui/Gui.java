@@ -74,9 +74,9 @@ public class Gui {
 		this.controls = controls;
 	}
 
-	public void startGame(boolean useCustomMaze) {
-		if (useCustomMaze) {
-			engine = panel.getCm().getCustomBoard();
+	public void startGame(GameEngine ge) {
+		if (ge != null) {
+			engine = ge;
 		} else {
 			MazeBuilder mb = new MazeBuilder();
 			mb.setMazeType(1);

@@ -111,7 +111,7 @@ public class SaveLoad extends JDialog {
 						gui.setEngine((GameEngine) is.readObject());
 						is.close();
 					} catch (IOException | ClassNotFoundException e1) {}
-					gui.startGame(false);
+					gui.startGame(gui.getEngine());
 					logs.append("Opening: " + file.getName() + newline);
 				} else {
 					logs.append("Open command cancelled by user." + newline);
@@ -141,11 +141,10 @@ public class SaveLoad extends JDialog {
 					ObjectInputStream is = null;
 					try {
 						is = new ObjectInputStream(new FileInputStream(savedGamesFolder + file.getName()));
-						GameEngine teste = (GameEngine) is.readObject();
-						gui.getPanel().getCm().setCustomBoard(teste);
+						gui.getPanel().getCm().setCustomBoard((GameEngine) is.readObject());
 						is.close();
 					} catch (IOException | ClassNotFoundException e1) {}
-					gui.startGame(true);
+					gui.startGame(gui.getPanel().getCm().getCustomBoard());
 					logs.append("Opening: " + file.getName() + newline);
 				} else {
 					logs.append("Open command cancelled by user." + newline);
