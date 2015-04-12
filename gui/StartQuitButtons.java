@@ -9,18 +9,42 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-@SuppressWarnings("serial")
+/**
+ * Manages the panel on top of the game screen.
+ */
 public class StartQuitButtons extends JPanel {
+	/**
+	 * Serial version ID.
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The start game button.
+	 */
 	private JButton StartButton;
+	
+	/**
+	 * The quit game button.
+	 */
 	private JButton QuitButton;
+	
+	/**
+	 * {@link gui.Gui}
+	 */
 	private Gui gui;
 
-	public StartQuitButtons(Gui gm) {
+	/**
+	 * The class constructor.
+	 * @param gui {@link gui.Gui}
+	 */
+	public StartQuitButtons(Gui gui) {
 		setLayout(new BorderLayout(0, 0));
 		createButtons();
-		this.gui = gm;
+		this.gui = gui;
 	}
 
+	/**
+	 * Creates the two buttons and adds them a actionPerformed listener.
+	 */
 	public void createButtons() {
 		StartButton = new JButton("Start game");
 		StartButton.setPreferredSize(new Dimension(Gui.hSize / 2, 25));

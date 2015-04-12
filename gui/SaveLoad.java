@@ -24,32 +24,95 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import logic.GameEngine;
 
-@SuppressWarnings("serial")
+/**
+ * The class that manages the Save/Load Game Fialog.
+ */
 public class SaveLoad extends JDialog {
+	
+	/**
+	 * Serial version ID.
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * A newline. Used in the logs.
+	 * @see logs
+	 */
+	static private final String newline = "\n";
+	
+	/**
+	 * The maze game save file extension format.
+	 */
+	static private final String mgsf = "mgsf";
+	
+	/**
+	 * The custom maze save file extension format.
+	 */
+	static private final String cmsf = "cmsf";
+	
 
+	/**
+	 * {@link gui.Gui}
+	 */
 	private Gui gui;
 
+	/**
+	 * The open a saved game button.
+	 */
 	private JButton openSavedGame;
+	
+	/**
+	 * The open custom maze button.
+	 */
 	private JButton openCustomMaze;
+	
+	/**
+	 * The save current state button.
+	 */
 	private JButton saveCurrentState;
+	
+	/**
+	 * The cancel button.
+	 */
 	private JButton cancel;
 
+	/**
+	 * The panel with the save/load buttons
+	 */
 	private JPanel buttons;
+	
+	/**
+	 * The text area that contains the save/load logs for this game session.
+	 */
 	private JTextArea logs;
+	
+	/**
+	 * The file chooser that opens when the user wants to save or load something.
+	 */
 	private JFileChooser fc;
 
-	private FileNameExtensionFilter f1;
-	private FileNameExtensionFilter f2;
-	private FileNameExtensionFilter f3;
-
-	static private final String newline = "\n";
-	static private final String mgsf = "mgsf";
-	static private final String cmsf = "cmsf";
+	/**
+	 * The filename extension filter used to limit the options to the ones the game can recognize.
+	 */
+	private FileNameExtensionFilter f1 = new FileNameExtensionFilter(
+			"Maze Escape Save Files (*.cmsf, *.mgsf)", cmsf, mgsf);
+	/**
+	 * The filename extension filter used to limit the options to the ones the game can recognize.
+	 */
+	private FileNameExtensionFilter f2 = new FileNameExtensionFilter("Mid-game Save File (*.mgsf)", mgsf);
+	/**
+	 * The filename extension filter used to limit the options to the ones the game can recognize.
+	 */
+	private FileNameExtensionFilter f3 = new FileNameExtensionFilter("Custom Maze Save File (*.cmsf)", cmsf);
 
 	/** Saved games folder path */
 	public static final String savedGamesFolder = System
 			.getProperty("user.dir") + "/Saved Games/";
 
+	/**
+	 * The constructor of the class.
+	 * @param gui {@link gui.Gui}
+	 */
 	public SaveLoad(Gui gui) {
 		setTitle("Save/Load game");
 		setModal(false);
@@ -69,14 +132,11 @@ public class SaveLoad extends JDialog {
 		fc = new JFileChooser();
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.setCurrentDirectory(new File(savedGamesFolder));
-
-		f1 = new FileNameExtensionFilter(
-				"Maze Escape Save Files (*.cmsf, *.mgsf)", cmsf, mgsf);
-		f2 = new FileNameExtensionFilter("Mid-game Save File (*.mgsf)", mgsf);
-		f3 = new FileNameExtensionFilter("Custom Maze Save File (*.cmsf)", cmsf);
-
 	}
 
+	/**
+	 * Creates the text area for the logs.
+	 */
 	public void createTextArea() {
 		logs = new JTextArea(5, 20);
 		logs.setMargin(new Insets(5, 5, 5, 5));
@@ -84,6 +144,9 @@ public class SaveLoad extends JDialog {
 		add(logs, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Creates all the buttons in dialog and the respective actionPerformed listeners.
+	 */
 	public void createButtons() {
 		buttons = new JPanel(new BorderLayout(0, 0));
 

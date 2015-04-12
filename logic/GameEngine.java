@@ -24,7 +24,7 @@ public class GameEngine implements Serializable {
 	public transient MyTest test = new MyTest();
 	public Dragon.Mode dragonMode;
 	public int ambiente; // 0=cli 1=test
-	public int[] posicoes = { 0, 0, 0, 0, 0 };
+	public int[] controls = { 0, 0, 0, 0, 0 };
 
 	public GameEngine(int ambiente) {
 		this.ambiente = ambiente;

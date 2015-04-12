@@ -13,31 +13,76 @@ import logic.Dart;
 import logic.Dragon;
 import logic.GameEngine;
 
+/**
+ * Manages the logic and buttons behind the maze creation by the user.
+ */
 public class CreationMenu extends JPanel {
 
-	public static final int hSize = Gui.hSize;
-	public static final int vSize = GraphicMaze.vSize - 25;
+	/**
+	 * Horizontal size of the maze window.
+	 */
+	public static final int hSize = Gui.hSize - GraphicMaze.createGameXi;
+	/**
+	 * Vertical size of the maze window.
+	 */
+	public static final int vSize = GraphicMaze.vSize - GraphicMaze.createGameYi;
 
+	/**
+	 * Serial version ID.
+	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	/**
+	 * The cancel button.
+	 */
 	private JButton btnCancelar;
+	/**
+	 * The ok button.
+	 */
 	private JButton btnOk;
+	
+	/**
+	 * The combo box with the various game entities, for the user to choose.
+	 */
 	private JComboBox<?> jcbEntidades;
+	
+	/**
+	 * {@link gui.Gui}
+	 */
 	private Gui gui;
 	
+	/**
+	 * The engine that contains the custom maze.
+	 */
 	private GameEngine customBoard;
 
+	/** 
+	 * Set @see #customBoard
+	 * @param customBoard {@link #customBoard}
+	 */
 	public void setCustomBoard(GameEngine customBoard) {
 		this.customBoard = customBoard;
 	}
 
+	/** 
+	 * Get @see #customBoard.
+	 * @return {@link #customBoard}
+	 */
 	public GameEngine getCustomBoard() {
 		return customBoard;
 	}
+	
+	/**
+	 * Creates a custom Board,
+	 */
 	public void createCustomBoard(){
 		customBoard = new GameEngine(2);
 	}
 
+	/**
+	 * The class constructor.
+	 * @param gui {@link #gui}
+	 */
 	public CreationMenu(Gui gui) {
 		setLayout(new BorderLayout(0, 0));
 		setSize(Gui.hSize, 25);
@@ -49,10 +94,17 @@ public class CreationMenu extends JPanel {
 		customBoard.posEspada = -1;
 	}
 
+	/**
+	 * Get @see #jcbEntidades
+	 * @return {@link #jcbEntidades}
+	 */
 	public JComboBox<?> getJcbEntidades() {
 		return jcbEntidades;
 	}
 
+	/**
+	 * Creates the buttons and the Combo box for user interface.
+	 */
 	public void createButtons() {
 		String[] entidades = { "Wall", "Floor", "Exit", "Hero", "Dragon",
 				"Dart", "Shield", "Sword" };
@@ -126,6 +178,10 @@ public class CreationMenu extends JPanel {
 
 	}
 
+	/**
+	 * When the user wants to save the maze, this function tests if it is a valid maze
+	 * @return 0 upon a valid maze, 1-6 depending on what it's missing.
+	 */
 	public int validateMaze() {
 
 		boolean habemusDragao = false;
@@ -172,6 +228,12 @@ public class CreationMenu extends JPanel {
 		return 0;
 	}
 
+	/**
+	 * Changes the custom board, validating the input.
+	 * @param x The x coordinate of the tile.
+	 * @param y The y coordinate of the tile.
+	 * @param entity The entity to place in that tile.
+	 */
 	public void changeBoard(int x, int y, char entity) {
 		int hTile = x * customBoard.board.getDimension() / hSize;
 		int vTile = y * customBoard.board.getDimension() / vSize;
@@ -271,6 +333,11 @@ public class CreationMenu extends JPanel {
 		customBoard.board.changeBoard(tile, entity);
 	}
 
+	/**
+	 * Converts the JComboBox index to the appropriate entity.
+	 * @return The entity.
+	 */
+	
 	public char getSeleccaoTile() {
 		switch (jcbEntidades.getSelectedIndex()) {
 		case 0:

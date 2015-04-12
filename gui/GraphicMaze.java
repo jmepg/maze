@@ -9,8 +9,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import cli.Cli;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -20,59 +18,126 @@ import java.awt.event.MouseAdapter;
 import logic.Maze;
 import logic.MazeBuilder;
 
+/**
+ * Manages the main screen containing the maze in-game and in creation mode, and an image otherwise.
+ */
 public class GraphicMaze extends JPanel implements KeyListener {
 	/**
-	 * 
+	 * Serial version ID.
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * The panel's horizontal size.
+	 */
 	public static final int hSize = Gui.hSize;
-	public static final int vSize = Gui.vSize - 50;
+	
+	/**
+	 * The panel's vertical size. 
+	 */
+	public static final int vSize = Gui.vSize - 2*Gui.buttonHeight;
 
-	private static final int createGameXi = 0;
-	private static final int createGameYi = 25;
+	/** 
+	 * The first horizontal coordinate of the maze in creation mode. 
+	 */
+	public static final int createGameXi = 0;
+	/**
+	 * The first vertical coordinate of the maze in creation mode. 
+	 */
+	public static final int createGameYi = Gui.buttonHeight;
 
+	/**
+	 * {@link gui.Gui}
+	 */
 	public Gui gui;
-	public Cli cli = new Cli();
+	
+	/**
+	 * Determines if the user is currently playing.
+	 */
 	private boolean inGame = false;
+	/**
+	 * Determines if the user is currently creating a maze.
+	 */
 	private boolean inCreationMode = false;
+	
+	/**
+	 * The image used in the main menu.
+	 */
+	private Image image;
+	
+	
+	/**
+	 * {@link gui.CreationMenu}
+	 */
 	private CreationMenu cm;
 
+	/**
+	 * Get @see #inGame
+	 * @return {@link #inGame}
+	 */
 	public boolean isInGame() {
 		return inGame;
 	}
+	
+	/**
+	 * Get @see #cm
+	 * @return {@link #cm}
+	 */
+	public CreationMenu getCm() {
+		return cm;
+	}
 
+	/**
+	 * Set @see #inGame
+	 * @param inGame {@link #inGame}
+	 */
 	public void setInGame(boolean inGame) {
 		this.inGame = inGame;
 	}
 
+	/**
+	 * Get @see #inCreationMode
+	 * @return {@link #inCreationMode}
+	 */
 	public boolean isInCreationMode() {
 		return inCreationMode;
 	}
 
+	/**
+	 * Set @see #inCreationMode
+	 * @param inCreationMode {@link #inCreationMode}
+	 */
 	public void setInCreationMode(boolean inCreationMode) {
 		this.inCreationMode = inCreationMode;
 	}
 
+	/**
+	 * Set @see #gui
+	 * @param gui {@link #gui}
+	 */
 	public void setGui(Gui gui) {
 		this.gui = gui;
 	}
 
-	public void setCli(Cli cli) {
-		this.cli = cli;
-	}
-
+	/**
+	 * Set @see #cm
+	 * @param cm {@link #cm}
+	 */
 	public void setCm(CreationMenu cm) {
 		this.cm = cm;
 	}
 
+	/**
+	 * Set @see #image
+	 * @param image {@link #image}
+	 */
 	public void setImage(Image image) {
 		this.image = image;
 	}
 
-	Image image;
-
 	/**
 	 * Create the application.
+	 * @param g {@link gui.Gui}
 	 */
 	public GraphicMaze(Gui g) {
 		addMouseListener(new MouseAdapter() {
@@ -99,10 +164,6 @@ public class GraphicMaze extends JPanel implements KeyListener {
 
 		cm = new CreationMenu(gui);
 		cm.setVisible(false);
-	}
-
-	public CreationMenu getCm() {
-		return cm;
 	}
 
 	public void paintComponent(Graphics g) {
@@ -148,11 +209,20 @@ public class GraphicMaze extends JPanel implements KeyListener {
 			gui.getEngine().placeEntities();
 			for (int i = 0; i < gui.getEngine().board.getDimension(); i++)
 				System.out.println("");
-			cli.printMaze(gui.getEngine().board.getDados());
 			repaint();
 		}
 	}
 
+	/**
+	 * Prints the maze on the screen. Only called by paintComponent().
+	 * @see #paintComponent(Graphics)
+	 * @param g Graphics from paintCompontent().
+	 * @param board The board to print.
+	 * @param xi The first horizontal pixel coordinate to print on.
+	 * @param yi The first vertical pixel coordinate to print on.
+	 * @param hSize The horizontal size of the rectangle to print on.
+	 * @param vSize The vertical size of the rectangle to print on.
+	 */
 	public void printMaze(Graphics g, Maze board, int xi, int yi, int hSize,
 			int vSize) {
 		int size = board.getDimension();
@@ -203,6 +273,12 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		}
 	}
 
+	/**
+	 * Sets the custom Maze in the create maze option with the settings from the Options class.
+	 * 
+	 * @see gui.Options
+	 * @see gui.CreationMenu
+	 */
 	public void startMenuCreation() {
 		MazeBuilder mb = new MazeBuilder();
 		mb.setMazeType(2);
@@ -215,17 +291,29 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		cm.getCustomBoard().board.gera();
 	}
 
+	/**
+	 * Disposes the game screen when the game ends.
+	 */
 	public void disposeGame(){
 		inGame = false;
 		repaint();
 	}
 	
+	/**
+	 * Starts the maze creation interface.
+	 * @see gui.CreationMenu
+	 */
 	public void setCreateMenuAsVisible() {
 		add(cm, BorderLayout.NORTH);
 		inGame = false;
 		cm.setVisible(true);
 	}
 
+	/**
+	 * Disposes the create menu screen.
+	 * @param discardChanges If set to true, the function will destroy all the customMaze data.
+	 * <p> If set to false, the fucntion will keep it.
+	 */
 	public void disposeCreateMenu(boolean discardChanges) {
 		inCreationMode = false;
 		remove(gui.getPanel().getCm());

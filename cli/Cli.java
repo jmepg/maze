@@ -5,13 +5,19 @@ import java.util.List;
 
 import logic.Dragon;
 
-
+/**
+ * Manages the necessary information for playing with a command-line interface.
+ */
 public class Cli {
 
+	/**
+	 * The scanner used for accepting the player's inputs.
+	 */
 	Scanner keyboard = new Scanner(System.in);
 
-	/*
-	 * @brief Imprime no ecra o labirinto.
+	/**
+	 *  Prints the maze in the command-line.
+	 *  @param maze The list of characters containing the information regarding the maze.
 	 */
 	public void printMaze(List<Character> maze) {
 
@@ -25,9 +31,9 @@ public class Cli {
 		}
 	}
 	
-	/*
-	 * @brief Pergunta no ecra a direcao para a qual o heroi se vai mover na
-	 * jogada seguinte.
+	/**
+	 * Asks in the command line the player's next move.
+	 * @return The direction the user chose.
 	 */
 
 	public char askForDirection() {
@@ -42,8 +48,9 @@ public class Cli {
 		return direcao;
 	}
 
-	/*
-	 * @brief Pergunta pelo tipo de labirinto.
+	/**
+	 * Asks the user the desired labyrinth type (Static/Generated).
+	 * @return The labyrinth type.
 	 */
 	public int askForType() {
 		int opcao;
@@ -58,9 +65,9 @@ public class Cli {
 		return opcao;
 	}
 	
-	/*
-	 * @brief Se for escolhida a opcao de labirinto aleatorio, pergunta pelo
-	 * tamanho do labirinto.
+	/**
+	 * In the case of a random labyrinth, asks the user for its size.
+	 * @return The size.
 	 */
 
 	public int askForSize() {
@@ -74,6 +81,11 @@ public class Cli {
 
 		return tamanho;
 	}
+	
+	/**
+	 * Asks the user for the dragon's behaviour (mode) (Static/Moving/Sleepy).
+	 * @return The dragon mode.
+	 */
 	
 	public Dragon.Mode askForMode(){
 		int choice;
@@ -101,6 +113,10 @@ public class Cli {
 		return mode;
 	}
 	
+	/**
+	 * Asks the user about the number of dragons he wishes to have the game generate.
+	 * @return The user's input.
+	 */
 	public int askForDragons(){
 		int number;
 		do{
@@ -112,8 +128,8 @@ public class Cli {
 		return number;
 	}
 
-	/*
-	 * @brief Pseudo-limpa a consola.
+	/**
+	 * Pseudo-clears the console.
 	 */
 	public final static void clearConsole() {
 		for (int i = 0; i < 25; i++) {
@@ -121,14 +137,12 @@ public class Cli {
 		}
 	}
 
-	/*
-	 * @brief Funcao que gere a condicao de fim de jogo
-	 * 
-	 * @param estado caso de fim de jogo. 0=vitoria 1=derrota.
+	/**
+	 * When one of the game-finishing conditions has been met, outputs the game result.
+	 * @param estado The game result.
 	 */
 	public void estadoFinal(int estado) {
 
-		//clearConsole();
 		System.out.println();
 
 		switch (estado) {

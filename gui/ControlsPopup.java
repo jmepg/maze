@@ -6,12 +6,29 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 
 import java.awt.event.KeyAdapter;
-
-@SuppressWarnings("serial")
+/**
+ * Manages the dialog that asks for the key to assign to each user action.
+ */
 public class ControlsPopup extends JDialog {
+	/**
+	 * Serial version ID.
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Id of the key the button will manage the assignment
+	 */
 	private int nControl;
+	/**
+	 * {@link gui.Gui}
+	 */
 	private Gui gui;
-
+	
+	/**
+	 * The class constructor.
+	 * @param jdialog The owner of this object.
+	 * @param nControl {@link #nControl}
+	 * @param gui {@link #gui}
+	 */
 	public ControlsPopup(Options jdialog, int nControl, Gui gui) {
 		super(jdialog, "Set key");
 		this.gui = gui;
@@ -36,7 +53,10 @@ public class ControlsPopup extends JDialog {
 		setVisible(true);
 	}
 	
-	
+	/**
+	 * Assigns the key given by the user.
+	 * @param arg0 the KeyEvent.
+	 */
 	public void setKey(KeyEvent arg0){
 		gui.setControl(nControl, arg0.getKeyCode());
 	}

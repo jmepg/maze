@@ -2,6 +2,9 @@ package gui;
 
 import java.awt.EventQueue;
 
+/**
+ * Contains the main. The project starts here!
+ */
 public class Launcher {
 	
 	public static void main(String[] args){

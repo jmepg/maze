@@ -14,89 +14,171 @@ import java.awt.event.ActionEvent;
 import logic.Dragon;
 import logic.Dragon.Mode;
 
-@SuppressWarnings("serial")
+/**
+ * Manages the options dialog.
+ */
 public class Options extends JDialog {
 
+	/**
+	 * Serial version ID.
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * The slider that asks for the maze's size input.
+	 */
 	private JSlider tamanho;
+	
+	/**
+	 * The slider that asks for the number of dragons.
+	 */
 	private JSlider nDragoes;
 	
+	
+	/**
+	 * The label for the labyrinth's size.
+	 */
 	private JLabel lblTamanhoDoLabirinto;
+	
+	/**
+	 * The label for the number of dragons.
+	 */
 	private JLabel lblNmeroDeDrages;
+	
+	/**
+	 * The label for the dragon's behaviour.
+	 */
 	private JLabel lblModoDosDrages;
+	
+	/**
+	 * The label for the controls.
+	 */
 	private JLabel lblControlos;
 	
+	/**
+	 * The confirm button.
+	 */
 	private JButton btnOk;
+	
+	/**
+	 * The cancel button.
+	 */
 	private JButton btnCancelar;
+	
+	/**
+	 * The up control button.
+	 */
 	private JButton btnCima;
+	
+	/**
+	 * The down control button.
+	 */
 	private JButton btnBaixo;
+	
+	/**
+	 * The left control button.
+	 */
 	private JButton btnEsquerda;
+	
+	/**
+	 * The right control button.
+	 */
 	private JButton btnDireita;
 	
+	/**
+	 * {@link gui.Gui}
+	 */
 	private Gui gui;
 	
+	/**
+	 * The variable that keeps the labyrinth size for the other classes to use.
+	 * <p> Updated only when the user presses ok.
+	 */
 	private int tamanhoLabirinto;
+	
+	/**
+	 * The variable that keeps the number of dragons for the other classes to use.
+	 * <p> Updated only when the user presses ok.
+	 */
 	private int numeroDragoes;
+	
+	/**
+	 * The variable that keeps the dragon behaviour for the other classes to use.
+	 * <p> Updated only when the user presses ok.
+	 */
 	private Mode modoDragoes;
 	
+	/**
+	 * The Combo box that lets the user choose which behaviour he wants for the dragons.
+	 */
 	private JComboBox<?> comportamentoDragoes;
 	
 	
-
+	/**
+	 * The class constructors
+	 * @param frame The owner of this dialog.
+	 * @param title The title to display in the top of the dialog.
+	 * @param gui {@link gui.Gui}
+	 */
 	public Options(JFrame frame, String title, Gui gui) {
 		super(frame, title);
 		this.gui = gui;
 		initialize();
 	}
 
+	/**
+	 * Get @see #tamanhoLabirinto
+	 * 
+	 * @return {@link #tamanhoLabirinto}
+	 */
 	public int getTamanhoLabirinto() {
 		return tamanhoLabirinto;
 	}
 
+	/**
+	 * Get @see #numeroDragoes
+	 * 
+	 * @return {@link #numeroDragoes}
+	 */
+	
 	public int getNumeroDragoes() {
 		return numeroDragoes;
 	}
 
+	/**
+	 * Get @see #modoDragoes
+	 * 
+	 * @return {@link #modoDragoes}
+	 */
 	public Mode getModoDragoes() {
 		return modoDragoes;
 	}
 	
+	/**
+	 * Get @see #tamanho
+	 * 
+	 * @return {@link #tamanho}
+	 */
 	public JSlider getTamanho() {
 		return tamanho;
 	}
 
+	/**
+	 * Get @see #nDragoes
+	 * 
+	 * @return {@link #nDragoes}
+	 */
 	public JSlider getnDragoes() {
 		return nDragoes;
 	}
 
-	public JLabel getLblTamanhoDoLabirinto() {
-		return lblTamanhoDoLabirinto;
-	}
 
-	public JLabel getLblNmeroDeDrages() {
-		return lblNmeroDeDrages;
-	}
-
-	public JLabel getLblModoDosDrages() {
-		return lblModoDosDrages;
-	}
-
-	public JLabel getLblControlos() {
-		return lblControlos;
-	}
-
-	public JButton getBtnOk() {
-		return btnOk;
-	}
-
-	public JButton getBtnCancelar() {
-		return btnCancelar;
-	}
-
-	
-	public JComboBox<?> getComportamentoDragoes() {
-		return comportamentoDragoes;
-	}
-
+	/**
+	 * Initializes the variables with the information for the other classes and some configurations.
+	 * @see #tamanhoLabirinto
+	 * @see #numeroDragoes
+	 * @see #modoDragoes
+	 */
 	public void initialize() {
 		tamanhoLabirinto = 15;
 		numeroDragoes = 5;
@@ -110,6 +192,11 @@ public class Options extends JDialog {
 		setVisible(false);
 	}
 	
+	/**
+	 * Converts the Combo Box selection to the corresponding dragon behaviour (mode).
+	 * @param mode The index of the selected JComboBox option.
+	 * @return The desired mode.
+	 */
 	public Mode convertSelectionToMode(int mode){
 		switch (mode) {
 		case 1:
@@ -124,6 +211,9 @@ public class Options extends JDialog {
 		return null;
 	}
 
+	/**
+	 * Initializes all the buttons, labels, sliders and the combo box.
+	 */
 	public void setOptions() {
 		getContentPane().setLayout(null);
 		
