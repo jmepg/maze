@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 
-import logic.Dragon;
 import logic.GameEngine;
 import logic.MazeBuilder;
 
@@ -85,20 +84,7 @@ public class Gui {
 			engine.board = mb.getMaze();
 			engine.board.gera();
 
-			switch (getOptionButtons().getOptDialog().getModoDragoes()) {
-			case 1:
-				engine.dragonMode = Dragon.Mode.STATIC;
-				break;
-			case 2:
-				engine.dragonMode = Dragon.Mode.MOVABLE;
-				break;
-			case 3:
-				engine.dragonMode = Dragon.Mode.SLEEPING;
-				break;
-			default:
-				break;
-			}
-
+			engine.dragonMode = getOptionButtons().getOptDialog().getModoDragoes();
 			engine.generateDragons(getOptionButtons().getOptDialog()
 					.getNumeroDragoes());
 

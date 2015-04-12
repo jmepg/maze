@@ -213,6 +213,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 				.getTamanhoLabirinto());
 		if (cm.getCustomBoard() == null)
 			cm.createCustomBoard();
+		cm.getCustomBoard().dragonMode = gui.getOptionButtons().getOptDialog().getModoDragoes();
 		cm.getCustomBoard().board = mb.getMaze();
 		cm.getCustomBoard().board.gera();
 	}

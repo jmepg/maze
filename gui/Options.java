@@ -11,6 +11,9 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import logic.Dragon;
+import logic.Dragon.Mode;
+
 @SuppressWarnings("serial")
 public class Options extends JDialog {
 
@@ -33,7 +36,7 @@ public class Options extends JDialog {
 	
 	private int tamanhoLabirinto;
 	private int numeroDragoes;
-	private int modoDragoes;
+	private Mode modoDragoes;
 	
 	private JComboBox<?> comportamentoDragoes;
 	
@@ -53,7 +56,7 @@ public class Options extends JDialog {
 		return numeroDragoes;
 	}
 
-	public int getModoDragoes() {
+	public Mode getModoDragoes() {
 		return modoDragoes;
 	}
 	
@@ -97,7 +100,7 @@ public class Options extends JDialog {
 	public void initialize() {
 		tamanhoLabirinto = 15;
 		numeroDragoes = 5;
-		modoDragoes = 2;
+		modoDragoes = convertSelectionToMode(1);
 		
 		setModal(true);
 		setBounds(400, 300, 479, 329);
@@ -105,6 +108,20 @@ public class Options extends JDialog {
 
 		setResizable(false);
 		setVisible(false);
+	}
+	
+	public Mode convertSelectionToMode(int mode){
+		switch (mode) {
+		case 1:
+			return Dragon.Mode.STATIC;
+		case 2:
+			return Dragon.Mode.MOVABLE;
+		case 3:
+			return Dragon.Mode.SLEEPING;
+		default:
+			break;
+		}
+		return null;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -170,7 +187,7 @@ public class Options extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				numeroDragoes = nDragoes.getValue();
 				tamanhoLabirinto = tamanho.getValue();
-				modoDragoes = comportamentoDragoes.getSelectedIndex()+1;
+				modoDragoes = convertSelectionToMode(comportamentoDragoes.getSelectedIndex()+1);
 				dispose();
 			}
 		});

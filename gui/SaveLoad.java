@@ -113,6 +113,7 @@ public class SaveLoad extends JDialog {
 					} catch (IOException | ClassNotFoundException e1) {}
 					gui.startGame(gui.getEngine());
 					logs.append("Opening: " + file.getName() + newline);
+					dispose();
 				} else {
 					logs.append("Open command cancelled by user." + newline);
 				}
@@ -146,6 +147,7 @@ public class SaveLoad extends JDialog {
 					} catch (IOException | ClassNotFoundException e1) {}
 					gui.startGame(gui.getPanel().getCm().getCustomBoard());
 					logs.append("Opening: " + file.getName() + newline);
+					dispose();
 				} else {
 					logs.append("Open command cancelled by user." + newline);
 				}
@@ -187,7 +189,7 @@ public class SaveLoad extends JDialog {
 											+ cmsf));
 						}
 						
-						os.writeObject(gui.getEngine());
+						os.writeObject(gui.getPanel().getCm().getCustomBoard());
 						os.close();
 						JOptionPane.showMessageDialog(null,
 								"Game successfully saved.");
