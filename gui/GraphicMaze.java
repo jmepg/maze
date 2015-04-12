@@ -170,10 +170,10 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		super.paintComponent(g);
 
 		if (inGame) {
-			printMaze(g, gui.getEngine().board, 0, 0, GraphicMaze.hSize,
+			printMaze(g, gui.getEngine().getBoard(), 0, 0, GraphicMaze.hSize,
 					GraphicMaze.vSize);
 		} else if (inCreationMode) {
-			printMaze(g, cm.getCustomBoard().board, createGameXi, createGameYi,
+			printMaze(g, cm.getCustomBoard().getBoard(), createGameXi, createGameYi,
 					CreationMenu.hSize - createGameXi, CreationMenu.vSize
 							- createGameYi);
 		} else {
@@ -287,8 +287,8 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		if (cm.getCustomBoard() == null)
 			cm.createCustomBoard();
 		cm.getCustomBoard().dragonMode = gui.getOptionButtons().getOptDialog().getModoDragoes();
-		cm.getCustomBoard().board = mb.getMaze();
-		cm.getCustomBoard().board.generate();
+		cm.getCustomBoard().setBoard(mb.getMaze());
+		cm.getCustomBoard().getBoard().generate();
 	}
 
 	/**
@@ -312,7 +312,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	/**
 	 * Disposes the create menu screen.
 	 * @param discardChanges If set to true, the function will destroy all the customMaze data.
-	 * <p> If set to false, the fucntion will keep it.
+	 * <p> If set to false, the function will keep it.
 	 */
 	public void disposeCreateMenu(boolean discardChanges) {
 		inCreationMode = false;
@@ -320,7 +320,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		cm.setVisible(false);
 		repaint();
 		if (discardChanges)
-			cm.getCustomBoard().board = null;
+			cm.getCustomBoard().setBoard(null);
 	}
 
 	@Override

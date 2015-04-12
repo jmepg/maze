@@ -52,7 +52,7 @@ public class StartQuitButtons extends JPanel {
 		StartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int res;
-				if (gui.getPanel().getCm().getCustomBoard().board == null) {
+				if (gui.getPanel().getCm().getCustomBoard().getBoard() == null) {
 					res = JOptionPane.showConfirmDialog(null,
 							"Are you sure you want to start a new game?",
 							"Confirmation", JOptionPane.YES_NO_OPTION);

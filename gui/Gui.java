@@ -154,14 +154,14 @@ public class Gui {
 			mb.setOpcao(1);
 			mb.setMazeDim(getOptionButtons().getOptDialog()
 					.getTamanhoLabirinto());
-			engine.board = mb.getMaze();
-			engine.board.generate();
+			engine.setBoard(mb.getMaze());
+			engine.getBoard().generate();
 
 			engine.dragonMode = getOptionButtons().getOptDialog().getModoDragoes();
 			engine.generateDragons(getOptionButtons().getOptDialog()
 					.getNumeroDragoes());
 			
-			engine.h1.resetEquipment();
+			engine.getHero().resetEquipment();
 			
 			engine.initializeGame(mb);
 			engine.placeEntities();

@@ -89,9 +89,9 @@ public class CreationMenu extends JPanel {
 		this.gui = gui;
 		createButtons();
 		createCustomBoard();
-		customBoard.h1.setPosicao(-1);
-		customBoard.posEscudo = -1;
-		customBoard.posEspada = -1;
+		customBoard.getHero().setPosicao(-1);
+		customBoard.setPosEscudo(-1); 
+		customBoard.setPosEspada(-1);
 	}
 
 	/**
@@ -189,20 +189,20 @@ public class CreationMenu extends JPanel {
 		boolean habemusEscudo = false;
 
 		/* Testa se ha heroi. Se nao houver, o labirinto nao pode ser jogado */
-		if (customBoard.h1.getPosicao() == -1)
+		if (customBoard.getHero().getPosicao() == -1)
 			return 1;
 
 		/* Testa se ha saida. */
-		if (customBoard.board.getExit() == -1)
+		if (customBoard.getBoard().getExit() == -1)
 			return 2;
 
 		/* Testa se ha dragoes, espada e escudo */
-		for (char tile = 0; tile < customBoard.board.getMaze().size(); tile++) {
-			if (customBoard.board.getMaze().get(tile) == 'D')
+		for (char tile = 0; tile < customBoard.getBoard().getMaze().size(); tile++) {
+			if (customBoard.getBoard().getMaze().get(tile) == 'D')
 				habemusDragao = true;
-			else if (customBoard.board.getMaze().get(tile) == 'E')
+			else if (customBoard.getBoard().getMaze().get(tile) == 'E')
 				habemusEspada = true;
-			else if (customBoard.board.getMaze().get(tile) == 'P')
+			else if (customBoard.getBoard().getMaze().get(tile) == 'P')
 				habemusEscudo = true;
 		}
 		if (!habemusDragao)
@@ -211,10 +211,10 @@ public class CreationMenu extends JPanel {
 			return 4;
 
 		/* Por ultimo, testa se ha dragoes ao lado do heroi */
-		if (customBoard.board.checkTile(customBoard.h1.getPosicao() + 1) == 'D'
-				|| customBoard.board.checkTile(customBoard.h1.getPosicao() - 1) == 'D'
-				|| customBoard.board.checkTile(customBoard.h1.getPosicao() + customBoard.board.getDimension()) == 'D'
-				|| customBoard.board.checkTile(customBoard.h1.getPosicao() - customBoard.board.getDimension()) == 'D')
+		if (customBoard.getBoard().checkTile(customBoard.getHero().getPosicao() + 1) == 'D'
+				|| customBoard.getBoard().checkTile(customBoard.getHero().getPosicao() - 1) == 'D'
+				|| customBoard.getBoard().checkTile(customBoard.getHero().getPosicao() + customBoard.getBoard().getDimension()) == 'D'
+				|| customBoard.getBoard().checkTile(customBoard.getHero().getPosicao() - customBoard.getBoard().getDimension()) == 'D')
 			return 6;
 
 		/*
@@ -235,9 +235,9 @@ public class CreationMenu extends JPanel {
 	 * @param entity The entity to place in that tile.
 	 */
 	public void changeBoard(int x, int y, char entity) {
-		int hTile = x * customBoard.board.getDimension() / hSize;
-		int vTile = y * customBoard.board.getDimension() / vSize;
-		int tile = vTile * customBoard.board.getDimension() + hTile;
+		int hTile = x * customBoard.getBoard().getDimension() / hSize;
+		int vTile = y * customBoard.getBoard().getDimension() / vSize;
+		int tile = vTile * customBoard.getBoard().getDimension() + hTile;
 
 		/*
 		 * Validar a entrada, nao podemos permitir ao utilizador por dois
@@ -245,8 +245,8 @@ public class CreationMenu extends JPanel {
 		 */
 		switch (entity) {
 		case ' ':
-			if (hTile == 0 || hTile == customBoard.board.getDimension() - 1 || vTile == 0
-					|| vTile == customBoard.board.getDimension() - 1) {
+			if (hTile == 0 || hTile == customBoard.getBoard().getDimension() - 1 || vTile == 0
+					|| vTile == customBoard.getBoard().getDimension() - 1) {
 				JOptionPane.showMessageDialog(null,
 						"You can't place floor on the borders of the map!",
 						"Error", JOptionPane.ERROR_MESSAGE);
@@ -254,83 +254,83 @@ public class CreationMenu extends JPanel {
 			}
 			break;
 		case 'S':
-			if (!(hTile == 0 || hTile == customBoard.board.getDimension() - 1 || vTile == 0 || vTile == customBoard.board
+			if (!(hTile == 0 || hTile == customBoard.getBoard().getDimension() - 1 || vTile == 0 || vTile == customBoard.getBoard()
 					.getDimension() - 1)) {
 				JOptionPane.showMessageDialog(null,
 						"The exit has to be in the borders of the map!",
 						"Error", JOptionPane.ERROR_MESSAGE);
 				return;
-			} else if (customBoard.board.getExit() != -1)
-				customBoard.board.changeBoard(customBoard.board.getExit(), 'X');
-			customBoard.board.setExit(tile);
+			} else if (customBoard.getBoard().getExit() != -1)
+				customBoard.getBoard().changeBoard(customBoard.getBoard().getExit(), 'X');
+			customBoard.getBoard().setExit(tile);
 			break;
 		case 'H':
-			if (customBoard.board.getMaze().get(tile) != ' ') {
+			if (customBoard.getBoard().getMaze().get(tile) != ' ') {
 				JOptionPane.showMessageDialog(null,
 						"The hero has to be placed on the floor!", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				return;
-			} else if (customBoard.h1.getPosicao() != -1)
-				customBoard.board.changeBoard(customBoard.h1.getPosicao(), ' ');
-			customBoard.h1.setPosicao(tile);
+			} else if (customBoard.getHero().getPosicao() != -1)
+				customBoard.getBoard().changeBoard(customBoard.getHero().getPosicao(), ' ');
+			customBoard.getHero().setPosicao(tile);
 			break;
 		case 'D':
-			if (customBoard.board.getMaze().get(tile) != ' ') {
+			if (customBoard.getBoard().getMaze().get(tile) != ' ') {
 				JOptionPane.showMessageDialog(null,
 						"A dragon has to be placed on the floor!", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			customBoard.dragons.add(new Dragon(tile));
+			customBoard.getDragons().add(new Dragon(tile));
 			break;
 		case 'T':
-			if (customBoard.board.getMaze().get(tile) != ' ') {
+			if (customBoard.getBoard().getMaze().get(tile) != ' ') {
 				JOptionPane.showMessageDialog(null,
 						"A dart has to be placed on the floor!", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			customBoard.darts.add(new Dart(tile));
+			customBoard.getDarts().add(new Dart(tile));
 			break;
 		case 'E':
-			if (customBoard.board.getMaze().get(tile) != ' ') {
+			if (customBoard.getBoard().getMaze().get(tile) != ' ') {
 				JOptionPane.showMessageDialog(null,
 						"The sword has to be placed on the floor!", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				return;
-			} else if (customBoard.posEspada != -1)
-				customBoard.board.changeBoard(customBoard.posEspada, ' ');
-			customBoard.posEspada = tile;
+			} else if (customBoard.getPosEspada() != -1)
+				customBoard.getBoard().changeBoard(customBoard.getPosEspada(), ' ');
+			customBoard.setPosEspada(tile); 
 			break;
 		case 'P':
-			if (customBoard.board.getMaze().get(tile) != ' ') {
+			if (customBoard.getBoard().getMaze().get(tile) != ' ') {
 				JOptionPane.showMessageDialog(null,
 						"The shield has to be placed on the floor!", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				return;
-			} else if (customBoard.posEscudo != -1)
-				customBoard.board.changeBoard(customBoard.posEscudo, ' ');
-			customBoard.posEscudo = tile;
+			} else if (customBoard.getPosEscudo() != -1)
+				customBoard.getBoard().changeBoard(customBoard.getPosEscudo(), ' ');
+			customBoard.setPosEscudo(tile); 
 			break;
 		}
 		
-		if(customBoard.board.getMaze().get(tile) == 'D')
-			for(int dragon = 0; dragon < customBoard.dragons.size(); dragon++){
-				if(customBoard.dragons.get(dragon).getPosicao() == tile) {
-					customBoard.dragons.remove(dragon);
+		if(customBoard.getBoard().getMaze().get(tile) == 'D')
+			for(int dragon = 0; dragon < customBoard.getDragons().size(); dragon++){
+				if(customBoard.getDragons().get(dragon).getPosicao() == tile) {
+					customBoard.getDragons().remove(dragon);
 					break;
 				}
 			}
 		
-		else if(customBoard.board.getMaze().get(tile) == 'T')
-			for(int dart = 0; dart < customBoard.darts.size(); dart++){
-				if(customBoard.dragons.get(dart).getPosicao() == tile) {
-					customBoard.dragons.remove(dart);
+		else if(customBoard.getBoard().getMaze().get(tile) == 'T')
+			for(int dart = 0; dart < customBoard.getDarts().size(); dart++){
+				if(customBoard.getDragons().get(dart).getPosicao() == tile) {
+					customBoard.getDragons().remove(dart);
 					break;
 				}
 			}
 		
-		customBoard.board.changeBoard(tile, entity);
+		customBoard.getBoard().changeBoard(tile, entity);
 	}
 
 	/**

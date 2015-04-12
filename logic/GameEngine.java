@@ -21,32 +21,75 @@ public class GameEngine implements Serializable {
 	/**
 	 * List of the dragons in the maze
 	 */
-	public List<Dragon> dragons = new ArrayList<Dragon>();
+	private List<Dragon> dragons = new ArrayList<Dragon>();
+	
+	public List <Dragon> getDragons(){
+		return dragons;
+	}
+	
+	public void setDragons(List <Dragon> dragons){
+		this.dragons=dragons;
+	}
 	
 	/**
 	 * List of the darts in the maze
 	 */
-	public List<Dart> darts = new ArrayList<Dart>();
+	private List<Dart> darts = new ArrayList<Dart>();
 	
+	public List <Dart> getDarts(){
+		return darts;
+	}
+	
+	public void setDarts(List <Dart> darts){
+		this.darts=darts;
+	}
 	/**
 	 * The hero.
 	 */
-	public Hero h1 = new Hero();
+	private Hero h1 = new Hero();
 	
+	public Hero getHero(){
+		return h1;
+	}
+	
+	public void setHero(Hero hero){
+		this.h1=hero;
+	}
 	/**
 	 * The board layout.
 	 */
-	public Maze board;
+	private Maze board;
+	
+	public Maze getBoard(){
+		return board;
+	}
+	
+	public void setBoard(Maze b1){
+		this.board=b1;
+	}
 	
 	/**
 	 * The sword's position.
 	 */
-	public int posEspada = 81;
+	private int posEspada = 81;
 	
+	public int getPosEspada(){
+		return posEspada;
+	}
+	public void setPosEspada(int sword){
+		this.posEspada=sword;
+	}
 	/**
 	 * The shield's position.
 	 */
-	public int posEscudo = -1;
+	private int posEscudo = -1;
+	
+	public int getPosEscudo(){
+		return posEscudo;
+	}
+	public void setPosEscudo(int shield){
+		this.posEscudo=shield;
+	}
 	
 	/* Nao vou documentar estes dois membros porque vao muito provavelmente ser apagados */
 	public transient Cli cli = new Cli();
@@ -58,7 +101,14 @@ public class GameEngine implements Serializable {
 	public Dragon.Mode dragonMode;
 	
 	/** The interface used to play */
-	public int ambiente; // 0=cli 1=test
+	private int ambiente; // 0=cli 1=test
+	
+	public int getAmbiente(){
+		return ambiente;
+	}
+	public void setAmbiente(int amb){
+		this.ambiente=amb;
+	}
 
 	/** 
 	 * The class constructor.
