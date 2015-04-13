@@ -174,7 +174,6 @@ public class GraphicMaze extends JPanel implements KeyListener {
 							- createGameYi, cm.getSeleccaoTile());
 					repaint();
 				}
-				System.out.println(arg0.getX() + " " + arg0.getY());
 			}
 		});
 		addKeyListener(this);

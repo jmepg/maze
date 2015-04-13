@@ -579,7 +579,7 @@ public class GameEngine implements Serializable {
 					else
 						maxpos = pos - 3;
 					while (board.checkTile(pos) != 'X'
-							&& Math.abs(maxpos - pos) > 0) {
+							&& maxpos != pos) {
 						if (h1.getPosicao() == pos) {
 							if (ambiente == 0) {
 								cli.printMaze(board.getMaze());
@@ -612,6 +612,7 @@ public class GameEngine implements Serializable {
 								test.printMaze(board.getMaze());
 								test.estadoFinal(1);
 							}
+							System.out.println("Cenas");
 							return true;
 						} else if (h1.getPosicao() < pos)
 							pos -= board.getDimension();
