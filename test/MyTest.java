@@ -19,7 +19,6 @@ public class MyTest {
 	/**
 	 * Tests if the hero can sucessfully navigate through the floor.
 	 */
-
 	@Test
 	public void testPlayerMovement() {
 		g1 = new GameEngine(1);
@@ -47,7 +46,6 @@ public class MyTest {
 	/**
 	 * Tests if the hero doesn't walk through walls.
 	 */
-
 	@Test
 	public void testIfNotPassThroughWalls() {
 		g1 = new GameEngine(1);
@@ -365,6 +363,7 @@ public class MyTest {
 		}
 
 		if (g1.getDragons().size() == 0 || g1.getDragons().get(0).getPosicao() != 31) {
+			g1.getDragons().clear();
 			Dragon d1 = new Dragon();
 			g1.getDragons().add(d1);
 		}
@@ -502,7 +501,6 @@ public class MyTest {
 			g1.setAmbiente(1);
 		g1.initializeGame(null);
 		g1.getDragons().clear();
-		g1.cli.printMaze(g1.getBoard().getMaze());
 		g1.placeEntities();
 		try {
 			Thread.sleep(500);

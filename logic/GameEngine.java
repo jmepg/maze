@@ -514,6 +514,10 @@ public class GameEngine implements Serializable {
 	 */
 
 	public boolean combate() {
+		
+		if(fireballKill())
+			return true;
+		
 		for (int i = 0; i < dragons.size(); i++) {
 			if (h1.getPosicao() == dragons.get(i).getPosicao() + 1
 					|| h1.getPosicao() == dragons.get(i).getPosicao() - 1
@@ -558,7 +562,7 @@ public class GameEngine implements Serializable {
 
 		if (h1.isEscudo())
 			return false;
-
+		
 		for (int i = 0; i < dragons.size(); i++) {
 
 			int pos = dragons.get(i).getPosicao();
@@ -577,8 +581,14 @@ public class GameEngine implements Serializable {
 					while (board.checkTile(pos) != 'X'
 							&& Math.abs(maxpos - pos) > 0) {
 						if (h1.getPosicao() == pos) {
-							cli.printMaze(board.getMaze());
-							cli.estadoFinal(1);
+							if (ambiente == 0) {
+								cli.printMaze(board.getMaze());
+								cli.estadoFinal(1);
+							}
+							if (ambiente == 1) {
+								test.printMaze(board.getMaze());
+								test.estadoFinal(1);
+							}
 							return true;
 						} else if (h1.getPosicao() < pos)
 							pos--;
@@ -594,8 +604,14 @@ public class GameEngine implements Serializable {
 					while (board.checkTile(pos) != 'X'
 							&& Math.abs(maxpos - pos) > 0) {
 						if (h1.getPosicao() == pos) {
-							cli.printMaze(board.getMaze());
-							cli.estadoFinal(1);
+							if (ambiente == 0) {
+								cli.printMaze(board.getMaze());
+								cli.estadoFinal(1);
+							}
+							if (ambiente == 1) {
+								test.printMaze(board.getMaze());
+								test.estadoFinal(1);
+							}
 							return true;
 						} else if (h1.getPosicao() < pos)
 							pos -= board.getDimension();
@@ -617,7 +633,7 @@ public class GameEngine implements Serializable {
 	public boolean randomFireBall() {
 		Random r = new Random();
 		int n = r.nextInt(10) + 1;
-		if (n == 2)
+		if (n==2)
 			return true;
 		else
 			return false;
@@ -656,7 +672,7 @@ public class GameEngine implements Serializable {
 	public void generateDarts() {
 		int n = 0;
 		Random r = new Random();
-		int number = r.nextInt(dragons.size()+1);
+		int number = r.nextInt(dragons.size())+1;
 		
 		darts.clear();
 
