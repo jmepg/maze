@@ -235,7 +235,7 @@ public class MyTest {
 		g1.moveHeroi('d');
 		g1.placeEntities();
 
-		Assert.assertEquals(true, g1.getHero().isEscudo());
+		Assert.assertEquals(true, g1.getHero().hasEscudo());
 	}
 
 	/**

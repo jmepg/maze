@@ -68,7 +68,7 @@ public class Hero implements Serializable {
 	 * 
 	 * @return {@link dardo}
 	 */
-    public boolean isDardo() {
+    public boolean hasDardo() {
         return dardo;
     }
 
@@ -77,7 +77,7 @@ public class Hero implements Serializable {
 	 * 
 	 * @return {@link escudo}
 	 */
-    public boolean isEscudo() {
+    public boolean hasEscudo() {
         return escudo;
     }
 

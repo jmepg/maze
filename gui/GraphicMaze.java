@@ -50,13 +50,13 @@ public class GraphicMaze extends JPanel implements KeyListener {
 
 	/* Hero shielded sprites */
 	private Image heroShieldedDown;
-	private Image heroSheildedUp;
+	private Image heroShieldedUp;
 	private Image heroShieldedLeft;
 	private Image heroShieldedRight;
 
 	/* Hero armed and shielded sprites */
 	private Image heroArmedShieldedDown;
-	private Image heroArmedSheildedUp;
+	private Image heroArmedShieldedUp;
 	private Image heroArmedShieldedLeft;
 	private Image heroArmedShieldedRight;
 
@@ -215,6 +215,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 			e.printStackTrace();
 		}
 
+		/* Dragon Sprites */
+		
+		
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Dragons/down.png"));
 		dragonDown = i.getImage();
@@ -231,6 +234,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 				"resources/Dragons/right.png"));
 		dragonRight = i.getImage();
 
+		/* Hero unarmed sprites */
+		
+		
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Hero/Empty/down.png"));
 		heroDown = i.getImage();
@@ -246,27 +252,10 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Hero/Empty/right.png"));
 		heroRight = i.getImage();
-
-		i = new ImageIcon(this.getClass().getResource(
-				"resources/Tiles/floor.png"));
-		floor = i.getImage();
-
-		i = new ImageIcon(this.getClass().getResource(
-				"resources/Tiles/roof.png"));
-		wall = i.getImage();
-
-		i = new ImageIcon(this.getClass().getResource(
-				"resources/Weapons/dart.png"));
-		dart = i.getImage();
-
-		i = new ImageIcon(this.getClass().getResource(
-				"resources/Weapons/shield.png"));
-		shield = i.getImage();
-
-		i = new ImageIcon(this.getClass().getResource(
-				"resources/Weapons/spear.png"));
-		sword = i.getImage();
-
+		
+		/* Hero Armed Sprites */
+		
+		
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Hero/Weapon/down.png"));
 		heroArmedDown = i.getImage();
@@ -282,6 +271,69 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Hero/Weapon/right.png"));
 		heroArmedRight = i.getImage();
+		
+		/* Hero Shielded Sprites */
+		
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/Shield/down.png"));
+		heroShieldedDown = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/Shield/up.png"));
+		heroShieldedUp = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/Shield/left.png"));
+		heroShieldedLeft = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/Shield/right.png"));
+		heroShieldedRight = i.getImage();
+		
+		/* Hero Weapon-Shielded Sprites */
+		
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/WeaponShield/down.png"));
+		heroArmedShieldedDown = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/WeaponShield/up.png"));
+		heroArmedShieldedUp = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/WeaponShield/left.png"));
+		heroArmedShieldedLeft = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/WeaponShield/right.png"));
+		heroArmedShieldedRight = i.getImage();
+		
+		/* Tiles */
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Tiles/floor.png"));
+		floor = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Tiles/roof.png"));
+		wall = i.getImage();
+
+		
+		/* Weapons */
+		
+		
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Weapons/dart.png"));
+		dart = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Weapons/shield.png"));
+		shield = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Weapons/spear.png"));
+		sword = i.getImage();
+
 	}
 
 	public void paintComponent(Graphics g) {
@@ -375,24 +427,48 @@ public class GraphicMaze extends JPanel implements KeyListener {
 				case Tile.HERO:
 					switch (gui.getEngine().getHero().getDirection()) {
 					case Direction.UP:
-						g.drawImage(heroUp, (hTile * tileHSizeInt + xi), (vTile
-								* tileVSizeInt + yi), tileHSizeInt,
-								tileVSizeInt, null);
+						if (gui.getEngine().getHero().hasEscudo())
+							g.drawImage(heroShieldedUp,
+									(hTile * tileHSizeInt + xi), (vTile
+											* tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						else
+							g.drawImage(heroUp, (hTile * tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
 						break;
 					case Direction.DOWN:
-						g.drawImage(heroDown, (hTile * tileHSizeInt + xi),
-								(vTile * tileVSizeInt + yi), tileHSizeInt,
-								tileVSizeInt, null);
+						if (gui.getEngine().getHero().hasEscudo())
+							g.drawImage(heroShieldedDown,
+									(hTile * tileHSizeInt + xi), (vTile
+											* tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						else
+							g.drawImage(heroDown, (hTile * tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
 						break;
 					case Direction.LEFT:
-						g.drawImage(heroLeft, (hTile * tileHSizeInt + xi),
-								(vTile * tileVSizeInt + yi), tileHSizeInt,
-								tileVSizeInt, null);
+						if (gui.getEngine().getHero().hasEscudo())
+							g.drawImage(heroShieldedLeft,
+									(hTile * tileHSizeInt + xi), (vTile
+											* tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						else
+							g.drawImage(heroLeft, (hTile * tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
 						break;
 					case Direction.RIGHT:
-						g.drawImage(heroRight, (hTile * tileHSizeInt + xi),
-								(vTile * tileVSizeInt + yi), tileHSizeInt,
-								tileVSizeInt, null);
+						if (gui.getEngine().getHero().hasEscudo())
+							g.drawImage(heroShieldedRight,
+									(hTile * tileHSizeInt + xi), (vTile
+											* tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						else
+							g.drawImage(heroRight, (hTile * tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
 						break;
 					default:
 						g.drawImage(heroDown, (hTile * tileHSizeInt + xi),
@@ -454,9 +530,61 @@ public class GraphicMaze extends JPanel implements KeyListener {
 							null);
 					break;
 				case Tile.ARMEDHERO:
-					g.drawImage(heroArmedDown, (hTile * tileHSizeInt + xi),
-							(vTile * tileVSizeInt + yi), tileHSizeInt,
-							tileVSizeInt, null);
+					switch (gui.getEngine().getHero().getDirection()) {
+					case Direction.UP:
+						if (gui.getEngine().getHero().hasEscudo())
+							g.drawImage(heroArmedShieldedUp, (hTile
+									* tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						else
+							g.drawImage(heroArmedUp,
+									(hTile * tileHSizeInt + xi), (vTile
+											* tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						break;
+					case Direction.DOWN:
+						if (gui.getEngine().getHero().hasEscudo())
+							g.drawImage(heroArmedShieldedDown, (hTile
+									* tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						else
+							g.drawImage(heroArmedDown,
+									(hTile * tileHSizeInt + xi), (vTile
+											* tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						break;
+					case Direction.LEFT:
+						if (gui.getEngine().getHero().hasEscudo())
+							g.drawImage(heroArmedShieldedLeft, (hTile
+									* tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						else
+							g.drawImage(heroArmedLeft,
+									(hTile * tileHSizeInt + xi), (vTile
+											* tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						break;
+					case Direction.RIGHT:
+						if (gui.getEngine().getHero().hasEscudo())
+							g.drawImage(heroArmedShieldedRight, (hTile
+									* tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						else
+							g.drawImage(heroArmedRight,
+									(hTile * tileHSizeInt + xi), (vTile
+											* tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						break;
+					default:
+						g.drawImage(heroDown, (hTile * tileHSizeInt + xi),
+								(vTile * tileVSizeInt + yi), tileHSizeInt,
+								tileVSizeInt, null);
+
+					}
 					break;
 				case Tile.SHIELD:
 					g.drawImage(shield, (hTile * tileHSizeInt + xi), (vTile

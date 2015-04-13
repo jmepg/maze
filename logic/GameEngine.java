@@ -608,7 +608,7 @@ public class GameEngine implements Serializable {
 	 */
 	public boolean fireballKill() {
 
-		if (h1.isEscudo())
+		if (h1.hasEscudo())
 			return false;
 
 		for (int i = 0; i < dragons.size(); i++) {
@@ -744,7 +744,7 @@ public class GameEngine implements Serializable {
 	public void throwDarts(char direcao) {
 		boolean usedDart = false;
 
-		if (h1.isDardo()) {
+		if (h1.hasDardo()) {
 			for (int i = 0; i < dragons.size(); i++) {
 				int pos = h1.getPosicao();
 				while (!(board.checkTile(pos) == Tile.WALL || board
