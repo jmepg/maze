@@ -1,5 +1,6 @@
 package logic;
 
+import symbolics.MazeBuild;
 import logic.RandomMaze;
 import logic.StaticMaze;
 import logic.Maze;
@@ -51,9 +52,9 @@ public class MazeBuilder {
 	 * @return The labyrinth generated.
 	 */
 	public Maze getMaze() {
-		if (opcao == 1)
+		if (opcao == MazeBuild.RANDOMMAZE)
 			return new RandomMaze(dimension);
-		else if(opcao == 0)
+		else if(opcao == MazeBuild.STATICMAZE)
 			return new StaticMaze();
 		else
 			return new CreatedMaze(dimension);

@@ -4,8 +4,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import symbolics.GameResult;
+import symbolics.MazeBuild;
+import symbolics.Size;
+
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
+
 import logic.GameEngine;
 import logic.MazeBuilder;
 
@@ -47,22 +52,7 @@ public class Gui {
 	private int[] controls;
 
 	/**
-	 * The game's horizontal size.
-	 */
-	public static final int hSize = 600;
-	
-	/**
-	 * The game's vertical size.
-	 */
-	public static final int vSize = 600;
-	
-	/**
-	 * The standard button height in the program.
-	 */
-	public static final int buttonHeight = 25;
-
-	/**
-	 * Get @see #controls
+	 * Get @see controls
 	 * 
 	 * @return {@link #controls}
 	 */
@@ -72,7 +62,7 @@ public class Gui {
 
 	
 	/**
-	 * Set @see #controls
+	 * Set @see controls
 	 * @param index the index where to set the keyCode to.
 	 * @param keyCode the keyCode
 	 */
@@ -91,7 +81,7 @@ public class Gui {
 	}
 
 	/**
-	 * Get @see #engine
+	 * Get @see engine
 	 * 
 	 * @return {@link #engine}
 	 */
@@ -100,7 +90,7 @@ public class Gui {
 	}
 
 	/**
-	 * Get @see #panel
+	 * Get @see panel
 	 * 
 	 * @return {@link #panel}
 	 */
@@ -121,7 +111,7 @@ public class Gui {
 	 */
 	private void initialize() {
 		frame = new JFrame("Escape the Maze");
-		frame.setBounds(0, 0, hSize, vSize);
+		frame.setBounds(0, 0, Size.hSize, Size.vSize);
 
 		this.panel = new GraphicMaze(this);
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
@@ -151,7 +141,7 @@ public class Gui {
 		} else {
 			/* Isto pode passado quase tudo para a initializeGame, depois trato disso */
 			MazeBuilder mb = new MazeBuilder();
-			mb.setOpcao(1);
+			mb.setOpcao(MazeBuild.RANDOMMAZE);
 			mb.setMazeDim(getOptionButtons().getOptDialog()
 					.getTamanhoLabirinto());
 			engine.setBoard(mb.getMaze());
@@ -171,6 +161,9 @@ public class Gui {
 		panel.repaint();
 	}
 
+	/**
+	 * Makes the necessary arrangements for starting the create maze menu.
+	 */
 	public void createGame() {
 		panel.setInCreationMode(true);
 		panel.startMenuCreation();
@@ -179,18 +172,22 @@ public class Gui {
 		panel.repaint();
 	}
 	
+	/**
+	 * Outputs to the user the game result, once the game is over
+	 * @param estado Whether the user has won or lost
+	 */
 	public void estadoFinal(int estado) {
 
 		switch (estado) {
-		case 0:
+		case GameResult.WIN:
 			JOptionPane.showMessageDialog(null,
 					"You win!", "Escape the Maze",
-					JOptionPane.INFORMATION_MESSAGE,new ImageIcon("src/resources/Trophy.png"));
+					JOptionPane.INFORMATION_MESSAGE,new ImageIcon("resources/Trophy.png"));
 			break;
-		case 1:
+		case GameResult.LOSE:
 			JOptionPane.showMessageDialog(null,
 					"You lose!", "Escape the Maze",
-					JOptionPane.ERROR_MESSAGE,new ImageIcon("src/resources/logo.png"));
+					JOptionPane.ERROR_MESSAGE,new ImageIcon("resources/logo.png"));
 			break;
 		default:
 			break;
@@ -198,14 +195,26 @@ public class Gui {
 		return;
 	}
 
+	/**
+	 * Set @see engine
+	 * @param engine {@link engine}
+	 */
 	public void setEngine(GameEngine engine) {
 		this.engine = engine;
 	}
 
+	/**
+	 * Get @see engine
+	 * @return {@link optionButtons}
+	 */
 	public BottomOptions getOptionButtons() {
 		return optionButtons;
 	}
 
+	/**
+	 * Set @see optionButtons
+	 * @param optionButtons {@link optionButtons}
+	 */
 	public void setOptionButtons(BottomOptions optionButtons) {
 		this.optionButtons = optionButtons;
 	}

@@ -5,6 +5,8 @@ import logic.*;
 import org.junit.Assert;
 import org.junit.Test;
 
+import symbolics.GameResult;
+
 import java.util.List;
 import java.util.Random;
 
@@ -598,11 +600,11 @@ public class MyTest {
 
 		switch (estado) {
 		case 0:
-			return 0;
+			return GameResult.WIN;
 		case 1:
-			return 1;
+			return GameResult.LOSE;
 		default:
-			return 2;
+			return GameResult.ERROR;
 		}
 	}
 

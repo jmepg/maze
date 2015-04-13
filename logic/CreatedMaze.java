@@ -1,5 +1,7 @@
 package logic;
 
+import symbolics.Tile;
+
 /**
  * Subclass of maze that creates an empty labyrinth, used in the create maze option in the gui.
  */
@@ -21,7 +23,7 @@ public class CreatedMaze extends Maze {
 	@Override
 	public void generate() {
 		for (int i = 0; i < dimension * dimension; i++){
-			maze.add('X');
+			maze.add(Tile.WALL);
 		}
 		setExit(-1);
 	}

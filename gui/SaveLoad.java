@@ -22,10 +22,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import symbolics.FileFormat;
 import logic.GameEngine;
 
 /**
- * The class that manages the Save/Load Game Fialog.
+ * The class that manages the Save/Load Game Dialog.
+ * <p> Based on the one shown here: https://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html
  */
 public class SaveLoad extends JDialog {
 	
@@ -40,17 +42,6 @@ public class SaveLoad extends JDialog {
 	 */
 	static private final String newline = "\n";
 	
-	/**
-	 * The maze game save file extension format.
-	 */
-	static private final String mgsf = "mgsf";
-	
-	/**
-	 * The custom maze save file extension format.
-	 */
-	static private final String cmsf = "cmsf";
-	
-
 	/**
 	 * {@link gui.Gui}
 	 */
@@ -95,15 +86,15 @@ public class SaveLoad extends JDialog {
 	 * The filename extension filter used to limit the options to the ones the game can recognize.
 	 */
 	private FileNameExtensionFilter f1 = new FileNameExtensionFilter(
-			"Maze Escape Save Files (*.cmsf, *.mgsf)", cmsf, mgsf);
+			"Maze Escape Save Files (*.cmsf, *.mgsf)", FileFormat.cmsf, FileFormat.mgsf);
 	/**
 	 * The filename extension filter used to limit the options to the ones the game can recognize.
 	 */
-	private FileNameExtensionFilter f2 = new FileNameExtensionFilter("Mid-game Save File (*.mgsf)", mgsf);
+	private FileNameExtensionFilter f2 = new FileNameExtensionFilter("Mid-game Save File (*.mgsf)", FileFormat.mgsf);
 	/**
 	 * The filename extension filter used to limit the options to the ones the game can recognize.
 	 */
-	private FileNameExtensionFilter f3 = new FileNameExtensionFilter("Custom Maze Save File (*.cmsf)", cmsf);
+	private FileNameExtensionFilter f3 = new FileNameExtensionFilter("Custom Maze Save File (*.cmsf)", FileFormat.cmsf);
 
 	/** Saved games folder path */
 	public static final String savedGamesFolder = System
@@ -244,16 +235,16 @@ public class SaveLoad extends JDialog {
 						ObjectOutputStream os;
 						if (gui.getPanel().isInGame()) {
 							logs.append("Saving: " + file.getName() + "."
-									+ mgsf + newline);
+									+ FileFormat.mgsf + newline);
 							os = new ObjectOutputStream(new FileOutputStream(
 									savedGamesFolder + file.getName() + "."
-											+ mgsf));
+											+ FileFormat.mgsf));
 						} else {
 							logs.append("Saving: " + file.getName() + "."
-									+ cmsf + newline);
+									+ FileFormat.cmsf + newline);
 							os = new ObjectOutputStream(new FileOutputStream(
 									savedGamesFolder + file.getName() + "."
-											+ cmsf));
+											+ FileFormat.cmsf));
 						}
 						
 						os.writeObject(gui.getPanel().getCm().getCustomBoard());

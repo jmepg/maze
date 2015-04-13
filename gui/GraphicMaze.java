@@ -4,6 +4,12 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import symbolics.Direction;
+import symbolics.GameResult;
+import symbolics.MazeBuild;
+import symbolics.Size;
+import symbolics.Tile;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -37,25 +43,6 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	 * Serial version ID.
 	 */
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * The panel's horizontal size.
-	 */
-	public static final int hSize = Gui.hSize;
-
-	/**
-	 * The panel's vertical size.
-	 */
-	public static final int vSize = Gui.vSize - 2 * Gui.buttonHeight;
-
-	/**
-	 * The first horizontal coordinate of the maze in creation mode.
-	 */
-	public static final int createGameXi = 0;
-	/**
-	 * The first vertical coordinate of the maze in creation mode.
-	 */
-	public static final int createGameYi = Gui.buttonHeight;
 
 	/**
 	 * {@link gui.Gui}
@@ -166,19 +153,19 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	 */
 	public GraphicMaze(Gui g) {
 		gui = g;
-		setSize(hSize, vSize);
+		setSize(Size.gameHSize, Size.gameVSize);
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				if (inCreationMode) {
-					cm.changeBoard(arg0.getX() - createGameXi, arg0.getY()
-							- createGameYi, cm.getSeleccaoTile());
+					cm.changeBoard(arg0.getX() - Size.createGameXi, arg0.getY()
+							- Size.createGameYi, cm.getSeleccaoTile());
 					repaint();
 				}
 			}
 		});
 		addKeyListener(this);
-		setPreferredSize(new Dimension(Gui.hSize, Gui.vSize));
-		setMinimumSize(new Dimension(Gui.hSize, Gui.vSize));
+		setPreferredSize(new Dimension(Size.hSize, Size.vSize));
+		setMinimumSize(new Dimension(Size.hSize, Size.vSize));
 		setLayout(new BorderLayout());
 
 		loadImages();
@@ -229,9 +216,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 			printMaze(g, gui.getEngine().getBoard(), 0, 0, this.getWidth(),
 					this.getHeight());
 		} else if (inCreationMode) {
-			printMaze(g, cm.getCustomBoard().getBoard(), createGameXi,
-					createGameYi, this.getWidth() - createGameXi,
-					this.getHeight() - createGameYi);
+			printMaze(g, cm.getCustomBoard().getBoard(), Size.createGameXi,
+					Size.createGameYi, this.getWidth() - Size.createGameXi,
+					this.getHeight() - Size.createGameYi);
 		} else {
 			g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), 0, 0,
 					image.getWidth(null), image.getHeight(null), null);
@@ -242,26 +229,26 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	public void keyPressed(KeyEvent arg0) {
 		if (inGame) {
 			if (arg0.getKeyCode() == gui.getControls()[0])
-				gui.getEngine().moveHeroi('w');
+				gui.getEngine().moveHeroi(Direction.UP);
 			else if (arg0.getKeyCode() == gui.getControls()[1])
-				gui.getEngine().moveHeroi('s');
+				gui.getEngine().moveHeroi(Direction.DOWN);
 			else if (arg0.getKeyCode() == gui.getControls()[2])
-				gui.getEngine().moveHeroi('a');
+				gui.getEngine().moveHeroi(Direction.LEFT);
 			else if (arg0.getKeyCode() == gui.getControls()[3])
-				gui.getEngine().moveHeroi('d');
+				gui.getEngine().moveHeroi(Direction.RIGHT);
 			else
 				return;
 
 			gui.getEngine().moveDragoes();
 			if (gui.getEngine().combate()) {
 				repaint();
-				gui.estadoFinal(1);
+				gui.estadoFinal(GameResult.LOSE);
 				disposeGame();
 			}
 
 			if (gui.getEngine().testWinCondition()) {
 				repaint();
-				gui.estadoFinal(0);
+				gui.estadoFinal(GameResult.WIN);
 				disposeGame();
 			}
 
@@ -300,57 +287,57 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		for (int vTile = 0; vTile < size; vTile++) {
 			for (int hTile = 0; hTile < size; hTile++) {
 				switch (board.getMaze().get(vTile * size + hTile)) {
-				case 'X':
+				case Tile.WALL:
 					g.drawImage(wall, (hTile * tileHSizeInt + xi), (vTile
 							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
 							null);
 					break;
-				case ' ':
+				case Tile.FLOOR:
 					g.drawImage(floor, (hTile * tileHSizeInt + xi), (vTile
 							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
 							null);
 					break;
-				case 'H':
+				case Tile.HERO:
 					g.drawImage(hero, (hTile * tileHSizeInt + xi), (vTile
 							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
 							null);
 					break;
-				case 'D':
+				case Tile.DRAGON:
 					g.drawImage(dragon, (hTile * tileHSizeInt + xi), (vTile
 							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
 							null);
 					break;
-				case 'd':
+				case Tile.SLEEPINGDRAGON:
 					g.drawImage(dragon, (hTile * tileHSizeInt + xi), (vTile
 							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
 							null); // E preciso mudar isto
 					break;
-				case 'E':
+				case Tile.SWORD:
 					g.drawImage(sword, (hTile * tileHSizeInt + xi), (vTile
 							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
 							null);
 					break;
-				case 'A':
+				case Tile.ARMEDHERO:
 					g.drawImage(armedHero, (hTile * tileHSizeInt + xi), (vTile
 							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
 							null);
 					break;
-				case 'P':
+				case Tile.SHIELD:
 					g.drawImage(shield, (hTile * tileHSizeInt + xi), (vTile
 							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
 							null);
 					break;
-				case 'F':
+				case Tile.TWOENTITIES:
 					g.drawImage(floor, (hTile * tileHSizeInt + xi), (vTile
 							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
 							null);
 					break;
-				case 'T':
+				case Tile.DART:
 					g.drawImage(dart, (hTile * tileHSizeInt + xi), (vTile
 							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
 							null);
 					break;
-				case 'S':
+				case Tile.EXIT:
 					g.setColor(Color.BLUE);
 				default:
 					break;
@@ -369,7 +356,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	 */
 	public void startMenuCreation() {
 		MazeBuilder mb = new MazeBuilder();
-		mb.setOpcao(2);
+		mb.setOpcao(MazeBuild.CREATEDMAZE);
 		mb.setMazeDim(gui.getOptionButtons().getOptDialog()
 				.getTamanhoLabirinto());
 		if (cm.getCustomBoard() == null)

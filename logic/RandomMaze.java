@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
+import symbolics.Tile;
+
 /**
  * Subclass of Maze that randomly generates a labyrinth.
  */
@@ -92,7 +94,7 @@ public class RandomMaze extends Maze{
 		/* Encher o maze com X */
 
 		for (int i = 0; i < getDimension() * getDimension(); i++) {
-			maze.add('X');
+			maze.add(Tile.WALL);
 		}
 
 		/*
@@ -111,7 +113,7 @@ public class RandomMaze extends Maze{
 
 		for (long i = 0; i < getDimension() * getDimension(); i++) {
 			if ((((i / getDimension()) * (i % getDimension())) % 2) != 0) {
-				maze.set((int) i, ' ');
+				maze.set((int) i, Tile.FLOOR);
 				visitedCells.add((int) i);
 			}
 		}
@@ -145,16 +147,16 @@ public class RandomMaze extends Maze{
 		 */
 		if (currentPivot / vcSize == 0) {
 			setExit(iterador - getDimension());
-			maze.set(getExit(), 'S');
+			maze.set(getExit(), Tile.EXIT);
 		} else if ((currentPivot / vcSize) >= (vcSize - 1)) {
 			setExit(iterador + getDimension());
-			maze.set(getExit(), 'S');
+			maze.set(getExit(), Tile.EXIT);
 		} else if (currentPivot % vcSize == 0) {
 			setExit(iterador - 1);
-			maze.set(getExit(), 'S');
+			maze.set(getExit(), Tile.EXIT);
 		} else {
 			setExit(iterador + 1);
-			maze.set(getExit(), 'S');
+			maze.set(getExit(), Tile.EXIT);
 		}
 
 		/* Escolha dos proximos pivots */
@@ -194,19 +196,19 @@ public class RandomMaze extends Maze{
 			 */
 			switch (nextDirection) {
 			case 0:
-				maze.set(iterador - getDimension(), ' ');
+				maze.set(iterador - getDimension(), Tile.FLOOR);
 				currentPivot -= vcSize;
 				break;
 			case 1:
-				maze.set(iterador + getDimension(), ' ');
+				maze.set(iterador + getDimension(), Tile.FLOOR);
 				currentPivot += vcSize;
 				break;
 			case 2:
-				maze.set(iterador - 1, ' ');
+				maze.set(iterador - 1, Tile.FLOOR);
 				currentPivot -= 1;
 				break;
 			case 3:
-				maze.set(iterador + 1, ' ');
+				maze.set(iterador + 1, Tile.FLOOR);
 				currentPivot += 1;
 				break;
 			}

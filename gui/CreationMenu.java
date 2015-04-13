@@ -4,11 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import symbolics.Size;
+import symbolics.ValidateMaze;
 import logic.Dart;
 import logic.Dragon;
 import logic.GameEngine;
@@ -21,11 +24,11 @@ public class CreationMenu extends JPanel {
 	/**
 	 * Horizontal size of the maze window.
 	 */
-	public static final int hSize = Gui.hSize - GraphicMaze.createGameXi;
+	public static final int hSize = Size.hSize - Size.createGameXi;
 	/**
 	 * Vertical size of the maze window.
 	 */
-	public static final int vSize = GraphicMaze.vSize - GraphicMaze.createGameYi;
+	public static final int vSize = Size.gameVSize - Size.createGameYi;
 
 	/**
 	 * Serial version ID.
@@ -85,7 +88,7 @@ public class CreationMenu extends JPanel {
 	 */
 	public CreationMenu(Gui gui) {
 		setLayout(new BorderLayout(0, 0));
-		setSize(Gui.hSize, 25);
+		setSize(Size.hSize, 25);
 		this.gui = gui;
 		createButtons();
 		createCustomBoard();
@@ -109,11 +112,11 @@ public class CreationMenu extends JPanel {
 		String[] entidades = { "Wall", "Floor", "Exit", "Hero", "Dragon",
 				"Dart", "Shield", "Sword" };
 		jcbEntidades = new JComboBox<>(entidades);
-		jcbEntidades.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
+		jcbEntidades.setPreferredSize(new Dimension(Size.hSize / 3, 25));
 		add(jcbEntidades, BorderLayout.WEST);
 
 		btnCancelar = new JButton("Cancel");
-		btnCancelar.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
+		btnCancelar.setPreferredSize(new Dimension(Size.hSize / 3, 25));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gui.getPanel().disposeCreateMenu(true);
@@ -122,37 +125,37 @@ public class CreationMenu extends JPanel {
 		add(btnCancelar, BorderLayout.EAST);
 
 		btnOk = new JButton("OK");
-		btnOk.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
+		btnOk.setPreferredSize(new Dimension(Size.hSize / 3, 25));
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switch (validateMaze()) {
-				case 0:
+				case ValidateMaze.SUCCESS:
 					JOptionPane.showMessageDialog(null,
 							"Maze sucessfully created!", "",
 							JOptionPane.INFORMATION_MESSAGE);
 					gui.getPanel().disposeCreateMenu(false);
 					break;
-				case 1:
+				case ValidateMaze.NOHEROEXISTS:
 					JOptionPane.showMessageDialog(null,
 							"The maze has to have a hero!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 					break;
-				case 2:
+				case ValidateMaze.NOEXITEXISTS:
 					JOptionPane.showMessageDialog(null,
 							"Your maze has to have an exit!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 					break;
-				case 3:
+				case ValidateMaze.NODRAGONSEXIST:
 					JOptionPane.showMessageDialog(null,
 							"The maze has to have at least a dragon!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 					break;
-				case 4:
+				case ValidateMaze.NOSWORDEXISTS:
 					JOptionPane.showMessageDialog(null,
 							"The maze has to have a sword!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 					break;
-				case 5:
+				case ValidateMaze.NOSHIELDEXISTS:
 					int opt = JOptionPane
 							.showConfirmDialog(
 									null,
@@ -166,7 +169,7 @@ public class CreationMenu extends JPanel {
 
 					}
 					break;
-				case 6:
+				case ValidateMaze.DRAGONSNEXTTOHERO:
 					JOptionPane.showMessageDialog(null,
 							"You can't put the hero next to a dragon!",
 							"Error", JOptionPane.ERROR_MESSAGE);
@@ -190,11 +193,11 @@ public class CreationMenu extends JPanel {
 
 		/* Testa se ha heroi. Se nao houver, o labirinto nao pode ser jogado */
 		if (customBoard.getHero().getPosicao() == -1)
-			return 1;
+			return ValidateMaze.NOHEROEXISTS;
 
 		/* Testa se ha saida. */
 		if (customBoard.getBoard().getExit() == -1)
-			return 2;
+			return ValidateMaze.NOEXITEXISTS;
 
 		/* Testa se ha dragoes, espada e escudo */
 		for (char tile = 0; tile < customBoard.getBoard().getMaze().size(); tile++) {
@@ -206,26 +209,26 @@ public class CreationMenu extends JPanel {
 				habemusEscudo = true;
 		}
 		if (!habemusDragao)
-			return 3;
+			return ValidateMaze.NODRAGONSEXIST;
 		if (!habemusEspada)
-			return 4;
+			return ValidateMaze.NOSWORDEXISTS;
 
 		/* Por ultimo, testa se ha dragoes ao lado do heroi */
 		if (customBoard.getBoard().checkTile(customBoard.getHero().getPosicao() + 1) == 'D'
 				|| customBoard.getBoard().checkTile(customBoard.getHero().getPosicao() - 1) == 'D'
 				|| customBoard.getBoard().checkTile(customBoard.getHero().getPosicao() + customBoard.getBoard().getDimension()) == 'D'
 				|| customBoard.getBoard().checkTile(customBoard.getHero().getPosicao() - customBoard.getBoard().getDimension()) == 'D')
-			return 6;
+			return ValidateMaze.DRAGONSNEXTTOHERO;
 
 		/*
 		 * Este check tem de estar no fim porque nao e um erro critico, apenas
 		 * uma decisao extremamente questionavel.
 		 */
 		if (!habemusEscudo)
-			return 5;
+			return ValidateMaze.NOSHIELDEXISTS;
 
 		/* Tudo bem, informar que o labirinto esta bem feito! */
-		return 0;
+		return ValidateMaze.SUCCESS;
 	}
 
 	/**
@@ -236,7 +239,7 @@ public class CreationMenu extends JPanel {
 	 */
 	public void changeBoard(int x, int y, char entity) {
 		int hTile = x * customBoard.getBoard().getDimension() / gui.getPanel().getHeight();
-		int vTile = y * customBoard.getBoard().getDimension() / (gui.getPanel().getWidth()-GraphicMaze.createGameYi);
+		int vTile = y * customBoard.getBoard().getDimension() / (gui.getPanel().getWidth()-Size.createGameYi);
 		
 		int tile = vTile * customBoard.getBoard().getDimension() + hTile;
 
@@ -342,21 +345,21 @@ public class CreationMenu extends JPanel {
 	public char getSeleccaoTile() {
 		switch (jcbEntidades.getSelectedIndex()) {
 		case 0:
-			return 'X';
+			return symbolics.Tile.WALL;
 		case 1:
-			return ' ';
+			return symbolics.Tile.FLOOR;
 		case 2:
-			return 'S';
+			return symbolics.Tile.EXIT;
 		case 3:
-			return 'H';
+			return symbolics.Tile.HERO;
 		case 4:
-			return 'D';
+			return symbolics.Tile.DRAGON;
 		case 5:
-			return 'T';
+			return symbolics.Tile.DART;
 		case 6:
-			return 'P';
+			return symbolics.Tile.SHIELD;
 		case 7:
-			return 'E';
+			return symbolics.Tile.SWORD;
 		default:
 			return '\0';
 		}

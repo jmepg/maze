@@ -3,6 +3,8 @@ package cli;
 import java.util.Scanner;
 import java.util.List;
 
+import symbolics.GameResult;
+import symbolics.MazeBuild;
 import logic.Dragon;
 
 /**
@@ -88,10 +90,10 @@ public class Cli {
 
 		do {
 			System.out
-					.print("Static Maze or Random Maze (0/1)? ");
+					.print("Random or Static Maze (0/1)? ");
 			opcao = keyboard.nextInt();
 			System.out.println();
-		} while (!(opcao == 0 || opcao == 1));
+		} while (!(opcao == MazeBuild.STATICMAZE || opcao == MazeBuild.RANDOMMAZE));
 
 		return opcao;
 	}
@@ -176,13 +178,11 @@ public class Cli {
 		System.out.println();
 
 		switch (estado) {
-		case 0:
+		case GameResult.WIN:
 			System.out.println("YOU WON!!!");
 			break;
-		case 1:
+		case GameResult.LOSE:
 			System.out.println("YOU LOST, YOU WERE KILLED BY A DRAGON!!!");
-			break;
-		case 2:
 			break;
 		default:
 			System.out.println("ERROR!!!");

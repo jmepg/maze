@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import symbolics.Size;
+
 /**
  * Manages the panel below the game screen.
  *
@@ -115,7 +117,7 @@ public class BottomOptions extends JPanel {
 	
 	public void createButtons() {
 		options = new JButton("Options");
-		options.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
+		options.setPreferredSize(new Dimension(Size.hSize / 3, 25));
 		add(options, BorderLayout.WEST);
 		optDialog = new Options(null, "Game Options", gui);
 		options.addActionListener(new ActionListener() {
@@ -127,7 +129,7 @@ public class BottomOptions extends JPanel {
 		});
 
 		saveload = new JButton("Save/Load Game");
-		saveload.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
+		saveload.setPreferredSize(new Dimension(Size.hSize / 3, 25));
 		add(saveload, BorderLayout.CENTER);
 		saveLoadDialog = new SaveLoad(gui);
 		saveload.addActionListener(new ActionListener() {
@@ -139,7 +141,7 @@ public class BottomOptions extends JPanel {
 		});
 
 		create = new JButton("Create Maze");
-		create.setPreferredSize(new Dimension(Gui.hSize / 3, 25));
+		create.setPreferredSize(new Dimension(Size.hSize / 3, 25));
 		add(create, BorderLayout.EAST);
 		create.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
