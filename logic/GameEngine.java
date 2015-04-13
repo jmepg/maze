@@ -26,7 +26,7 @@ public class GameEngine implements Serializable {
     /**
 	 * Get @see dragons
 	 * 
-	 * @param {@link dragons}
+	 * @return {@link dragons}
 	 */
 	public List <Dragon> getDragons(){
 		return dragons;
@@ -50,7 +50,7 @@ public class GameEngine implements Serializable {
     /**
 	 * Get @see darts
 	 * 
-	 * @param {@link darts}
+	 * @return {@link darts}
 	 */
 	public List <Dart> getDarts(){
 		return darts;
@@ -70,18 +70,18 @@ public class GameEngine implements Serializable {
 	private Hero h1 = new Hero();
 
     /**
-	 * Get @see hero
+	 * Get @see h1
 	 * 
-	 * @param {@link hero}
+	 * @return {@link h1}
 	 */
 	public Hero getHero(){
 		return h1;
 	}
 
     /**
-	 * Set @see hero
+	 * Set @see h1
 	 * 
-	 * @param hero {@link hero}
+	 * @param hero {@link h1}
 	 */
 	
 	public void setHero(Hero hero){
@@ -92,17 +92,17 @@ public class GameEngine implements Serializable {
 	 */
 	private Maze board;
 	  /**
-		 * Get @see maze
+		 * Get @see board
 		 * 
-		 * @param {@link maze}
+		 * @return {@link board}
 		 */
 	public Maze getBoard(){
 		return board;
 	}
 	/**
-	 * Set @see maze
+	 * Set @see board
 	 * 
-	 * @param  {@link maze}
+	 * @param b1 {@link board}
 	 */	
 	public void setBoard(Maze b1){
 		this.board=b1;
@@ -115,7 +115,7 @@ public class GameEngine implements Serializable {
 	 /**
 	 * Get @see posEpada
 	 * 
-	 * @param {@link posEspada}
+	 * @return {@link posEspada}
 	 */
 	public int getPosEspada(){
 		return posEspada;
@@ -123,7 +123,7 @@ public class GameEngine implements Serializable {
 	/**
 	 * Set @see posEspada
 	 * 
-	 * @param posEspada {@link posEspada}
+	 * @param sword {@link posEspada}
 	 */
 	public void setPosEspada(int sword){
 		this.posEspada=sword;
@@ -135,7 +135,7 @@ public class GameEngine implements Serializable {
 	 /**
 	 * Get @see posEscudo
 	 * 
-	 * @param {@link posEscudo}
+	 * @return {@link posEscudo}
 	 */
 	public int getPosEscudo(){
 		return posEscudo;
@@ -143,7 +143,7 @@ public class GameEngine implements Serializable {
 	/**
 	 * Set @see posEscudo
 	 * 
-	 * @param posEscudo {@link posEscudo}
+	 * @param shield {@link posEscudo}
 	 */
 	public void setPosEscudo(int shield){
 		this.posEscudo=shield;
@@ -163,7 +163,7 @@ public class GameEngine implements Serializable {
 	 /**
 	 * Get @see ambiente
 	 * 
-	 * @param {@link ambiente}
+	 * @return {@link ambiente}
 	 */
 	public int getAmbiente(){
 		return ambiente;
@@ -171,7 +171,7 @@ public class GameEngine implements Serializable {
 	/**
 	 * Set @see ambiente
 	 * 
-	 * @param ambiente {@link ambiente}
+	 * @param amb {@link ambiente}
 	 */
 	public void setAmbiente(int amb){
 		this.ambiente=amb;

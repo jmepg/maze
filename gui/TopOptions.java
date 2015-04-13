@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 /**
  * Manages the panel on top of the game screen.
  */
-public class StartQuitButtons extends JPanel {
+public class TopOptions extends JPanel {
 	/**
 	 * Serial version ID.
 	 */
@@ -36,7 +36,7 @@ public class StartQuitButtons extends JPanel {
 	 * The class constructor.
 	 * @param gui {@link gui.Gui}
 	 */
-	public StartQuitButtons(Gui gui) {
+	public TopOptions(Gui gui) {
 		this.gui = gui;
 		setLayout(new GridLayout(1, 3));
 		createButtons();

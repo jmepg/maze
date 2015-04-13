@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  * Manages the panel below the game screen.
  *
  */
-public class OptionButtons extends JPanel {
+public class BottomOptions extends JPanel {
 	/**
 	 * Serial version ID.
 	 */
@@ -55,7 +55,7 @@ public class OptionButtons extends JPanel {
 	 * The class constructor.
 	 * @param gui {@link gui.Gui}
 	 */
-	public OptionButtons(Gui gui) {
+	public BottomOptions(Gui gui) {
 		setLayout(new GridLayout(1, 2));
 		this.gui = gui;
 		createButtons();
@@ -108,9 +108,9 @@ public class OptionButtons extends JPanel {
 
 	/**
 	 * Creates all the buttons in this class.
-	 * @see #options
-	 * @see #saveload
-	 * @see #create
+	 * @see options
+	 * @see saveload
+	 * @see create
 	 */
 	
 	public void createButtons() {

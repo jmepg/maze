@@ -34,12 +34,12 @@ public class Gui {
 	/**
 	 * The bottom panel in the game. Holds the options, start/load game and create maze buttons.
 	 */
-	private OptionButtons optionButtons;
+	private BottomOptions optionButtons;
 	
 	/**
 	 * The top panel in the game. Holds the start and quit buttons.
 	 */
-	private StartQuitButtons startQuitButtons;
+	private TopOptions startQuitButtons;
 	
 	/**
 	 * The game controls. They default to W/A/S/D
@@ -126,10 +126,10 @@ public class Gui {
 		this.panel = new GraphicMaze(this);
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 
-		startQuitButtons = new StartQuitButtons(this);
+		startQuitButtons = new TopOptions(this);
 		frame.getContentPane().add(startQuitButtons, BorderLayout.NORTH);
 
-		setOptionButtons(new OptionButtons(this));
+		setOptionButtons(new BottomOptions(this));
 		frame.getContentPane().add(getOptionButtons(), BorderLayout.SOUTH);
 		
 		frame.pack();
@@ -202,11 +202,11 @@ public class Gui {
 		this.engine = engine;
 	}
 
-	public OptionButtons getOptionButtons() {
+	public BottomOptions getOptionButtons() {
 		return optionButtons;
 	}
 
-	public void setOptionButtons(OptionButtons optionButtons) {
+	public void setOptionButtons(BottomOptions optionButtons) {
 		this.optionButtons = optionButtons;
 	}
 

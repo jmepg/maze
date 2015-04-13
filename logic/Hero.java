@@ -119,7 +119,7 @@ public class Hero implements Serializable {
     /**
    	 * Get @see direction
    	 * 
-   	 * @param  {@link direction}
+   	 * @return {@link direction}
    	 */
     public char getDirection(){
     	return direction;
@@ -128,7 +128,7 @@ public class Hero implements Serializable {
     /**
 	 * Set @see direction
 	 * 
-	 * @param direction {@link direction}
+	 * @param dir {@link direction}
 	 */
     public void setDirection(char dir){
     	this.direction=dir;
