@@ -246,13 +246,18 @@ public class MyTest {
 		if (g1.getAmbiente() != 1)
 			g1.setAmbiente(1);
 		g1.initializeGame(null);
-
-		boolean fireball = g1.randomFireBall(1);
+		
+		
+		boolean fireball = false;
+				
+		do{
+			fireball = g1.randomFireBall();
+		} while(fireball = false);
 
 		Assert.assertTrue(fireball);
 
 		for (int i = 0; i < 1000; i++) {
-			fireball = g1.randomFireBall(0);
+			fireball = g1.randomFireBall();
 			Assert.assertTrue(fireball == true || fireball == false);
 		}
 	}
@@ -267,20 +272,25 @@ public class MyTest {
 		if (g1.getAmbiente() != 1)
 			g1.setAmbiente(1);
 		g1.initializeGame(null);
+		
 		List <Dragon> dragons1 = null;
 		g1.setDragons(dragons1);
 		int nDragons = 1;
 		int ret = 0;
 
-		while (ret != nDragons)
+		while (ret != nDragons){
+			g1.generateDragons(nDragons);
 			ret = g1.getDragons().size();
+			}
 		Assert.assertEquals(nDragons, ret);
 
 		g1.setDragons(dragons1);
 
 		nDragons = 2;
-		while (ret != nDragons)
+		while (ret != nDragons){	
+			g1.generateDragons(nDragons);
 			ret = g1.getDragons().size();
+			}
 		Assert.assertEquals(nDragons, ret);
 
 		g1.setDragons(dragons1);
@@ -288,8 +298,10 @@ public class MyTest {
 
 		nDragons = r.nextInt(99) + 1;
 
-		while (ret != nDragons)
+		while (ret != nDragons){
+			g1.generateDragons(nDragons);
 			ret = g1.getDragons().size();
+			}
 		Assert.assertEquals(nDragons, ret);
 	}
 
@@ -392,7 +404,7 @@ public class MyTest {
 		g1 = new GameEngine(1);
 		if (g1.getAmbiente() != 1)
 			g1.setAmbiente(1); 
-		g1.initializeGame(null);
+		g1.initializeGame(null); 
 		List <Dragon> dragons1 = null;
 		g1.setDragons(dragons1);
 		g1.generateDragons(1);
@@ -577,33 +589,6 @@ public class MyTest {
 
 		m1.changeBoard(11, 'X');
 		Assert.assertEquals('X', m1.checkTile(11));
-	}
-
-	/**
-	 * Tests if the MyRandom class correctly generates random stuff.
-	 */
-	@Test
-	public void testMyRandom() {
-
-		int res = 0;
-		MyRandom mr = new MyRandom();
-
-		for (int i = 0; i < 1000; i++) {
-			res = mr.nextInt();
-			Assert.assertTrue(res == 0 || res == 1 || res == 2 || res == 3);
-		}
-
-		int[] n = { 10, 12, 34, 56, 77, 888 };
-		mr = new MyRandom(n);
-		res = 0;
-
-		for (int i = 0; i < n.length; i++) {
-			res = mr.nextInt();
-
-			boolean assertionAnswer = Arrays.asList(n).contains(res);
-
-			Assert.assertEquals(false, assertionAnswer);
-		}
 	}
 
 	/* Funcoes nao comentadas visto que vao muito provavelmetne ser apagadas */

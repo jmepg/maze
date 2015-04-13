@@ -22,10 +22,21 @@ public class GameEngine implements Serializable {
 	 * List of the dragons in the maze
 	 */
 	private List<Dragon> dragons = new ArrayList<Dragon>();
-	
+
+    /**
+	 * Get @see dragons
+	 * 
+	 * @param {@link dragons}
+	 */
 	public List <Dragon> getDragons(){
 		return dragons;
 	}
+
+    /**
+	 * Set @see dragons
+	 * 
+	 * @param dragons {@link dragons}
+	 */
 	
 	public void setDragons(List <Dragon> dragons){
 		this.dragons=dragons;
@@ -35,11 +46,21 @@ public class GameEngine implements Serializable {
 	 * List of the darts in the maze
 	 */
 	private List<Dart> darts = new ArrayList<Dart>();
-	
+
+    /**
+	 * Get @see darts
+	 * 
+	 * @param {@link darts}
+	 */
 	public List <Dart> getDarts(){
 		return darts;
 	}
-	
+
+    /**
+	 * Set @see darts
+	 * 
+	 * @param darts {@link darts}
+	 */
 	public void setDarts(List <Dart> darts){
 		this.darts=darts;
 	}
@@ -47,10 +68,21 @@ public class GameEngine implements Serializable {
 	 * The hero.
 	 */
 	private Hero h1 = new Hero();
-	
+
+    /**
+	 * Get @see hero
+	 * 
+	 * @param {@link hero}
+	 */
 	public Hero getHero(){
 		return h1;
 	}
+
+    /**
+	 * Set @see hero
+	 * 
+	 * @param hero {@link hero}
+	 */
 	
 	public void setHero(Hero hero){
 		this.h1=hero;
@@ -59,11 +91,19 @@ public class GameEngine implements Serializable {
 	 * The board layout.
 	 */
 	private Maze board;
-	
+	  /**
+		 * Get @see maze
+		 * 
+		 * @param {@link maze}
+		 */
 	public Maze getBoard(){
 		return board;
 	}
-	
+	/**
+	 * Set @see maze
+	 * 
+	 * @param  {@link maze}
+	 */	
 	public void setBoard(Maze b1){
 		this.board=b1;
 	}
@@ -72,10 +112,19 @@ public class GameEngine implements Serializable {
 	 * The sword's position.
 	 */
 	private int posEspada = 81;
-	
+	 /**
+	 * Get @see posEpada
+	 * 
+	 * @param {@link posEspada}
+	 */
 	public int getPosEspada(){
 		return posEspada;
 	}
+	/**
+	 * Set @see posEspada
+	 * 
+	 * @param posEspada {@link posEspada}
+	 */
 	public void setPosEspada(int sword){
 		this.posEspada=sword;
 	}
@@ -83,10 +132,19 @@ public class GameEngine implements Serializable {
 	 * The shield's position.
 	 */
 	private int posEscudo = -1;
-	
+	 /**
+	 * Get @see posEscudo
+	 * 
+	 * @param {@link posEscudo}
+	 */
 	public int getPosEscudo(){
 		return posEscudo;
 	}
+	/**
+	 * Set @see posEscudo
+	 * 
+	 * @param posEscudo {@link posEscudo}
+	 */
 	public void setPosEscudo(int shield){
 		this.posEscudo=shield;
 	}
@@ -102,10 +160,19 @@ public class GameEngine implements Serializable {
 	
 	/** The interface used to play */
 	private int ambiente; // 0=cli 1=test
-	
+	 /**
+	 * Get @see ambiente
+	 * 
+	 * @param {@link ambiente}
+	 */
 	public int getAmbiente(){
 		return ambiente;
 	}
+	/**
+	 * Set @see ambiente
+	 * 
+	 * @param ambiente {@link ambiente}
+	 */
 	public void setAmbiente(int amb){
 		this.ambiente=amb;
 	}
@@ -361,7 +428,8 @@ public class GameEngine implements Serializable {
 		default:
 			break;
 		}
-		throwDarts(direcao);
+		h1.setDirection(direcao);
+		throwDarts(h1.getDirection());
 		return;
 	}
 
@@ -500,7 +568,7 @@ public class GameEngine implements Serializable {
 			int yheroi = h1.getPosicao() / board.getDimension();
 			int maxpos = 0;
 
-			if (randomFireBall(1) && dragons.get(i).isAcordado()) {
+			if (randomFireBall() && dragons.get(i).isAcordado()) {
 				if (ydragao == yheroi) {
 					if (xdragao < xheroi)
 						maxpos = pos + 3;
@@ -547,10 +615,10 @@ public class GameEngine implements Serializable {
 	 * @param test ISTO E PARA SAIR DAQUI ESTRADA
 	 * @return true If a fireball is generated, false otherwise.
 	 */
-	public boolean randomFireBall(int test) {
+	public boolean randomFireBall() {
 		Random r = new Random();
 		int n = r.nextInt(10) + 1;
-		if (n == 2 || test == 1)
+		if (n == 2)
 			return true;
 		else
 			return false;
@@ -562,11 +630,12 @@ public class GameEngine implements Serializable {
 	 * 
 	 * @param number Number of dragons to generate.
 	 */
-	public void generateDragons(int number) {
+	public void generateDragons(int number) { 
 		int n = 0;
 		Random r = new Random();
 		
-		dragons.clear();
+		if(dragons.size()!=0)
+			dragons.clear();
 
 		for (int i = 0; i < number; i++) {
 			do {

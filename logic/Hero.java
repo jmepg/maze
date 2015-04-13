@@ -21,10 +21,14 @@ public class Hero implements Serializable {
 	 * Whether the hero is armed or not.
 	 */
 	private boolean armado = false;
-	
+	/**
+	 * The hero's direction
+	 */
+	private char direction;
 	/**
 	 * Whether the hero has darts or not.
 	 */
+
 	private boolean dardo = false;
 	
 	/**
@@ -79,6 +83,7 @@ public class Hero implements Serializable {
 
     /**
 	 * Set @see posicao
+	 * 
 	 * @param posicao {@link posicao}
 	 */
     public void setPosicao(int posicao) {
@@ -87,6 +92,7 @@ public class Hero implements Serializable {
 
     /**
 	 * Set @see armado
+	 * 
 	 * @param armado {@link armado}
 	 */
     public void setArmado(boolean armado) {
@@ -95,6 +101,7 @@ public class Hero implements Serializable {
 
     /**
 	 * Set @see dardo
+	 * 
 	 * @param dardo {@link dardo}
 	 */
     public void setDardo(boolean dardo) {
@@ -103,9 +110,28 @@ public class Hero implements Serializable {
 
     /**
 	 * Set @see escudo
+	 * 
 	 * @param escudo {@link escudo}
 	 */
     public void setEscudo(boolean escudo) {
         this.escudo = escudo;
     }
+    /**
+   	 * Get @see direction
+   	 * 
+   	 * @param  {@link direction}
+   	 */
+    public char getDirection(){
+    	return direction;
+    }
+
+    /**
+	 * Set @see direction
+	 * 
+	 * @param direction {@link direction}
+	 */
+    public void setDirection(char dir){
+    	this.direction=dir;
+    }
+    
 }
