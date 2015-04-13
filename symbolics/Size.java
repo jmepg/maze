@@ -1,5 +1,8 @@
 package symbolics;
 
+/**
+ * Symbolic constants referring to sizes in the GUI
+ */
 public class Size {
 
 	/**

@@ -1,11 +1,17 @@
 package gui;
 
 import java.awt.event.KeyEvent;
+
 import javax.swing.JDialog;
+
 import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
 
+import symbolics.Direction;
+
 import java.awt.event.KeyAdapter;
+
 /**
  * Manages the dialog that asks for the key to assign to each user action.
  */
@@ -43,13 +49,25 @@ public class ControlsPopup extends JDialog {
 		});
 		
 		setModal(true);
-		setBounds(540, 425, 250, 50);
+		setBounds(540, 425, 250, 75);
 		getContentPane().setLayout(new BorderLayout(0,0));
 		
 		setResizable(false);
 		
-		JLabel lblPrimaUmaTecla = new JLabel(" Hit a key for assignment...");
+		JLabel lblPrimaUmaTecla = new JLabel("Hit a key for assignment... ");
+		JLabel defaultKey;
+		
+		if(nControl == Direction.UP_INT)
+			defaultKey = new JLabel("Default: UP_ARROW");
+		else if(nControl == Direction.DOWN_INT)
+			defaultKey = new JLabel("Default: DOWN_ARROW");
+		else if(nControl == Direction.LEFT_INT)
+			defaultKey = new JLabel("Default: LEFT_ARROW");
+		else //Direction.RIGHT_INT
+			defaultKey = new JLabel("Default: RIGHT_ARROW");
+
 		getContentPane().add(lblPrimaUmaTecla, BorderLayout.CENTER);
+		getContentPane().add(defaultKey, BorderLayout.SOUTH);
 		setVisible(true);
 	}
 	

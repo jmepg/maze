@@ -1,5 +1,10 @@
 package symbolics;
 
+
+/**
+ * Symbolic constants referring to file formats
+ */
+
 public class FileFormat {
 
 	/**

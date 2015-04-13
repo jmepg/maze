@@ -647,11 +647,11 @@ public class GameEngine implements Serializable {
 						if (h1.getPosicao() == pos) {
 							if (ambiente == 0) {
 								cli.printMaze(board.getMaze());
-								cli.estadoFinal(1);
+								cli.estadoFinal(GameResult.LOSE);
 							}
 							if (ambiente == 1) {
 								test.printMaze(board.getMaze());
-								test.estadoFinal(1);
+								test.estadoFinal(GameResult.LOSE);
 							}
 							return true;
 						} else if (h1.getPosicao() < pos)
