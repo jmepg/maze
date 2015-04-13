@@ -615,7 +615,6 @@ public class GameEngine implements Serializable {
 								test.printMaze(board.getMaze());
 								test.estadoFinal(1);
 							}
-							System.out.println("Cenas");
 							return true;
 						} else if (h1.getPosicao() < pos)
 							pos -= board.getDimension();

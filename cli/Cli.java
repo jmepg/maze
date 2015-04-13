@@ -51,7 +51,7 @@ public class Cli {
 		System.out.println();
 		do {
 			System.out.println();
-			System.out.println("Option?" );
+			System.out.print("Option?" );
 			opcao = keyboard.nextInt();
 		} while (!(opcao == 1 || opcao == 2));
 		
@@ -88,7 +88,7 @@ public class Cli {
 
 		do {
 			System.out
-					.print("Static Maze or Random Maze (0/1)?");
+					.print("Static Maze or Random Maze (0/1)? ");
 			opcao = keyboard.nextInt();
 			System.out.println();
 		} while (!(opcao == 0 || opcao == 1));
@@ -106,7 +106,7 @@ public class Cli {
 		int tamanho;
 
 		do {
-			System.out.print("Maze size? (>7, tem de ser impar)");
+			System.out.print("Maze size? (odd, greater than 7) ");
 			tamanho = keyboard.nextInt();
 			System.out.println();
 		} while (tamanho < 7 || (tamanho % 2) == 0);
@@ -125,7 +125,7 @@ public class Cli {
 		Dragon.Mode mode = null;
 		do {
 			System.out
-					.print("Game Mode? 1-Static Drangons 2-Moving Dragons 3-Sleeping Dragons");
+					.print("Game Mode? 1-Static Drangons 2-Moving Dragons 3-Sleeping Dragons ");
 			choice = keyboard.nextInt();
 			System.out.println();
 		} while (choice != 1 && choice != 2 && choice != 3);
@@ -156,7 +156,7 @@ public class Cli {
 	public int askForDragons() {
 		int number;
 		do {
-			System.out.print("Number of Dragons?");
+			System.out.print("Number of Dragons? ");
 			number = keyboard.nextInt();
 			System.out.println();
 		} while (number < 0);
@@ -180,7 +180,7 @@ public class Cli {
 			System.out.println("YOU WON!!!");
 			break;
 		case 1:
-			System.out.println("YOU LOST, YOU WERE KILLEB BY A DRAGON!!!");
+			System.out.println("YOU LOST, YOU WERE KILLED BY A DRAGON!!!");
 			break;
 		case 2:
 			break;
