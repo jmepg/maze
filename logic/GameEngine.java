@@ -612,7 +612,6 @@ public class GameEngine implements Serializable {
 
 	/**
 	 * Randomly decides whether the dragon spits a fireball or not.
-	 * @param test ISTO E PARA SAIR DAQUI ESTRADA
 	 * @return true If a fireball is generated, false otherwise.
 	 */
 	public boolean randomFireBall() {

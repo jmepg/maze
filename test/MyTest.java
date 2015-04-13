@@ -176,10 +176,12 @@ public class MyTest {
 		}
 
 		if (g1.getDragons().size() == 0 || g1.getDragons().get(0).getPosicao() != 31) {
+			g1.getDragons().clear();
 			Dragon d1 = new Dragon();
 			d1.setPosicao(31);
-			g1.getDragons().add(d1);
+			g1.getDragons().add(d1); 
 		}
+		g1.setPosEspada(12);
 
 		g1.moveHeroi('d');
 		g1.placeEntities();
@@ -252,7 +254,7 @@ public class MyTest {
 				
 		do{
 			fireball = g1.randomFireBall();
-		} while(fireball = false);
+		} while(fireball == false);
 
 		Assert.assertTrue(fireball);
 
@@ -273,10 +275,9 @@ public class MyTest {
 			g1.setAmbiente(1);
 		g1.initializeGame(null);
 		
-		List <Dragon> dragons1 = null;
-		g1.setDragons(dragons1);
+		g1.getDragons().clear();
 		int nDragons = 1;
-		int ret = 0;
+		int ret = 0; 
 
 		while (ret != nDragons){
 			g1.generateDragons(nDragons);
@@ -284,7 +285,7 @@ public class MyTest {
 			}
 		Assert.assertEquals(nDragons, ret);
 
-		g1.setDragons(dragons1);
+		g1.getDragons().clear();
 
 		nDragons = 2;
 		while (ret != nDragons){	
@@ -293,7 +294,7 @@ public class MyTest {
 			}
 		Assert.assertEquals(nDragons, ret);
 
-		g1.setDragons(dragons1);
+		g1.getDragons().clear();
 		Random r = new Random();
 
 		nDragons = r.nextInt(99) + 1;
@@ -405,8 +406,7 @@ public class MyTest {
 		if (g1.getAmbiente() != 1)
 			g1.setAmbiente(1); 
 		g1.initializeGame(null); 
-		List <Dragon> dragons1 = null;
-		g1.setDragons(dragons1);
+		g1.getDragons().clear();
 		g1.generateDragons(1);
 		boolean awake = false;
 		while (!awake) {
@@ -432,8 +432,9 @@ public class MyTest {
 		if (g1.getAmbiente() != 1)
 			g1.setAmbiente(1); 
 		g1.initializeGame(null);
+		g1.generateDragons(5);
 		g1.generateDarts();
-		Assert.assertFalse(g1.getDarts().size() == 0);
+		Assert.assertTrue(g1.getDarts().size() > 0);
 	}
 
 	/**
@@ -500,9 +501,7 @@ public class MyTest {
 		if (g1.getAmbiente() != 1)
 			g1.setAmbiente(1);
 		g1.initializeGame(null);
-		List <Dragon> dragons1 = null;
-		g1.setDragons(dragons1);
-		g1.generateDragons(3);
+		g1.getDragons().clear();
 		g1.cli.printMaze(g1.getBoard().getMaze());
 		g1.placeEntities();
 		try {
