@@ -51,7 +51,7 @@ public class Cli {
 		System.out.println();
 		do {
 			System.out.println();
-			System.out.println("Opcao?" );
+			System.out.println("Option?" );
 			opcao = keyboard.nextInt();
 		} while (!(opcao == 1 || opcao == 2));
 		
@@ -69,7 +69,7 @@ public class Cli {
 	public char askForDirection() {
 		char direcao;
 		do {
-			System.out.print("Direcao? ");
+			System.out.print("Direction? ");
 			direcao = keyboard.next().charAt(0);
 			System.out.println(direcao);
 			System.out.println();
@@ -88,7 +88,7 @@ public class Cli {
 
 		do {
 			System.out
-					.print("Labirinto estatico ou gerar labirinto aleatorio (0/1)?");
+					.print("Static Maze or Random Maze (0/1)?");
 			opcao = keyboard.nextInt();
 			System.out.println();
 		} while (!(opcao == 0 || opcao == 1));
@@ -106,7 +106,7 @@ public class Cli {
 		int tamanho;
 
 		do {
-			System.out.print("Tamanho do labirinto? (>7, tem de ser impar)");
+			System.out.print("Maze size? (>7, tem de ser impar)");
 			tamanho = keyboard.nextInt();
 			System.out.println();
 		} while (tamanho < 7 || (tamanho % 2) == 0);
@@ -125,7 +125,7 @@ public class Cli {
 		Dragon.Mode mode = null;
 		do {
 			System.out
-					.print("Modo de Jogo? 1-Dragao estatico 2-Dragao com movimento 3-Dragao adormecido");
+					.print("Game Mode? 1-Static Drangons 2-Moving Dragons 3-Sleeping Dragons");
 			choice = keyboard.nextInt();
 			System.out.println();
 		} while (choice != 1 && choice != 2 && choice != 3);
@@ -156,7 +156,7 @@ public class Cli {
 	public int askForDragons() {
 		int number;
 		do {
-			System.out.print("Numero de dragoes?");
+			System.out.print("Number of Dragons?");
 			number = keyboard.nextInt();
 			System.out.println();
 		} while (number < 0);
@@ -177,15 +177,15 @@ public class Cli {
 
 		switch (estado) {
 		case 0:
-			System.out.println("GANHOU!!!");
+			System.out.println("YOU WON!!!");
 			break;
 		case 1:
-			System.out.println("PERDEU, FOI MORTO PELO DRAGÃO!!!");
+			System.out.println("YOU LOST, YOU WERE KILLEB BY A DRAGON!!!");
 			break;
 		case 2:
 			break;
 		default:
-			System.out.println("ERRO!!!");
+			System.out.println("ERROR!!!");
 			break;
 		}
 		return;
