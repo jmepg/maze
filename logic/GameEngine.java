@@ -231,7 +231,11 @@ public class GameEngine implements Serializable {
 	 */
 	public void initializeGame(MazeBuilder mb) {
 	
+		if(mb == null)
+			mb = new MazeBuilder();
+		
 		if (ambiente == 0) {
+			
 			if(!cli.mainMenu())
 				System.exit(0);
 			mb.setOpcao(cli.askForType());
@@ -248,11 +252,10 @@ public class GameEngine implements Serializable {
 				dragons.add(new Dragon());
 			}
 		} else if (ambiente == 1) {
-			MazeBuilder mbt = new MazeBuilder();
-			mbt.setOpcao(0);
-			board = mbt.getMaze();
+			mb.setOpcao(0);
+			board = mb.getMaze();
 			board.generate();
-			if (mbt.getOpcao() == 0) {
+			if (mb.getOpcao() == 0) {
 				dragonMode = Dragon.Mode.STATIC;
 				dragons.add(new Dragon());
 			}
