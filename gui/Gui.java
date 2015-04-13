@@ -125,15 +125,15 @@ public class Gui {
 
 		this.panel = new GraphicMaze(this);
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
-		frame.setVisible(true);
-		frame.setResizable(false);
-		panel.setBounds(0, 50, hSize, vSize - 100);
 
 		startQuitButtons = new StartQuitButtons(this);
 		frame.getContentPane().add(startQuitButtons, BorderLayout.NORTH);
 
 		setOptionButtons(new OptionButtons(this));
 		frame.getContentPane().add(getOptionButtons(), BorderLayout.SOUTH);
+		
+		frame.pack();
+		frame.setVisible(true);
 
 		int controls[] = { KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT,
 				KeyEvent.VK_RIGHT };

@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -55,7 +56,7 @@ public class OptionButtons extends JPanel {
 	 * @param gui {@link gui.Gui}
 	 */
 	public OptionButtons(Gui gui) {
-		setLayout(new BorderLayout(0, 0));
+		setLayout(new GridLayout(1, 2));
 		this.gui = gui;
 		createButtons();
 	}

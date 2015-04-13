@@ -282,7 +282,7 @@ public class SaveLoad extends JDialog {
 
 		try {
 			Image img = ImageIO.read(getClass().getResource(
-					"../resources/Open16.gif"));
+					"resources/Open16.gif"));
 			openSavedGame.setIcon(new ImageIcon(img));
 			openCustomMaze.setIcon(new ImageIcon(img));
 		} catch (IOException ex) {
@@ -291,7 +291,7 @@ public class SaveLoad extends JDialog {
 
 		try {
 			Image img = ImageIO.read(getClass().getResource(
-					"../resources/Save16.gif"));
+					"resources/Save16.gif"));
 			saveCurrentState.setIcon(new ImageIcon(img));
 		} catch (IOException ex) {
 			ex.printStackTrace();

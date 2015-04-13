@@ -1,7 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -37,9 +37,9 @@ public class StartQuitButtons extends JPanel {
 	 * @param gui {@link gui.Gui}
 	 */
 	public StartQuitButtons(Gui gui) {
-		setLayout(new BorderLayout(0, 0));
-		createButtons();
 		this.gui = gui;
+		setLayout(new GridLayout(1, 3));
+		createButtons();
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class StartQuitButtons extends JPanel {
 	 */
 	public void createButtons() {
 		StartButton = new JButton("Start game");
-		StartButton.setPreferredSize(new Dimension(Gui.hSize / 2, 25));
+		//StartButton.setSize(new Dimension(gui.getFrame().getWidth() / 2, 25));
 		add(StartButton, BorderLayout.WEST);
 		StartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -84,7 +84,7 @@ public class StartQuitButtons extends JPanel {
 		});
 
 		QuitButton = new JButton("Quit");
-		QuitButton.setPreferredSize(new Dimension(Gui.hSize / 2, 25));
+		//QuitButton.setSize(new Dimension(gui.getFrame().getWidth() / 2, 25));
 		add(QuitButton, BorderLayout.EAST);
 		QuitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

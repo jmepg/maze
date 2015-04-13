@@ -235,8 +235,9 @@ public class CreationMenu extends JPanel {
 	 * @param entity The entity to place in that tile.
 	 */
 	public void changeBoard(int x, int y, char entity) {
-		int hTile = x * customBoard.getBoard().getDimension() / hSize;
-		int vTile = y * customBoard.getBoard().getDimension() / vSize;
+		int hTile = x * customBoard.getBoard().getDimension() / gui.getPanel().getHeight();
+		int vTile = y * customBoard.getBoard().getDimension() / (gui.getPanel().getWidth()-GraphicMaze.createGameYi);
+		
 		int tile = vTile * customBoard.getBoard().getDimension() + hTile;
 
 		/*
