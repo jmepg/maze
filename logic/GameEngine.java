@@ -704,7 +704,7 @@ public class GameEngine implements Serializable {
 		for (int i = 0; i < number; i++) {
 			do {
 				n = r.nextInt((board.getDimension() * board.getDimension()) - 1);
-			} while (board.checkTile(n) == Tile.WALL);
+			} while (board.checkTile(n) != Tile.FLOOR);
 			Dragon d1 = new Dragon(n);
 			dragons.add(d1);
 			board.maze.set(n, Tile.DRAGON);

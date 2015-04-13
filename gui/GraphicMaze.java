@@ -11,7 +11,6 @@ import symbolics.Size;
 import symbolics.Tile;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -21,7 +20,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.awt.event.MouseAdapter;
 
-import logic.Dragon;
 import logic.Maze;
 import logic.MazeBuilder;
 
@@ -36,6 +34,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 	private Image dragonUp;
 	private Image dragonLeft;
 	private Image dragonRight;
+	private Image dragonAsleep;
 
 	/* Hero unarmed sprites */
 	private Image heroDown;
@@ -233,6 +232,10 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Dragons/right.png"));
 		dragonRight = i.getImage();
+		
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Dragons/asleep.png"));
+		dragonAsleep = i.getImage();
 
 		/* Hero unarmed sprites */
 
@@ -315,6 +318,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Tiles/roof.png"));
 		wall = i.getImage();
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Tiles/wall.png"));
+		wallRoof = i.getImage();
 
 		/* Weapons */
 
@@ -401,19 +407,28 @@ public class GraphicMaze extends JPanel implements KeyListener {
 			int vSize) {
 		int size = board.getDimension();
 
-		double tileHSize = (double) hSize / size;
-		double tileVSize = (double) vSize / size;
-
-		int tileHSizeInt = (int) tileHSize;
-		int tileVSizeInt = (int) tileVSize;
+		int tileHSizeInt = (int) hSize / size;
+		int tileVSizeInt = (int) vSize / size;
 
 		for (int vTile = 0; vTile < size; vTile++) {
 			for (int hTile = 0; hTile < size; hTile++) {
 				switch (board.getMaze().get(vTile * size + hTile)) {
 				case Tile.WALL:
-					g.drawImage(wall, (hTile * tileHSizeInt + xi), (vTile
-							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
-							null);
+					if (vTile != size - 1) {
+						if (gui.getEngine().getBoard()
+								.checkTile((vTile * size + hTile) + size) != Tile.WALL && gui.getEngine().getBoard()
+								.checkTile((vTile * size + hTile) + size) != Tile.EXIT)
+							g.drawImage(wallRoof, (hTile * tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						else
+							g.drawImage(wall, (hTile * tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+					} else
+						g.drawImage(wall, (hTile * tileHSizeInt + xi), (vTile
+								* tileVSizeInt + yi), tileHSizeInt,
+								tileVSizeInt, null);
 					break;
 				case Tile.FLOOR:
 					g.drawImage(floor, (hTile * tileHSizeInt + xi), (vTile
@@ -516,7 +531,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 
 					break;
 				case Tile.SLEEPINGDRAGON:
-					g.drawImage(dragonDown, (hTile * tileHSizeInt + xi), (vTile
+					g.drawImage(dragonAsleep, (hTile * tileHSizeInt + xi), (vTile
 							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
 							null); // E preciso mudar isto
 					break;
@@ -588,9 +603,45 @@ public class GraphicMaze extends JPanel implements KeyListener {
 							null);
 					break;
 				case Tile.TWOENTITIES:
-					g.drawImage(floor, (hTile * tileHSizeInt + xi), (vTile
-							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
-							null);
+					for (int dragon = 0; dragon < gui.getEngine().getDragons()
+							.size(); dragon++) {
+						if (gui.getEngine().getDragons().get(dragon)
+								.getPosicao() == vTile * size + hTile)
+							switch (gui.getEngine().getDragons().get(dragon)
+									.getDirection()) {
+							case 1:
+								g.drawImage(dragonRight,
+										(hTile * tileHSizeInt + xi), (vTile
+												* tileVSizeInt + yi),
+										tileHSizeInt, tileVSizeInt, null);
+								break;
+							case -1:
+								g.drawImage(dragonLeft,
+										(hTile * tileHSizeInt + xi), (vTile
+												* tileVSizeInt + yi),
+										tileHSizeInt, tileVSizeInt, null);
+								break;
+							case -2:
+								g.drawImage(dragonUp,
+										(hTile * tileHSizeInt + xi), (vTile
+												* tileVSizeInt + yi),
+										tileHSizeInt, tileVSizeInt, null);
+								break;
+							case 2:
+								g.drawImage(dragonDown,
+										(hTile * tileHSizeInt + xi), (vTile
+												* tileVSizeInt + yi),
+										tileHSizeInt, tileVSizeInt, null);
+								break;
+							default:
+								g.drawImage(dragonDown,
+										(hTile * tileHSizeInt + xi), (vTile
+												* tileVSizeInt + yi),
+										tileHSizeInt, tileVSizeInt, null);
+								break;
+
+							}
+					}
 					break;
 				case Tile.DART:
 					g.drawImage(dart, (hTile * tileHSizeInt + xi), (vTile
@@ -598,12 +649,17 @@ public class GraphicMaze extends JPanel implements KeyListener {
 							null);
 					break;
 				case Tile.EXIT:
-					if (gui.getEngine().exitOpen())
+					if (!gui.getEngine().exitOpen() && !inCreationMode)
+						if (vTile == 0)
+							g.drawImage(wallRoof, (hTile * tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+						else
+							g.drawImage(wall, (hTile * tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
+									tileVSizeInt, null);
+					else
 						g.drawImage(floor, (hTile * tileHSizeInt + xi), (vTile
-								* tileVSizeInt + yi), tileHSizeInt,
-								tileVSizeInt, null);
-					 else
-						g.drawImage(wall, (hTile * tileHSizeInt + xi), (vTile
 								* tileVSizeInt + yi), tileHSizeInt,
 								tileVSizeInt, null);
 				default:
