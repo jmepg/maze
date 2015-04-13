@@ -435,6 +435,7 @@ public class GameEngine implements Serializable {
 			if (canMove(h1.getPosicao() - board.getDimension())) {
 				board.maze.set(h1.getPosicao(), Tile.FLOOR);
 				h1.setPosicao(h1.getPosicao() - board.getDimension());
+				h1.setDirection(Direction.UP);
 			}
 			break;
 		case Direction.DOWN:
@@ -444,6 +445,7 @@ public class GameEngine implements Serializable {
 			if (canMove(h1.getPosicao() + board.getDimension())) {
 				board.maze.set(h1.getPosicao(), Tile.FLOOR);
 				h1.setPosicao(h1.getPosicao() + board.getDimension());
+				h1.setDirection(Direction.DOWN);
 			}
 			break;
 		case Direction.LEFT:
@@ -452,6 +454,7 @@ public class GameEngine implements Serializable {
 			if (canMove(h1.getPosicao() - 1)) {
 				board.maze.set(h1.getPosicao(), Tile.FLOOR);
 				h1.setPosicao(h1.getPosicao() - 1);
+				h1.setDirection(Direction.LEFT);
 			}
 			break;
 		case Direction.RIGHT:
@@ -460,6 +463,7 @@ public class GameEngine implements Serializable {
 			if (canMove(h1.getPosicao() + 1)) {
 				board.maze.set(h1.getPosicao(), Tile.FLOOR);
 				h1.setPosicao(h1.getPosicao() + 1);
+				h1.setDirection(Direction.RIGHT);
 			}
 			break;
 		default:
@@ -529,6 +533,7 @@ public class GameEngine implements Serializable {
 							&& board.maze.get(dragons.get(i).getPosicao() + t) != Tile.EXIT) {
 						dragons.get(i).setPosicao(
 								dragons.get(i).getPosicao() + t);
+						dragons.get(i).setDirection((t/board.getDimension())*2);
 						ret = 0;
 					}
 				} else {
@@ -537,6 +542,7 @@ public class GameEngine implements Serializable {
 							&& board.maze.get(dragons.get(i).getPosicao() + t) != Tile.EXIT) {
 						dragons.get(i).setPosicao(
 								dragons.get(i).getPosicao() + t);
+						dragons.get(i).setDirection(t);
 						ret = 0;
 					}
 				}

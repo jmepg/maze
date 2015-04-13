@@ -16,6 +16,11 @@ public class Dragon implements Serializable {
 	 * The dragon's position. When the dragon dies, this sets to -1.
 	 */
 	private int posicao = 31;
+	
+	/**
+	 * The dragon's direction.
+	 */
+	private int direction = 1;
 
 	/**
 	 * Whether the dragon is awake or not.
@@ -80,6 +85,20 @@ public class Dragon implements Serializable {
 	 */
 	public void setAcordado(boolean acordado) {
 		this.acordado = acordado;
+	}
+
+	/**
+	 * @return the direction
+	 */
+	public int getDirection() {
+		return direction;
+	}
+
+	/**
+	 * @param t the direction to set
+	 */
+	public void setDirection(int t) {
+		this.direction = t;
 	}
 
 }

@@ -30,14 +30,45 @@ import logic.MazeBuilder;
  */
 public class GraphicMaze extends JPanel implements KeyListener {
 
-	private Image dragon;
-	private Image hero;
+	/* Dragon sprites */
+	private Image dragonDown;
+	private Image dragonUp;
+	private Image dragonLeft;
+	private Image dragonRight;
+
+	/* Hero unarmed sprites */
+	private Image heroDown;
+	private Image heroUp;
+	private Image heroLeft;
+	private Image heroRight;
+
+	/* Hero armed sprites */
+	private Image heroArmedDown;
+	private Image heroArmedUp;
+	private Image heroArmedLeft;
+	private Image heroArmedRight;
+
+	/* Hero shielded sprites */
+	private Image heroShieldedDown;
+	private Image heroSheildedUp;
+	private Image heroShieldedLeft;
+	private Image heroShieldedRight;
+
+	/* Hero armed and shielded sprites */
+	private Image heroArmedShieldedDown;
+	private Image heroArmedSheildedUp;
+	private Image heroArmedShieldedLeft;
+	private Image heroArmedShieldedRight;
+
+	/* Tiles sprites */
 	private Image floor;
+	private Image wallRoof;
 	private Image wall;
+
+	/* Weapons sprites */
 	private Image dart;
 	private Image sword;
 	private Image shield;
-	private Image armedHero;
 
 	/**
 	 * Serial version ID.
@@ -184,29 +215,73 @@ public class GraphicMaze extends JPanel implements KeyListener {
 			e.printStackTrace();
 		}
 
-		i = new ImageIcon(this.getClass().getResource("resources/Dragons/down.png"));
-		dragon = i.getImage();
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Dragons/down.png"));
+		dragonDown = i.getImage();
 
-		i = new ImageIcon(this.getClass().getResource("resources/Hero/Empty/down.png"));
-		hero = i.getImage();
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Dragons/up.png"));
+		dragonUp = i.getImage();
 
-		i = new ImageIcon(this.getClass().getResource("resources/Tiles/floor.png"));
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Dragons/left.png"));
+		dragonLeft = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Dragons/right.png"));
+		dragonRight = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/Empty/down.png"));
+		heroDown = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/Empty/up.png"));
+		heroUp = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/Empty/left.png"));
+		heroLeft = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/Empty/right.png"));
+		heroRight = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Tiles/floor.png"));
 		floor = i.getImage();
 
-		i = new ImageIcon(this.getClass().getResource("resources/Tiles/roof.png"));
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Tiles/roof.png"));
 		wall = i.getImage();
 
-		i = new ImageIcon(this.getClass().getResource("resources/Weapons/dart.png"));
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Weapons/dart.png"));
 		dart = i.getImage();
 
-		i = new ImageIcon(this.getClass().getResource("resources/Weapons/shield.png"));
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Weapons/shield.png"));
 		shield = i.getImage();
 
-		i = new ImageIcon(this.getClass().getResource("resources/Weapons/spear.png"));
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Weapons/spear.png"));
 		sword = i.getImage();
 
-		i = new ImageIcon(this.getClass().getResource("resources/Hero/Weapon/down.png"));
-		armedHero = i.getImage();
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/Weapon/down.png"));
+		heroArmedDown = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/Weapon/up.png"));
+		heroArmedUp = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/Weapon/left.png"));
+		heroArmedLeft = i.getImage();
+
+		i = new ImageIcon(this.getClass().getResource(
+				"resources/Hero/Weapon/right.png"));
+		heroArmedRight = i.getImage();
 	}
 
 	public void paintComponent(Graphics g) {
@@ -298,17 +373,78 @@ public class GraphicMaze extends JPanel implements KeyListener {
 							null);
 					break;
 				case Tile.HERO:
-					g.drawImage(hero, (hTile * tileHSizeInt + xi), (vTile
-							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
-							null);
+					switch (gui.getEngine().getHero().getDirection()) {
+					case Direction.UP:
+						g.drawImage(heroUp, (hTile * tileHSizeInt + xi), (vTile
+								* tileVSizeInt + yi), tileHSizeInt,
+								tileVSizeInt, null);
+						break;
+					case Direction.DOWN:
+						g.drawImage(heroDown, (hTile * tileHSizeInt + xi),
+								(vTile * tileVSizeInt + yi), tileHSizeInt,
+								tileVSizeInt, null);
+						break;
+					case Direction.LEFT:
+						g.drawImage(heroLeft, (hTile * tileHSizeInt + xi),
+								(vTile * tileVSizeInt + yi), tileHSizeInt,
+								tileVSizeInt, null);
+						break;
+					case Direction.RIGHT:
+						g.drawImage(heroRight, (hTile * tileHSizeInt + xi),
+								(vTile * tileVSizeInt + yi), tileHSizeInt,
+								tileVSizeInt, null);
+						break;
+					default:
+						g.drawImage(heroDown, (hTile * tileHSizeInt + xi),
+								(vTile * tileVSizeInt + yi), tileHSizeInt,
+								tileVSizeInt, null);
+
+					}
 					break;
 				case Tile.DRAGON:
-					g.drawImage(dragon, (hTile * tileHSizeInt + xi), (vTile
-							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
-							null);
+					for (int dragon = 0; dragon < gui.getEngine().getDragons()
+							.size(); dragon++) {
+						if (gui.getEngine().getDragons().get(dragon)
+								.getPosicao() == vTile * size + hTile)
+							switch (gui.getEngine().getDragons().get(dragon)
+									.getDirection()) {
+							case 1:
+								g.drawImage(dragonRight,
+										(hTile * tileHSizeInt + xi), (vTile
+												* tileVSizeInt + yi),
+										tileHSizeInt, tileVSizeInt, null);
+								break;
+							case -1:
+								g.drawImage(dragonLeft,
+										(hTile * tileHSizeInt + xi), (vTile
+												* tileVSizeInt + yi),
+										tileHSizeInt, tileVSizeInt, null);
+								break;
+							case -2:
+								g.drawImage(dragonUp,
+										(hTile * tileHSizeInt + xi), (vTile
+												* tileVSizeInt + yi),
+										tileHSizeInt, tileVSizeInt, null);
+								break;
+							case 2:
+								g.drawImage(dragonDown,
+										(hTile * tileHSizeInt + xi), (vTile
+												* tileVSizeInt + yi),
+										tileHSizeInt, tileVSizeInt, null);
+								break;
+							default:
+								g.drawImage(dragonDown,
+										(hTile * tileHSizeInt + xi), (vTile
+												* tileVSizeInt + yi),
+										tileHSizeInt, tileVSizeInt, null);
+								break;
+
+							}
+					}
+
 					break;
 				case Tile.SLEEPINGDRAGON:
-					g.drawImage(dragon, (hTile * tileHSizeInt + xi), (vTile
+					g.drawImage(dragonDown, (hTile * tileHSizeInt + xi), (vTile
 							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
 							null); // E preciso mudar isto
 					break;
@@ -318,9 +454,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 							null);
 					break;
 				case Tile.ARMEDHERO:
-					g.drawImage(armedHero, (hTile * tileHSizeInt + xi), (vTile
-							* tileVSizeInt + yi), tileHSizeInt, tileVSizeInt,
-							null);
+					g.drawImage(heroArmedDown, (hTile * tileHSizeInt + xi),
+							(vTile * tileVSizeInt + yi), tileHSizeInt,
+							tileVSizeInt, null);
 					break;
 				case Tile.SHIELD:
 					g.drawImage(shield, (hTile * tileHSizeInt + xi), (vTile
