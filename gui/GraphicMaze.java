@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.awt.event.MouseAdapter;
 
+import logic.Dragon;
 import logic.Maze;
 import logic.MazeBuilder;
 
@@ -216,8 +217,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		}
 
 		/* Dragon Sprites */
-		
-		
+
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Dragons/down.png"));
 		dragonDown = i.getImage();
@@ -235,8 +235,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		dragonRight = i.getImage();
 
 		/* Hero unarmed sprites */
-		
-		
+
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Hero/Empty/down.png"));
 		heroDown = i.getImage();
@@ -252,10 +251,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Hero/Empty/right.png"));
 		heroRight = i.getImage();
-		
+
 		/* Hero Armed Sprites */
-		
-		
+
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Hero/Weapon/down.png"));
 		heroArmedDown = i.getImage();
@@ -271,9 +269,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Hero/Weapon/right.png"));
 		heroArmedRight = i.getImage();
-		
+
 		/* Hero Shielded Sprites */
-		
+
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Hero/Shield/down.png"));
 		heroShieldedDown = i.getImage();
@@ -289,9 +287,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Hero/Shield/right.png"));
 		heroShieldedRight = i.getImage();
-		
+
 		/* Hero Weapon-Shielded Sprites */
-		
+
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Hero/WeaponShield/down.png"));
 		heroArmedShieldedDown = i.getImage();
@@ -307,7 +305,7 @@ public class GraphicMaze extends JPanel implements KeyListener {
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Hero/WeaponShield/right.png"));
 		heroArmedShieldedRight = i.getImage();
-		
+
 		/* Tiles */
 
 		i = new ImageIcon(this.getClass().getResource(
@@ -318,10 +316,8 @@ public class GraphicMaze extends JPanel implements KeyListener {
 				"resources/Tiles/roof.png"));
 		wall = i.getImage();
 
-		
 		/* Weapons */
-		
-		
+
 		i = new ImageIcon(this.getClass().getResource(
 				"resources/Weapons/dart.png"));
 		dart = i.getImage();
@@ -461,9 +457,9 @@ public class GraphicMaze extends JPanel implements KeyListener {
 						break;
 					case Direction.RIGHT:
 						if (gui.getEngine().getHero().hasEscudo())
-							g.drawImage(heroShieldedRight,
-									(hTile * tileHSizeInt + xi), (vTile
-											* tileVSizeInt + yi), tileHSizeInt,
+							g.drawImage(heroShieldedRight, (hTile
+									* tileHSizeInt + xi),
+									(vTile * tileVSizeInt + yi), tileHSizeInt,
 									tileVSizeInt, null);
 						else
 							g.drawImage(heroRight, (hTile * tileHSizeInt + xi),
@@ -602,7 +598,14 @@ public class GraphicMaze extends JPanel implements KeyListener {
 							null);
 					break;
 				case Tile.EXIT:
-					g.setColor(Color.BLUE);
+					if (gui.getEngine().exitOpen())
+						g.drawImage(floor, (hTile * tileHSizeInt + xi), (vTile
+								* tileVSizeInt + yi), tileHSizeInt,
+								tileVSizeInt, null);
+					 else
+						g.drawImage(wall, (hTile * tileHSizeInt + xi), (vTile
+								* tileVSizeInt + yi), tileHSizeInt,
+								tileVSizeInt, null);
 				default:
 					break;
 				}

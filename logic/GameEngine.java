@@ -787,7 +787,14 @@ public class GameEngine implements Serializable {
 	 * @return true if it has been met, false otherwise.
 	 */
 	public boolean testWinCondition() {
-		if ((h1.getPosicao() == board.getExit()) && (h1.isArmado())) {
+		if ((h1.getPosicao() == board.getExit()) && exitOpen()) {
+			return true;
+		} else
+			return false;
+	}
+	
+	public boolean exitOpen(){
+		if (h1.isArmado()) {
 			for (int i = 0; i < dragons.size(); i++) {
 				if (dragons.get(i).getPosicao() != -1)
 					return false;
